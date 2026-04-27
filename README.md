@@ -1,60 +1,80 @@
 # NOMES v0
 
-Landing website pentru o agenție de marketing ("NOMÉS"), construit cu Next.js (App Router), React 19, Tailwind CSS v4 și componente UI de tip Radix/shadcn.
+Website de prezentare pentru o agenție de marketing (NOMES), construit cu Next.js App Router, React 19 și Tailwind CSS 4.
 
-## Ce este în proiect
+## Stack tehnic
 
-- Framework: Next.js 16
-- UI: React 19 + Tailwind CSS 4
-- Routing: App Router (`app/`)
-- Stil: paletă custom de brand în `app/globals.css`
-- Componente: `components/` + `components/ui/`
+- Next.js 16
+- React 19
+- Tailwind CSS 4
+- TypeScript 5
+- Componente UI pe baza Radix/shadcn
 
-## Structură relevantă
+## Structură proiect
 
-- `app/page.tsx` - pagina principală (hero)
-- `app/cine-suntem/page.tsx` - pagina "Cine suntem"
-- `app/servicii/page.tsx` - pagina "Servicii"
-- `components/hero-section.tsx` - hero principal cu meniul de navigație
-- `components/navigation.tsx` - header/nav reutilizabil
+- app/ - rute și layout-uri Next.js (App Router)
+- components/ - componente reutilizabile pentru secțiuni și pagini
+- components/ui/ - librăria de componente UI
+- public/ - asset-uri statice (imagini, fonturi, icon-uri)
+- styles/ - stiluri globale suplimentare
+
+Rute disponibile în acest moment:
+
+- / (acasă)
+- /cine-suntem
+- /servicii
+- /portofoliu
+- /articole
 
 ## Cerințe
 
 - Node.js 20+
-- pnpm (recomandat, există `pnpm-lock.yaml`)
+- pnpm recomandat (există fișierul pnpm-lock.yaml)
 
-## Instalare și rulare locală (Windows)
+## Rulare locală
 
-Deschide PowerShell în folderul proiectului și rulează:
+1. Instalează dependențele:
 
 ```powershell
 pnpm install
+```
+
+2. Pornește serverul de dezvoltare:
+
+```powershell
 pnpm dev
 ```
 
-Apoi deschide în browser:
+3. Deschide aplicația în browser la:
 
 ```text
 http://localhost:3000
 ```
 
-## Comenzi utile
+## Scripturi disponibile
 
 ```powershell
-pnpm dev     # pornește serverul de dezvoltare
+pnpm dev     # dezvoltare locală
 pnpm build   # build de producție
-pnpm start   # pornește build-ul de producție
-pnpm lint    # linting
+pnpm start   # rulează build-ul de producție
 ```
 
-## Observații
+## Build și deploy
 
-- În navigație există linkuri către pagini care nu sunt încă implementate în `app/` (ex: `/cursuri`, `/portofoliu`, `/articole`, `/about`).
-- În `next.config.mjs`, `typescript.ignoreBuildErrors` este activ, deci build-ul poate trece peste erori TypeScript.
+- Build local:
 
-## Alternative dacă nu ai pnpm
+```powershell
+pnpm build
+```
 
-Poți folosi și npm:
+- Pentru deploy recomandat: Vercel (compatibil nativ cu Next.js).
+
+## Note
+
+- În next.config.mjs este activată opțiunea typescript.ignoreBuildErrors.
+- Dacă vrei verificare strictă TypeScript la build, setează această opțiune pe false.
+
+## Variantă cu npm
 
 ```powershell
 npm install
