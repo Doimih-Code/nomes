@@ -74,7 +74,7 @@ export default function CineSuntemPage() {
 
       {/* Hero Section - Echipa ta de marketing */}
       <section
-        className="w-full min-h-screen px-6 md:px-12 pt-[104px] md:pt-[120px] pb-12 md:pb-16"
+        className="w-full min-h-screen px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
         style={{ backgroundColor: '#1b2c1a' }}
       >
         <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
@@ -108,17 +108,17 @@ export default function CineSuntemPage() {
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
+          <div className="grid grid-cols-3 gap-4 md:gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
             {stats.map((stat, idx) => (
               <div key={idx}>
                 <div
-                  className="text-5xl md:text-6xl font-bold mb-2"
+                  className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
                   style={{ color: '#eee5c8' }}
                 >
                   {stat.number}
                 </div>
                 <div
-                  className="text-xs uppercase tracking-widest"
+                  className="text-[10px] sm:text-xs uppercase tracking-[0.18em] md:tracking-widest leading-tight pr-2"
                   style={{ color: '#b4a35d' }}
                 >
                   {stat.label}
@@ -160,7 +160,7 @@ export default function CineSuntemPage() {
 
             {/* Right Dark Panel */}
             <div
-              className="relative p-8 md:p-12 min-h-[400px] flex flex-col justify-between rounded-[3px]"
+              className="relative p-8 md:p-12 min-h-100 flex flex-col justify-between rounded-[3px]"
               style={{ backgroundColor: '#1b2c1a' }}
             >
               <div
@@ -186,7 +186,7 @@ export default function CineSuntemPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* Left Dark Panel */}
             <div
-              className="relative p-8 md:p-12 min-h-[400px] flex flex-col justify-between order-2 md:order-1 rounded-[3px]"
+              className="relative p-8 md:p-12 min-h-100 flex flex-col justify-between order-2 md:order-1 rounded-[3px]"
               style={{ backgroundColor: '#1b2c1a' }}
             >
               <div
@@ -338,7 +338,7 @@ export default function CineSuntemPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* Left Dark Panel */}
             <div
-              className="relative p-8 md:p-12 min-h-[450px] flex flex-col justify-between rounded-[3px]"
+              className="relative p-8 md:p-12 min-h-112.5 flex flex-col justify-between rounded-[3px]"
               style={{ backgroundColor: '#1b2c1a' }}
             >
               <div
@@ -376,14 +376,14 @@ export default function CineSuntemPage() {
                 {timeline.map((item, idx) => (
                   <div key={idx} className="flex gap-6">
                     <div
-                      className="text-lg font-bold min-w-[60px]"
+                      className="text-lg font-bold min-w-15"
                       style={{ color: '#1b2c1a' }}
                     >
                       {item.year}
                     </div>
                     <div className="flex gap-4">
                       <div
-                        className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                        className="w-2 h-2 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: '#1b2c1a' }}
                       />
                       <div>

@@ -75,6 +75,16 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
   const isDarkLike = variant === 'dark' || variant === 'transparent'
   const isEffectivelyLight = isOverLight || (!isDarkLike)
   const glassBg = isEffectivelyLight
@@ -136,42 +146,85 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
         {/* Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
+          type="button"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
           className={`${dmMono.className} flex items-center gap-2 text-xs uppercase tracking-widest`}
           style={{ color: accentColor, fontWeight: 500 }}
         >
-          <span className="hidden md:inline">—</span>
-          MENU
+          <span className="hidden md:inline">— MENU</span>
+          <span className="md:hidden flex flex-col justify-center gap-1.5" aria-hidden="true">
+            <span
+              className={`block h-0.5 w-5 transition-transform duration-300 ${menuOpen ? 'translate-y-2 rotate-45' : ''}`}
+              style={{ backgroundColor: accentColor }}
+            />
+            <span
+              className={`block h-0.5 w-5 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}
+              style={{ backgroundColor: accentColor }}
+            />
+            <span
+              className={`block h-0.5 w-5 transition-transform duration-300 ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`}
+              style={{ backgroundColor: accentColor }}
+            />
+          </span>
         </button>
+      </header>
 
-        {/* Mobile Menu Overlay */}
-        {menuOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center md:hidden"
-            style={{ backgroundColor: '#1b2c1a' }}
-          >
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="absolute top-4 right-6 text-2xl"
-              style={{ color: '#eee5c8' }}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-50 md:hidden"
+          style={{ backgroundColor: 'rgba(27, 44, 26, 0.98)' }}
+        >
+          <div className="flex min-h-screen flex-col px-6 pt-5 pb-8">
+            <div className="flex items-center justify-between">
+              <Link
+                href="/"
+                className="flex items-center gap-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: '#c94c4c' }}
+                />
+                <span
+                  className={`${syne.className} text-lg tracking-tight`}
+                  style={{ color: '#eee5c8' }}
+                >
+                  NOMÉS
+                </span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="text-3xl leading-none"
+                style={{ color: '#eee5c8' }}
+                aria-label="Close menu"
+              >
+                ×
+              </button>
+            </div>
+
+            <nav
+              id="mobile-navigation"
+              className="flex flex-1 flex-col items-center justify-center gap-6 text-center"
             >
-              ×
-            </button>
-            <nav className="flex flex-col gap-6 text-center">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-2xl font-bold"
-                  style={{ color: '#eee5c8' }}
+                  className="text-4xl font-bold leading-none"
+                  style={{ color: activePage === item.label ? '#eee5c8' : '#bfbea2' }}
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
           </div>
-        )}
-      </header>
+        </div>
+      )}
 
       {needsOffset && <div aria-hidden="true" className="h-[68px] md:h-[72px]" />}
     </>

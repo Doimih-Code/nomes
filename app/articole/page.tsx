@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Navigation from '@/components/navigation'
 
 const categories = [
@@ -68,10 +68,53 @@ const articles = [
 
 export default function ArticolePage() {
   const [activeCategory, setActiveCategory] = useState('Toate')
+  const categoryScrollerRef = useRef<HTMLDivElement | null>(null)
+  const dragStateRef = useRef({ isPointerDown: false, isDragging: false, startX: 0, startScrollLeft: 0 })
 
   const filteredArticles = activeCategory === 'Toate'
     ? articles
     : articles.filter(a => a.category === activeCategory)
+
+  const handleCategoryPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const scroller = categoryScrollerRef.current
+    if (!scroller) return
+
+    dragStateRef.current = {
+      isPointerDown: true,
+      isDragging: false,
+      startX: event.clientX,
+      startScrollLeft: scroller.scrollLeft,
+    }
+  }
+
+  const handleCategoryPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const scroller = categoryScrollerRef.current
+    const dragState = dragStateRef.current
+    if (!scroller || !dragState.isPointerDown) return
+
+    const deltaX = event.clientX - dragState.startX
+
+    if (!dragState.isDragging && Math.abs(deltaX) < 8) {
+      return
+    }
+
+    if (!dragState.isDragging) {
+      dragState.isDragging = true
+      scroller.setPointerCapture(event.pointerId)
+    }
+
+    scroller.scrollLeft = dragState.startScrollLeft - deltaX
+  }
+
+  const handleCategoryPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const scroller = categoryScrollerRef.current
+    if (scroller?.hasPointerCapture(event.pointerId)) {
+      scroller.releasePointerCapture(event.pointerId)
+    }
+
+    dragStateRef.current.isPointerDown = false
+    dragStateRef.current.isDragging = false
+  }
 
   return (
     <main style={{ backgroundColor: '#eee5c8' }}>
@@ -83,32 +126,60 @@ export default function ArticolePage() {
         style={{ backgroundColor: '#eee5c8', borderColor: 'rgba(27, 44, 26, 0.12)' }}
       >
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="flex items-center gap-2 overflow-x-auto py-4" style={{ scrollbarWidth: 'none' }}>
-            <span
-              className="text-xs uppercase tracking-[0.35em] whitespace-nowrap pr-4 border-r mr-2"
-              style={{ color: '#b4a35d', borderColor: 'rgba(27, 44, 26, 0.15)' }}
+          <div className="relative">
+            <div
+              ref={categoryScrollerRef}
+              onPointerDown={handleCategoryPointerDown}
+              onPointerMove={handleCategoryPointerMove}
+              onPointerUp={handleCategoryPointerUp}
+              onPointerCancel={handleCategoryPointerUp}
+              className="overflow-x-scroll overflow-y-hidden py-4 touch-pan-x select-none"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
+                cursor: 'grab',
+              }}
             >
-              Categorii
-            </span>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className="relative whitespace-nowrap px-3 py-1 text-sm transition-colors"
-                style={{
-                  color: activeCategory === cat ? '#1b2c1a' : '#5a5a4a',
-                  fontWeight: activeCategory === cat ? 700 : 400,
-                }}
-              >
-                {cat}
-                {activeCategory === cat && (
-                  <span
-                    className="absolute bottom-0 left-3 right-3 h-[2px]"
-                    style={{ backgroundColor: '#1b2c1a' }}
-                  />
-                )}
-              </button>
-            ))}
+              <div className="inline-flex w-max items-center gap-3 pr-8">
+                <span
+                  className="text-xs uppercase tracking-[0.35em] whitespace-nowrap pr-4 border-r mr-2 shrink-0"
+                  style={{ color: '#b4a35d', borderColor: 'rgba(27, 44, 26, 0.15)' }}
+                >
+                  Categorii
+                </span>
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className="relative whitespace-nowrap px-4 py-1 text-sm transition-colors shrink-0"
+                    style={{
+                      color: activeCategory === cat ? '#1b2c1a' : '#5a5a4a',
+                      fontWeight: activeCategory === cat ? 700 : 400,
+                    }}
+                  >
+                    {cat}
+                    {activeCategory === cat && (
+                      <span
+                        className="absolute bottom-0 left-3 right-3 h-0.5"
+                        style={{ backgroundColor: '#1b2c1a' }}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 w-6 md:hidden"
+              style={{ background: 'linear-gradient(90deg, #eee5c8 0%, rgba(238, 229, 200, 0) 100%)' }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 w-10 md:hidden"
+              style={{ background: 'linear-gradient(270deg, #eee5c8 0%, rgba(238, 229, 200, 0) 100%)' }}
+            />
           </div>
         </div>
       </div>
@@ -119,7 +190,7 @@ export default function ArticolePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-[3px] overflow-hidden">
             {/* Image placeholder */}
             <div
-              className="aspect-[4/3] md:aspect-auto md:min-h-[420px] flex items-end justify-center relative"
+              className="aspect-4/3 md:aspect-auto md:min-h-105 flex items-end justify-center relative"
               style={{ backgroundColor: '#1b2c1a' }}
             >
               <p
@@ -206,7 +277,7 @@ export default function ArticolePage() {
               <div key={article.id} className="group cursor-pointer">
                 {/* Image placeholder */}
                 <div
-                  className="aspect-[16/10] w-full rounded-[3px] mb-4 transition-opacity group-hover:opacity-90"
+                  className="aspect-16/10 w-full rounded-[3px] mb-4 transition-opacity group-hover:opacity-90"
                   style={{ backgroundColor: '#1b2c1a' }}
                 />
                 <p className="text-xs uppercase tracking-widest mb-2" style={{ color: '#b4a35d' }}>

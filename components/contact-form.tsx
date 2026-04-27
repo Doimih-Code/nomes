@@ -18,8 +18,8 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
       className={isDialog ? 'w-full' : 'w-full px-6 md:px-12 py-16 md:py-24'}
       style={isDialog ? undefined : { backgroundColor: '#eee5c8' }}
     >
-      <div className={isDialog ? 'max-w-3xl mx-auto' : 'max-w-4xl mx-auto'}>
-        <div className="mb-10 text-center">
+      <div className={isDialog ? 'max-w-2xl mx-auto' : 'max-w-4xl mx-auto'}>
+        <div className="mb-6 md:mb-10 text-center">
           <p
             className="text-xs uppercase tracking-widest mb-3"
             style={{ color: '#5a5a4a' }}
@@ -27,14 +27,14 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
             CONTACT
           </p>
           <h3
-            className="text-3xl md:text-4xl"
+            className="text-2xl md:text-4xl leading-tight"
             style={{ color: '#1b2c1a', fontWeight: 300 }}
           >
             Hai sa vorbim despre proiectul tau.
           </h3>
         </div>
 
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-5" action="#" method="post">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5" action="#" method="post">
           <div className="md:col-span-2">
             <label
               htmlFor="fullName"
@@ -49,7 +49,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               type="text"
               required
               placeholder="Introdu numele complet"
-              className="h-12 bg-white/60 border-[#d4ccae]"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
             />
           </div>
 
@@ -67,7 +67,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               type="email"
               required
               placeholder="exemplu@email.com"
-              className="h-12 bg-white/60 border-[#d4ccae]"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               type="tel"
               required
               placeholder="07xx xxx xxx"
-              className="h-12 bg-white/60 border-[#d4ccae]"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
             />
           </div>
 
@@ -102,14 +102,14 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               name="comment"
               required
               placeholder="Scrie cateva detalii despre proiectul tau"
-              className="min-h-36 bg-white/60 border-[#d4ccae]"
+              className="min-h-28 md:min-h-36 bg-white/60 border-[#d4ccae] text-sm"
             />
           </div>
 
-          <div className="md:col-span-2 flex justify-center md:justify-end pt-2">
+          <div className="md:col-span-2 flex justify-stretch md:justify-end pt-1 md:pt-2">
             <Button
               type="submit"
-              className="h-12 px-8 text-xs uppercase tracking-widest rounded-[3px]"
+              className="h-11 md:h-12 w-full md:w-auto px-6 md:px-8 text-xs uppercase tracking-[0.2em] md:tracking-widest rounded-[3px]"
               style={{ backgroundColor: '#1b2c1a', color: '#eee5c8' }}
             >
               Trimite mesajul
