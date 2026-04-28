@@ -9,60 +9,52 @@ const cormorantGaramondItalic = Cormorant_Garamond({
 })
 
 const stats = [
-  { number: '14+', label: 'ANI DE EXPERIENȚĂ' },
-  { number: '24+', label: 'CLIENȚI RECURENȚI' },
-  { number: '150+', label: 'PROIECTE LIVRATE' },
+  { number: '9+', label: 'Ani Experiență' },
+  { number: '12+', label: 'Clienți Recurenți' },
+  { number: '100+', label: 'Proiecte Livrate' },
 ]
 
 const values = [
   {
     id: '01',
     title: 'Autenticitate',
-    description: 'Fiecare decizie pornește din adevăr, nu din tendințe.',
-  },
+      },
   {
     id: '02',
     title: 'Excelență',
-    description: 'Standardele noastre nu au limită de sus.',
-  },
+      },
   {
     id: '03',
     title: 'Inovație',
-    description: 'Căutăm soluții acolo unde alții văd obstacole.',
-  },
+      },
   {
     id: '04',
     title: 'Parteneriat',
-    description: 'Succesul tău este și succesul nostru.',
   },
 ]
 
 const team = [
-  { initials: 'AN', name: 'Alexandru N.', role: 'FONDATOR' },
-  { initials: 'MG', name: 'Maria G.', role: 'DIR. CREATIV' },
-  { initials: 'RB', name: 'Radu B.', role: 'DEVELOPER' },
+  { initials: 'MI', name: 'Mihai Iorgulescu', role: 'Ads specialist' },
+  { initials: 'RE', name: 'Radu Enache', role: 'Account manager' },
+  { initials: 'AI', name: 'Andrei Ionescu', role: 'Creative & Partnership' },
 ]
 
 const timeline = [
   {
     year: '2017',
-    title: 'Începerea în freelancing',
-    description: 'Primii pași — pasiune, determinare și primele rezultate reale pentru clienți.',
+    title: 'Început în freelancing',
   },
   {
     year: '2018',
-    title: 'Primul client mare',
-    description: 'Colaborarea care ne-a validat și ne-a pus pe hartă la nivel național.',
+    title: 'Primul client',
   },
   {
     year: '2020',
     title: 'Începerea expansiunii',
-    description: 'Am crescut echipa, serviciile și portofoliul — de la freelancing la agenție.',
   },
   {
     year: 'Azi',
     title: 'Astăzi',
-    description: '24+ clienți recurenți, 0 clienți pierduți, și o echipă care crește în fiecare zi.',
   },
 ]
 
@@ -129,12 +121,20 @@ export default function CineSuntemPage() {
         </div>
       </section>
 
-      {/* De ce existam Section */}
+      {/* Misiune + Valori Section */}
       <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            {/* Left Content */}
-            <div>
+        <div className="max-w-6xl mx-auto relative">
+          <div
+            aria-hidden="true"
+            className="hidden md:block absolute top-0 bottom-0 left-1/2 w-px"
+            style={{
+              background: 'linear-gradient(180deg, rgba(27, 44, 26, 0) 0%, rgba(27, 44, 26, 0.35) 14%, rgba(27, 44, 26, 0.35) 86%, rgba(27, 44, 26, 0) 100%)',
+            }}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+            {/* Left Content: Misiunea */}
+            <div className="md:pr-10 lg:pr-14">
               <div
                 className="text-xs uppercase tracking-widest mb-4"
                 style={{ color: '#5a5a4a' }}
@@ -158,93 +158,41 @@ export default function CineSuntemPage() {
               </div>
             </div>
 
-            {/* Right Dark Panel */}
-            <div
-              className="relative p-8 md:p-12 min-h-100 flex flex-col justify-between rounded-[3px]"
-              style={{ backgroundColor: '#1b2c1a' }}
-            >
+            {/* Right Content: Valorile */}
+            <div className="md:pl-10 lg:pl-14">
               <div
-                className="text-8xl font-bold opacity-20"
-                style={{ color: '#eee5c8' }}
-              >
-                01
-              </div>
-              <p
-                className="text-lg italic"
-                style={{ color: '#bfbea2' }}
-              >
-                {'"Transformăm viziuni în realități tangibile, cu fiecare proiect în parte."'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Ce ne defineste Section */}
-      <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            {/* Left Dark Panel */}
-            <div
-              className="relative p-8 md:p-12 min-h-100 flex flex-col justify-between order-2 md:order-1 rounded-[3px]"
-              style={{ backgroundColor: '#1b2c1a' }}
-            >
-              <div
-                className="text-8xl font-bold opacity-20"
-                style={{ color: '#eee5c8' }}
-              >
-                02
-              </div>
-              <p
-                className="text-lg italic"
-                style={{ color: '#bfbea2' }}
-              >
-                {'"Valorile nu sunt afișate pe pereți — sunt trăite în fiecare proiect."'}
-              </p>
-            </div>
-
-            {/* Right Content */}
-            <div className="order-1 md:order-2">
-              <div
-                className="text-xs uppercase tracking-widest mb-4"
+                className="text-xs uppercase tracking-widest mb-4 md:text-right"
                 style={{ color: '#5a5a4a' }}
               >
                 VALORILE NOASTRE
               </div>
               <h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 md:text-right"
                 style={{ color: '#1b2c1a' }}
               >
                 Ce ne<br />
                 definește.
               </h2>
 
-              {/* Values Grid */}
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {values.map((value) => (
                   <div
                     key={value.id}
-                    className="p-6 border rounded-[3px]"
+                    className="p-6 md:p-7 border rounded-[3px]"
                     style={{ borderColor: 'rgba(26, 44, 26, 0.15)', backgroundColor: 'rgba(255,255,255,0.3)' }}
                   >
                     <div
-                      className="text-xs mb-2"
+                      className="text-xs mb-3"
                       style={{ color: '#5a5a4a' }}
                     >
                       {value.id}
                     </div>
                     <h3
-                      className="text-lg font-bold mb-2"
+                      className="text-lg font-bold"
                       style={{ color: '#1b2c1a' }}
                     >
                       {value.title}
                     </h3>
-                    <p
-                      className="text-sm"
-                      style={{ color: '#5a5a4a' }}
-                    >
-                      {value.description}
-                    </p>
                   </div>
                 ))}
               </div>
@@ -372,35 +320,25 @@ export default function CineSuntemPage() {
               </h2>
 
               {/* Timeline */}
-              <div className="space-y-8">
+              <div className="space-y-4 md:space-y-5">
                 {timeline.map((item, idx) => (
-                  <div key={idx} className="flex gap-6">
+                  <div key={idx} className="flex items-center gap-2 md:gap-3">
                     <div
-                      className="text-lg font-bold min-w-15"
+                      className="text-lg font-bold w-12 md:w-14"
                       style={{ color: '#1b2c1a' }}
                     >
                       {item.year}
                     </div>
-                    <div className="flex gap-4">
-                      <div
-                        className="w-2 h-2 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: '#1b2c1a' }}
-                      />
-                      <div>
-                        <h3
-                          className="font-bold mb-1"
-                          style={{ color: '#1b2c1a' }}
-                        >
-                          {item.title}
-                        </h3>
-                        <p
-                          className="text-sm"
-                          style={{ color: '#5a5a4a' }}
-                        >
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
+                    <div
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ backgroundColor: '#1b2c1a' }}
+                    />
+                    <h3
+                      className="font-bold"
+                      style={{ color: '#1b2c1a' }}
+                    >
+                      {item.title}
+                    </h3>
                   </div>
                 ))}
               </div>
