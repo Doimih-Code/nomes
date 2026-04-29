@@ -14,6 +14,7 @@ const navItems = [
   { label: 'Portofoliu', href: '/portofoliu', active: false },
   { label: 'Articole', href: '/articole', active: false },
   { label: 'About', href: '/about', active: false },
+  { label: 'Contact', href: '/contact', active: false },
 ]
 
 interface NavigationProps {

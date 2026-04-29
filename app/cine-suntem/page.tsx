@@ -37,6 +37,7 @@ const team = [
   { initials: 'MI', name: 'Mihai Iorgulescu', role: 'Ads specialist' },
   { initials: 'RE', name: 'Radu Enache', role: 'Account manager' },
   { initials: 'AI', name: 'Andrei Ionescu', role: 'Creative & Partnership' },
+  { initials: 'MO', name: 'Romina Neagu', role: 'Social Media Specialist & Creator' },
 ]
 
 const timeline = [
@@ -159,15 +160,15 @@ export default function CineSuntemPage() {
             </div>
 
             {/* Right Content: Valorile */}
-            <div className="md:pl-10 lg:pl-14">
+            <div className="md:pl-4 lg:pl-6">
               <div
-                className="text-xs uppercase tracking-widest mb-4 md:text-right"
+                className="text-xs uppercase tracking-widest mb-4"
                 style={{ color: '#5a5a4a' }}
               >
                 VALORILE NOASTRE
               </div>
               <h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 md:text-right"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12"
                 style={{ color: '#1b2c1a' }}
               >
                 Ce ne<br />
@@ -225,7 +226,7 @@ export default function CineSuntemPage() {
       {/* Oamenii din spate Section */}
       <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
             {/* Left Content */}
             <div>
               <div
@@ -246,17 +247,20 @@ export default function CineSuntemPage() {
                   O echipă diversă de profesioniști pasionați, fiecare aducând o perspectivă unică și o expertiză aparte.
                 </p>
                 <p>
+                  Oameni diferiți, cu backgrounduri diferite, uniți pentru a aduce rezultate.
+                </p>
+                <p>
                   Împreună, formăm mai mult decât o sumă a părților.
                 </p>
               </div>
             </div>
 
             {/* Right Team Cards */}
-            <div className="flex gap-4 justify-center md:justify-end">
+            <div className="grid grid-cols-2 gap-x-6 md:gap-x-8 gap-y-10 justify-items-center md:justify-items-end md:max-w-[420px] md:ml-auto">
               {team.map((member, idx) => (
-                <div key={idx} className="text-center">
+                <div key={idx} className="w-[140px] md:w-[168px] text-center">
                   <div
-                    className="w-28 h-36 md:w-32 md:h-40 flex items-center justify-center text-3xl md:text-4xl font-bold mb-4 rounded-[3px]"
+                    className="w-[140px] h-[170px] md:w-[168px] md:h-[192px] flex items-center justify-center text-3xl md:text-5xl font-bold mb-4 rounded-[3px]"
                     style={{ backgroundColor: '#1b2c1a', color: '#3a4a3a' }}
                   >
                     {member.initials}
