@@ -63,7 +63,7 @@ export default function PortofoliuPage() {
               </h2>
             </div>
             <p className="text-xs uppercase tracking-[0.35em] hidden md:block" style={{ color: '#bfbea2' }}>
-              24+ clienți recurenți
+              40+ clienți recurenți
             </p>
           </div>
 
@@ -87,7 +87,7 @@ export default function PortofoliuPage() {
             </div>
             <div className="flex-1">
               <p className="text-base md:text-lg leading-relaxed" style={{ color: '#1b2c1a' }}>
-                Clienții nostri sunt cei mai buni ambasadori. Mai jos, câteva cuvinte de la ei — și o secțiune dedicată video-testimonialelor pe care le vom încărcă împreună.
+                Clienții nostri sunt cei mai buni ambasadori. Mai jos, câteva cuvinte de la ei, și o secțiune dedicată video-testimonialelor pe care le vom încărcă împreună.
               </p>
             </div>
           </div>
