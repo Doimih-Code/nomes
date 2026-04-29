@@ -10,6 +10,7 @@ const pageLinks = [
   { label: 'Portofoliu', href: '/portofoliu' },
   { label: 'Articole', href: '/articole' },
   { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const socialLinks = [
