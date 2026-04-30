@@ -1,5 +1,6 @@
 import Navigation from '@/components/navigation'
 import PortofolioSlider from '@/components/portfolio-slider'
+import PartnersMarquee from '@/components/partners-marquee'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
 
 export default function PortofoliuPage() {
@@ -154,13 +155,7 @@ export default function PortofoliuPage() {
             <p className="text-xs uppercase tracking-[0.4em] mb-8" style={{ color: '#b4a35d' }}>
               Parteneri &amp; Colaboratori
             </p>
-            <div className="flex flex-wrap gap-4">
-              {['PARTENER 01', 'PARTENER 02', 'PARTENER 03', 'PARTENER 04', 'PARTENER 05', 'PARTENER 06'].map((partner, idx) => (
-                <div key={idx} className="flex-1 min-w-[140px] text-center py-8 border rounded-[3px]" style={{ borderColor: 'rgba(27, 44, 26, 0.25)', color: '#1b2c1a' }}>
-                  <p className="text-xs uppercase tracking-widest">{partner}</p>
-                </div>
-              ))}
-            </div>
+              <PartnersMarquee />
           </div>
         </div>
       </section>
