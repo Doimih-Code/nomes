@@ -2,7 +2,7 @@
 
 import Navigation from '@/components/navigation'
 import PortfolioSlider from '@/components/portfolio-slider'
-import PartnersMarquee from '@/components/partners-marquee'
+import PartnersLogoLoop from '@/components/partners-logo-loop'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
 import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { motion } from 'motion/react'
@@ -196,7 +196,7 @@ export default function PortofoliuPage() {
             <p className="text-xs uppercase tracking-[0.4em] mb-8" style={{ color: '#b4a35d' }}>
               Parteneri &amp; Colaboratori
             </p>
-            <PartnersMarquee />
+            <PartnersLogoLoop />
           </div>
         </div>
       </motion.section>
