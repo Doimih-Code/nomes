@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Navigation from '@/components/navigation'
+import { motion } from 'motion/react'
 
 interface ServiceExample {
   title: string
@@ -204,7 +205,11 @@ export default function ServiciiPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
             {/* Left side */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
               <p
                 className="text-xs uppercase tracking-widest mb-6"
                 style={{ color: '#1b2c1a', letterSpacing: '0.2em' }}
@@ -217,17 +222,22 @@ export default function ServiciiPage() {
               >
                 Servicii.
               </h1>
-            </div>
+            </motion.div>
 
             {/* Right side */}
-            <div className="flex flex-col items-start md:items-end">
+            <motion.div
+              className="flex flex-col items-start md:items-end"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
               <p
                 className="text-xs uppercase tracking-widest"
                 style={{ color: '#666', letterSpacing: '0.15em' }}
               >
                 — 08 SERVICII DISPONIBILE
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -238,8 +248,14 @@ export default function ServiciiPage() {
           {/* Divider line */}
           <div className="border-t" style={{ borderColor: '#ccc5a8' }} />
 
-          {services.map((service) => (
-            <div key={service.id}>
+          {services.map((service, idx) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: idx * 0.06 }}
+            >
               {/* Service Row */}
               <button
                 onClick={() => toggleService(service.id)}
@@ -348,7 +364,7 @@ export default function ServiciiPage() {
 
               {/* Divider line */}
               <div className="border-t" style={{ borderColor: '#ccc5a8' }} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

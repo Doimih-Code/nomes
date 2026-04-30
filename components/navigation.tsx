@@ -13,7 +13,6 @@ const navItems = [
   { label: 'Cursuri', href: '/cursuri', active: false },
   { label: 'Portofoliu', href: '/portofoliu', active: false },
   { label: 'Articole', href: '/articole', active: false },
-  { label: 'About', href: '/about', active: false },
   { label: 'Contact', href: '/contact', active: false },
 ]
 
