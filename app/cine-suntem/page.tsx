@@ -1,6 +1,9 @@
+'use client'
+
 import Navigation from '@/components/navigation'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
 import { Cormorant_Garamond } from 'next/font/google'
+import { motion } from 'motion/react'
 
 const cormorantGaramondItalic = Cormorant_Garamond({
   subsets: ['latin'],
@@ -81,29 +84,40 @@ export default function CineSuntemPage() {
           </div>
 
           {/* Main Title */}
-          <h1
+          <motion.h1
             className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8"
             style={{ color: '#eee5c8' }}
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             Echipa<br />
             ta de<br />
             marketing.
-          </h1>
+          </motion.h1>
 
           {/* Description */}
-          <p
+          <motion.p
             className={`${cormorantGaramondItalic.className} text-lg md:text-xl max-w-2xl mb-10 md:mb-12 italic tracking-wide`}
             style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
           >
             Google, Meta, TikTok și LinkedIn Ads, social media strategy, content,
             video profesionist și evenimente PR — tot ce ai nevoie, sub un singur
             acoperiș.
-          </p>
+          </motion.p>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 md:gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
             {stats.map((stat, idx) => (
-              <div key={idx}>
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.4 + idx * 0.12 }}
+              >
                 <div
                   className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
                   style={{ color: '#eee5c8' }}
@@ -116,14 +130,21 @@ export default function CineSuntemPage() {
                 >
                   {stat.label}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Misiune + Valori Section */}
-      <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
+      <motion.section
+        className="w-full px-6 md:px-12 py-16 md:py-24"
+        style={{ backgroundColor: '#eee5c8' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-6xl mx-auto relative">
           <div
             aria-hidden="true"
@@ -200,12 +221,16 @@ export default function CineSuntemPage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Quote Section */}
-      <section
+      <motion.section
         className="w-full px-6 md:px-12 py-24 md:py-32"
         style={{ backgroundColor: '#1b2c1a' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <p
@@ -221,10 +246,17 @@ export default function CineSuntemPage() {
             — ECHIPA NOASTRĂ
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Oamenii din spate Section */}
-      <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
+      <motion.section
+        className="w-full px-6 md:px-12 py-16 md:py-24"
+        style={{ backgroundColor: '#eee5c8' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
             {/* Left Content */}
@@ -282,10 +314,17 @@ export default function CineSuntemPage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Drumul nostru Section */}
-      <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
+      <motion.section
+        className="w-full px-6 md:px-12 py-16 md:py-24"
+        style={{ backgroundColor: '#eee5c8' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* Left Dark Panel */}
@@ -349,35 +388,57 @@ export default function CineSuntemPage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="w-full px-6 md:px-12 py-24 md:py-32" style={{ backgroundColor: '#eee5c8' }}>
+      <motion.section
+        className="w-full px-6 md:px-12 py-24 md:py-32"
+        style={{ backgroundColor: '#eee5c8' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="relative max-w-4xl mx-auto text-center overflow-hidden">
           <div
             className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
             aria-hidden="true"
           >
-            <span
+            <motion.span
               className="text-[7rem] md:text-[11rem] font-bold leading-none"
               style={{ color: '#1b2c1a', opacity: 0.07 }}
+              initial={{ opacity: 0, scale: 0.94, y: 24 }}
+              whileInView={{ opacity: 0.07, scale: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
               HAI
-            </span>
+            </motion.span>
           </div>
 
           <div className="relative z-10">
-          <h2
+          <motion.h2
             className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8"
             style={{ color: '#1b2c1a' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           >
             Lucrăm<br />
             Împreună?
-          </h2>
-          <ContactCtaDialog />
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+          >
+            <ContactCtaDialog />
+          </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer spacer */}
       <div className="h-16" style={{ backgroundColor: '#eee5c8' }} />

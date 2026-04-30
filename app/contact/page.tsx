@@ -5,6 +5,7 @@ import Navigation from '@/components/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { motion } from 'motion/react'
 
 const services = [
   { id: 'performance', label: 'Performance (Ads Management)' },
@@ -40,7 +41,11 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end">
             {/* Left side */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div
                 className="flex items-center gap-2 text-xs uppercase tracking-widest mb-6"
                 style={{ color: '#b4a35d', letterSpacing: '0.2em' }}
@@ -55,30 +60,44 @@ export default function ContactPage() {
                 Hai să<br />
                 vorbim.
               </h1>
-            </div>
+            </motion.div>
 
             {/* Right side */}
-            <div className="flex flex-col items-start md:items-end">
+            <motion.div
+              className="flex flex-col items-start md:items-end"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
               <p
                 className="text-base md:text-lg max-w-md leading-relaxed"
                 style={{ color: '#bfbea2' }}
               >
                 Spune-ne pe scurt de ce ai nevoie, iar noi revenim cu o direcție clară și o propunere potrivită pentru business-ul tău.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section
+      <motion.section
         className="w-full px-6 md:px-12 py-16 md:py-24"
         style={{ backgroundColor: '#eee5c8' }}
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
             {/* Left Column - Contact Info */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -32 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            >
               <div
                 className="text-xs uppercase tracking-widest mb-6"
                 style={{ color: '#5a5a4a', letterSpacing: '0.2em' }}
@@ -126,13 +145,23 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column - Form */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 32 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            >
               <form className="space-y-5" action="#" method="post">
                 {/* Nume */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.22 }}
+                >
                   <label
                     htmlFor="name"
                     className="block text-xs uppercase tracking-widest mb-2"
@@ -148,10 +177,15 @@ export default function ContactPage() {
                     placeholder="Numele tău"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
-                </div>
+                </motion.div>
 
                 {/* Email */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                >
                   <label
                     htmlFor="email"
                     className="block text-xs uppercase tracking-widest mb-2"
@@ -167,10 +201,15 @@ export default function ContactPage() {
                     placeholder="email@example.com"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
-                </div>
+                </motion.div>
 
                 {/* Denumire firmă */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.38 }}
+                >
                   <label
                     htmlFor="company"
                     className="block text-xs uppercase tracking-widest mb-2"
@@ -185,10 +224,15 @@ export default function ContactPage() {
                     placeholder="Denumirea companiei"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
-                </div>
+                </motion.div>
 
                 {/* Website */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.46 }}
+                >
                   <label
                     htmlFor="website"
                     className="block text-xs uppercase tracking-widest mb-2"
@@ -203,10 +247,15 @@ export default function ContactPage() {
                     placeholder="https://example.com"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
-                </div>
+                </motion.div>
 
                 {/* Services Checkboxes */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.54 }}
+                >
                   <label
                     className="block text-xs uppercase tracking-widest mb-3"
                     style={{ color: '#5a5a4a' }}
@@ -261,10 +310,15 @@ export default function ContactPage() {
                       </label>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Comentarii */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.62 }}
+                >
                   <label
                     htmlFor="message"
                     className="block text-xs uppercase tracking-widest mb-2"
@@ -278,10 +332,16 @@ export default function ContactPage() {
                     placeholder="Spune-ne mai mult despre ceea ce ai în minte…"
                     className="min-h-32 md:min-h-40 bg-white/60 border-[#d4ccae] text-sm"
                   />
-                </div>
+                </motion.div>
 
                 {/* Submit Button */}
-                <div className="pt-2">
+                <motion.div
+                  className="pt-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
+                >
                   <Button
                     type="submit"
                     className="h-12 w-full text-xs uppercase tracking-[0.2em] md:tracking-widest font-bold rounded-[3px] transition-all hover:opacity-80"
@@ -289,12 +349,12 @@ export default function ContactPage() {
                   >
                     TRIMITE MESAJUL
                   </Button>
-                </div>
+                </motion.div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer spacer */}
       <div className="h-16" style={{ backgroundColor: '#eee5c8' }} />
