@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Navigation from '@/components/navigation'
+import { motion } from 'motion/react'
 
 const categories = [
   'Toate',
@@ -189,9 +190,12 @@ export default function ArticolePage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-[3px] overflow-hidden">
             {/* Image placeholder */}
-            <div
+            <motion.div
               className="aspect-4/3 md:aspect-auto md:min-h-105 flex items-end justify-center relative"
               style={{ backgroundColor: '#1b2c1a' }}
+              initial={{ opacity: 0, x: -32 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <p
                 className="absolute text-xs uppercase tracking-[0.4em] pb-10"
@@ -199,12 +203,15 @@ export default function ArticolePage() {
               >
                 Imagine Articol Featured
               </p>
-            </div>
+            </motion.div>
 
             {/* Content */}
-            <div
+            <motion.div
               className="flex flex-col justify-center px-8 md:px-12 py-10"
               style={{ backgroundColor: '#eee5c8' }}
+              initial={{ opacity: 0, x: 32 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             >
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-xs" style={{ color: '#b4a35d' }}>—</span>
@@ -247,7 +254,7 @@ export default function ArticolePage() {
                   Citește →
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -273,12 +280,16 @@ export default function ArticolePage() {
 
           {/* Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
+            {filteredArticles.map((article, idx) => (
               <div key={article.id} className="group cursor-pointer">
                 {/* Image placeholder */}
-                <div
+                <motion.div
                   className="aspect-16/10 w-full rounded-[3px] mb-4 transition-opacity group-hover:opacity-90"
                   style={{ backgroundColor: '#1b2c1a' }}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: idx * 0.14 }}
                 />
                 <p className="text-xs uppercase tracking-widest mb-2" style={{ color: '#b4a35d' }}>
                   {article.category}
