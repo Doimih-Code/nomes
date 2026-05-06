@@ -114,13 +114,13 @@ export default function PartnersLogoLoop() {
         ref={scrollerRef}
         className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory touch-pan-x [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        aria-label="Parteneri si colaboratori"
+        aria-label="Parteneri și colaboratori"
       >
         {repeatedLogos.map((partner, idx) => (
           <div
             key={`${partner.name}-${idx}`}
             data-logo-card="true"
-            className="shrink-0 snap-start w-47.5 sm:w-52.5 md:w-55 lg:w-60 border rounded-[3px] py-7 px-5 flex items-center justify-center"
+            className="shrink-0 snap-start w-[11.875rem] sm:w-[13.125rem] md:w-[13.75rem] lg:w-60 border rounded-[3px] py-7 px-5 flex items-center justify-center"
             style={{ borderColor: 'rgba(27, 44, 26, 0.25)', minHeight: '92px' }}
           >
             <div className="relative h-12 w-full flex items-center justify-center">
@@ -151,7 +151,7 @@ export default function PartnersLogoLoop() {
         onClick={() => move('left')}
         className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-3 z-10 h-10 w-10 md:h-11 md:w-11 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
         style={{ border: '1px solid rgba(27, 44, 26, 0.35)', backgroundColor: '#eee5c8', color: '#1b2c1a' }}
-        aria-label="Mergi la sigla anterioara"
+        aria-label="Mergi la sigla anterioară"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M15 5L8 12L15 19" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -163,7 +163,7 @@ export default function PartnersLogoLoop() {
         onClick={() => move('right')}
         className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-3 z-10 h-10 w-10 md:h-11 md:w-11 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
         style={{ border: '1px solid rgba(27, 44, 26, 0.35)', backgroundColor: '#eee5c8', color: '#1b2c1a' }}
-        aria-label="Mergi la urmatoarea sigla"
+        aria-label="Mergi la următoarea siglă"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M9 5L16 12L9 19" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />

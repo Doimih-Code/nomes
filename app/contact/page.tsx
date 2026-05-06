@@ -36,13 +36,18 @@ export default function ContactPage() {
     )
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // TODO: send form data to an API route or server action
+  }
+
   return (
     <main className="min-h-screen">
       <Navigation activePage="Contact" variant="dark" noOffset />
 
       {/* Hero Section */}
       <section
-        className="w-full min-h-screen px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
+        className="w-full min-h-screen px-6 md:px-12 pt-[6.5rem] md:pt-[7.5rem] pb-12 md:pb-16"
         style={{ backgroundColor: '#1b2c1a' }}
       >
         <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
@@ -167,7 +172,7 @@ export default function ContactPage() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             >
-              <form className="space-y-5" action="#" method="post">
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 {/* Nume */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
