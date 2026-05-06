@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Navigation from '@/components/navigation'
+import { motion } from 'motion/react'
 
 interface ServiceExample {
   title: string
@@ -31,7 +32,7 @@ const services: Service[] = [
       },
       {
         title: 'Meta Ads — Lead Gen & E-com',
-        description: 'Funnel complet pe Facebook & Instagram, de la awareness la conversie, cu testare creativă sistematică.',
+        description: 'Funnel complet pe Facebook & Instagram, de la awareness la conversie, cu testare creativă sistematică',
       },
       {
         title: 'TikTok & LinkedIn Ads',
@@ -44,7 +45,7 @@ const services: Service[] = [
     number: '02',
     name: 'Social Media Management',
     category: 'STRATEGY & EXECUTION',
-    description: 'Preluăm complet prezența ta pe social media — de la strategie și calendar editorial la publicare, community management și raportare lunară.',
+    description: 'Preluăm complet prezența ta pe social media, de la strategie și calendar editorial la publicare, community management și raportare lunară.',
     examples: [
       {
         title: 'Calendar editorial lunar',
@@ -52,7 +53,7 @@ const services: Service[] = [
       },
       {
         title: 'Community Management',
-        description: 'Gestionarea comentariilor, DM-urilor și interacțiunilor cu audiența în timp real, 7 zile din 7.',
+        description: 'Gestionarea comentariilor, DM-urilor și interacțiunilor cu audiența în timp real, 7 zile din 7. Automatizări AI integrate pentru răspunsuri rapide și clare.',
       },
       {
         title: 'Raportare & Analiză',
@@ -65,7 +66,7 @@ const services: Service[] = [
     number: '03',
     name: 'Content Creation',
     category: 'VISUAL & COPY',
-    description: 'Creăm conținut vizual și textual care oprește scrollul și generează engagement real — de la grafice și reels la copy persuasiv și storytelling de brand.',
+    description: 'Creăm conținut vizual ce generează engagement real, de la imagini statice și reels la copy persuasiv și storytelling de brand.',
     examples: [
       {
         title: 'Grafice & Visual Design',
@@ -73,7 +74,7 @@ const services: Service[] = [
       },
       {
         title: 'Copywriting & Captions',
-        description: 'Texte care vând și construiesc comunitate — de la headlines de aur la captions de Instagram care generează conversații.',
+        description: 'Texte care vând și construiesc comunitate, de la headlines la captions care generează conversații.',
       },
       {
         title: 'Reels & Short-Form',
@@ -86,7 +87,7 @@ const services: Service[] = [
     number: '04',
     name: 'Brand Strategy',
     category: 'POSITIONING & IDENTITY',
-    description: 'Definim esența brandului tău — de la poziționare și mesaj cheie la identitate vizuală și tonul vocii. Construim fundația pe care crește tot restul.',
+    description: 'Definim esența brandului tău, de la poziționare și mesaj cheie la identitate vizuală și tonul vocii. Construim fundația pe care crește tot restul.',
     examples: [
       {
         title: 'Brand Positioning',
@@ -149,7 +150,7 @@ const services: Service[] = [
     number: '07',
     name: 'Video Production',
     category: 'FILM & EDIT',
-    description: 'Producem conținut video de la concept la final — de la reels și TikTok-uri la videoclipuri de brand și testimoniale.',
+    description: 'Producem conținut video de la concept la final, de la reels și TikTok-uri la videoclipuri de brand și testimoniale.',
     examples: [
       {
         title: 'Brand Videos',
@@ -170,19 +171,19 @@ const services: Service[] = [
     number: '08',
     name: 'PR',
     category: 'EVENTS & RELATIONS',
-    description: 'Gestionăm relații cu presa, organizăm evenimente și construim parteneriate strategice pentru vizibilitate maximă.',
+    description: 'Organizăm evenimente, construim parteneriate strategice pentru vizibilitate maximă și gestionăm relații cu presa.',
     examples: [
       {
-        title: 'Media Relations',
-        description: 'Relații cu presa, comunicate și plasări media în publicații relevante pentru industria ta.',
-      },
-      {
         title: 'Event Management',
-        description: 'Organizare de evenimente de brand, lansări de produse și activări memorabile.',
+        description: 'Organizare de evenimente de brand, lansări de produse și activări.',
       },
       {
         title: 'Influencer Partnerships',
         description: 'Identificare, negociere și management de colaborări cu influenceri și creatori de conținut.',
+      },
+      {
+       title: 'Media Relations',
+        description: 'Relații cu presa, comunicate și plasări media în publicații relevante pentru industria ta.',
       },
     ],
   },
@@ -204,7 +205,11 @@ export default function ServiciiPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
             {/* Left side */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
               <p
                 className="text-xs uppercase tracking-widest mb-6"
                 style={{ color: '#1b2c1a', letterSpacing: '0.2em' }}
@@ -217,23 +222,22 @@ export default function ServiciiPage() {
               >
                 Servicii.
               </h1>
-            </div>
+            </motion.div>
 
             {/* Right side */}
-            <div className="flex flex-col items-start md:items-end">
-              <p
-                className="text-base md:text-lg max-w-md text-right leading-relaxed mb-6"
-                style={{ color: '#1b2c1a' }}
-              >
-                Fiecare serviciu este conceput să genereze rezultate reale — nu vanity metrics. Apasă pe orice serviciu pentru a vedea exemple concrete.
-              </p>
+            <motion.div
+              className="flex flex-col items-start md:items-end"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
               <p
                 className="text-xs uppercase tracking-widest"
                 style={{ color: '#666', letterSpacing: '0.15em' }}
               >
                 — 08 SERVICII DISPONIBILE
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -244,8 +248,14 @@ export default function ServiciiPage() {
           {/* Divider line */}
           <div className="border-t" style={{ borderColor: '#ccc5a8' }} />
 
-          {services.map((service) => (
-            <div key={service.id}>
+          {services.map((service, idx) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: idx * 0.06 }}
+            >
               {/* Service Row */}
               <button
                 onClick={() => toggleService(service.id)}
@@ -354,7 +364,7 @@ export default function ServiciiPage() {
 
               {/* Divider line */}
               <div className="border-t" style={{ borderColor: '#ccc5a8' }} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
