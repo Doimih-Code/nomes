@@ -1,0 +1,9 @@
+.git
+.gitignore
+.next
+.next-build
+node_modules
+dash-mode/node_modules
+dash-mode/.next
+README.md
+fisierul-plan-dashboard.md
