@@ -6,6 +6,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { motion } from 'motion/react'
+import { Cormorant_Garamond } from 'next/font/google'
+
+const cormorantGaramondItalic = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300'],
+  style: ['italic'],
+})
 
 const services = [
   { id: 'performance', label: 'Performance (Ads Management)' },
@@ -31,14 +38,14 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen">
-      <Navigation activePage="Contact" />
+      <Navigation activePage="Contact" variant="dark" noOffset />
 
       {/* Hero Section */}
       <section
-        className="w-full px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
+        className="w-full min-h-screen px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
         style={{ backgroundColor: '#1b2c1a' }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-end">
             {/* Left side */}
             <motion.div
@@ -53,13 +60,16 @@ export default function ContactPage() {
                 <span>—</span>
                 <span>CONTACT</span>
               </div>
-              <h1
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95]"
+              <motion.h1
+                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8"
                 style={{ color: '#eee5c8' }}
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
                 Hai să<br />
                 vorbim.
-              </h1>
+              </motion.h1>
             </motion.div>
 
             {/* Right side */}
@@ -69,12 +79,15 @@ export default function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
             >
-              <p
-                className="text-base md:text-lg max-w-md leading-relaxed"
-                style={{ color: '#bfbea2' }}
+              <motion.p
+                className={`${cormorantGaramondItalic.className} text-lg md:text-xl max-w-2xl mb-10 md:mb-12 italic tracking-wide`}
+                style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
               >
                 Spune-ne pe scurt de ce ai nevoie, iar noi revenim cu o direcție clară și o propunere potrivită pentru business-ul tău.
-              </p>
+              </motion.p>
             </motion.div>
           </div>
         </div>
