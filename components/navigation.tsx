@@ -103,7 +103,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
     <>
       <header
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-40 w-full py-4 px-6 md:px-12 flex items-center justify-between transition-transform duration-300 ${shouldHideNav ? '-translate-y-full' : 'translate-y-0'}`}
+        className={`fixed top-0 left-0 right-0 z-40 w-full py-4 transition-transform duration-300 ${shouldHideNav ? '-translate-y-full' : 'translate-y-0'}`}
         style={{
           backgroundColor: glassBg,
           backdropFilter: 'blur(16px) saturate(1.4)',
@@ -111,6 +111,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
           borderBottom: `1px solid ${glassBorder}`,
         }}
       >
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span
@@ -169,6 +170,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
             />
           </span>
         </button>
+        </div>
       </header>
 
       {menuOpen && (
