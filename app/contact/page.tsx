@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Navigation from '@/components/navigation'
+import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -37,6 +38,7 @@ export default function ContactPage() {
   }
 
   return (
+    <>
     <main className="min-h-screen">
       <Navigation activePage="Contact" variant="dark" noOffset />
 
@@ -77,14 +79,14 @@ export default function ContactPage() {
               className="flex flex-col items-start md:items-end"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.p
                 className={`${cormorantGaramondItalic.className} text-lg md:text-xl max-w-2xl mb-10 md:mb-12 italic tracking-wide`}
                 style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
                 Spune-ne pe scurt de ce ai nevoie, iar noi revenim cu o direcție clară și o propunere potrivită pentru business-ul tău.
               </motion.p>
@@ -109,7 +111,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: -32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <div
                 className="text-xs uppercase tracking-widest mb-6"
@@ -165,7 +167,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: 32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <form className="space-y-5" action="#" method="post">
                 {/* Nume */}
@@ -173,7 +175,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.22 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     htmlFor="name"
@@ -197,7 +199,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     htmlFor="email"
@@ -221,7 +223,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.38 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     htmlFor="company"
@@ -244,7 +246,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.46 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     htmlFor="website"
@@ -267,7 +269,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.54 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     className="block text-xs uppercase tracking-widest mb-3"
@@ -330,7 +332,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.62 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <label
                     htmlFor="message"
@@ -353,7 +355,7 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <Button
                     type="submit"
@@ -372,5 +374,7 @@ export default function ContactPage() {
       {/* Footer spacer */}
       <div className="h-16" style={{ backgroundColor: '#eee5c8' }} />
     </main>
+    <FallingDotIndicator />
+    </>
   )
 }

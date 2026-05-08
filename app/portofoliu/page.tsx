@@ -4,10 +4,12 @@ import Navigation from '@/components/navigation'
 import PortfolioSlider from '@/components/portfolio-slider'
 import PartnersMarquee from '@/components/partners-marquee'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
+import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { motion } from 'motion/react'
 
 export default function PortofoliuPage() {
   return (
+    <>
     <main className="min-h-screen" style={{ backgroundColor: '#1b2c1a' }}>
       <section className="w-full min-h-screen px-6 md:px-12 pt-[104px] md:pt-[120px] pb-16 md:pb-20" style={{ backgroundColor: '#1b2c1a' }}>
         <div className="max-w-6xl mx-auto">
@@ -41,7 +43,7 @@ export default function PortofoliuPage() {
               style={{ borderColor: 'rgba(180, 163, 93, 0.24)' }}
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="w-full flex flex-col items-center justify-center">
                 <div className="mb-5 flex justify-center">
@@ -94,7 +96,7 @@ export default function PortofoliuPage() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               40+ clienți recurenți
             </motion.p>
@@ -230,7 +232,7 @@ export default function PortofoliuPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             Vrei să fii<br />următorul?
           </motion.h2>
@@ -238,12 +240,14 @@ export default function PortofoliuPage() {
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <ContactCtaDialog variant="light" />
           </motion.div>
         </div>
       </motion.section>
     </main>
+    <FallingDotIndicator />
+    </>
   )
 }

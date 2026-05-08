@@ -2,6 +2,7 @@
 
 import Navigation from '@/components/navigation'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
+import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { Cormorant_Garamond } from 'next/font/google'
 import { motion } from 'motion/react'
 
@@ -64,6 +65,7 @@ const timeline = [
 
 export default function CineSuntemPage() {
   return (
+    <>
     <main style={{ backgroundColor: '#eee5c8' }}>
       {/* Navigation */}
       <Navigation activePage="Cine suntem" variant="dark" noOffset />
@@ -102,7 +104,7 @@ export default function CineSuntemPage() {
             style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             Google, Meta, TikTok și LinkedIn Ads, social media strategy, content,
             video profesionist și evenimente PR — tot ce ai nevoie, sub un singur
@@ -116,7 +118,7 @@ export default function CineSuntemPage() {
                 key={idx}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.4 + idx * 0.12 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div
                   className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
@@ -423,7 +425,7 @@ export default function CineSuntemPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             Lucrăm<br />
             Împreună?
@@ -432,7 +434,7 @@ export default function CineSuntemPage() {
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <ContactCtaDialog />
           </motion.div>
@@ -443,5 +445,7 @@ export default function CineSuntemPage() {
       {/* Footer spacer */}
       <div className="h-16" style={{ backgroundColor: '#eee5c8' }} />
     </main>
+    <FallingDotIndicator />
+    </>
   )
 }
