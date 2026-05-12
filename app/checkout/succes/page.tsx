@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Navigation from '@/components/navigation'
 import { motion } from 'motion/react'
 
-export default function CheckoutSuccesPage() {
+function CheckoutSuccesContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [loaded, setLoaded] = useState(false)
@@ -112,5 +112,13 @@ export default function CheckoutSuccesPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function CheckoutSuccesPage() {
+  return (
+    <Suspense>
+      <CheckoutSuccesContent />
+    </Suspense>
   )
 }
