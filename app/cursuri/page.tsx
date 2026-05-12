@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Navigation from '@/components/navigation'
+import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { Cormorant_Garamond } from 'next/font/google'
 import { motion } from 'motion/react'
 
@@ -134,13 +135,16 @@ export default function CursuriPage() {
       >
         <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
           {/* Label */}
-          <div
+          <motion.div
             className="flex items-center gap-2 text-xs uppercase tracking-widest mb-8"
             style={{ color: '#b4a35d' }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <span>—</span>
             <span>CURSURI NOMES</span>
-          </div>
+          </motion.div>
 
           {/* Main Title */}
           <motion.h1
@@ -148,7 +152,7 @@ export default function CursuriPage() {
             style={{ color: '#eee5c8' }}
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           >
             Învață de la<br />
             practici.
@@ -160,7 +164,7 @@ export default function CursuriPage() {
             style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           >
             Cursuri construite din experiența reală a echipei NOMES — fără teorie inutilă,
             cu aplicabilitate imediată în business-ul tău.
@@ -173,7 +177,7 @@ export default function CursuriPage() {
                 key={idx}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 + idx * 0.08 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 + idx * 0.12 }}
               >
                 <div
                   className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
@@ -335,6 +339,7 @@ export default function CursuriPage() {
         </div>
       </section>
     </main>
+    <FallingDotIndicator />
     </>
   )
 }
