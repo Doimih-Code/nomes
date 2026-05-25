@@ -13,7 +13,7 @@ const cormorantGaramondItalic = Cormorant_Garamond({
 })
 
 const stats = [
-  { number: '9+', label: 'Ani Experiență' },
+  { number: '15+', label: 'Ani Experiență' },
   { number: '12+', label: 'Clienți Recurenți' },
   { number: '100+', label: 'Proiecte Livrate' },
 ]

@@ -149,7 +149,6 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
           onClick={() => setMenuOpen(!menuOpen)}
           type="button"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           className={`${dmMono.className} flex items-center gap-2 text-xs uppercase tracking-widest`}
           style={{ color: accentColor, fontWeight: 500 }}
@@ -228,7 +227,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
         </div>
       )}
 
-      {needsOffset && <div aria-hidden="true" className="h-[68px] md:h-[72px]" />}
+      {needsOffset && <div aria-hidden="true" className="h-17 md:h-18" />}
     </>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Navigation from '@/components/navigation'
 import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { Cormorant_Garamond } from 'next/font/google'
@@ -14,332 +13,805 @@ const cormorantGaramondItalic = Cormorant_Garamond({
 })
 
 const heroStats = [
-  { number: '3', label: 'Cursuri Disponibile' },
-  { number: '15+', label: 'Săptămâni Conținut' },
-  { number: '100%', label: 'Aplicabilitate Reală' },
+  { number: '15+', label: 'ANI EXPERIENTA' },
+  { number: '8+', label: 'BRANDURI MAJORE' },
+  { number: '100+', label: 'CAMPANII GESTIONATE' },
+  { number: '1ZI', label: 'APLICABIL IMEDIAT' },
 ]
 
-interface Course {
+type SliderOrientation = 'landscape' | 'portrait'
+
+type SliderPlaceholder = {
   id: string
-  number: string
-  priceId: string
+  orientation: SliderOrientation
   title: string
-  category: string
-  description: string
-  duration: string
-  level: string
-  includes: string[]
-  price: string
+  caption: string
 }
 
-const courses: Course[] = [
+type SliderPage = {
+  items: SliderPlaceholder[]
+  caption: string
+}
+
+const sliderPlaceholders: SliderPlaceholder[] = [
   {
-    id: 'ads-fundamentals',
-    number: '01',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CURS_ADS || '',
-    title: 'Ads Fundamentals',
-    category: 'PERFORMANCE ADS',
-    description: 'Fundamente complete pentru rularea campaniilor plătite pe Google, Meta și TikTok. De la structura contului la primele campanii profitabile.',
-    duration: '6 săptămâni',
-    level: 'Începător',
-    includes: [
-      'Acces video pe viață',
-      'Template-uri structuri conturi',
-      'Sesiune Q&A lunară',
-    ],
-    price: process.env.NEXT_PUBLIC_PRICE_CURS_ADS || 'Disponibil în curând',
+    id: 'ph-01',
+    orientation: 'portrait',
+    title: 'Placeholder 1 · Portrait',
+    caption: 'Cadru portrait · studiu de caz',
   },
   {
-    id: 'social-media-mastery',
-    number: '02',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CURS_SMM || '',
-    title: 'Social Media Mastery',
-    category: 'SOCIAL MEDIA',
-    description: 'Strategia completă de Social Media Management: de la auditul conturilor la calendare editoriale, community management și raportare.',
-    duration: '4 săptămâni',
-    level: 'Intermediar',
-    includes: [
-      'Acces video pe viață',
-      'Calendare editoriale gata de folosit',
-      'Checklist-uri lunare',
-    ],
-    price: process.env.NEXT_PUBLIC_PRICE_CURS_SMM || 'Disponibil în curând',
+    id: 'ph-02',
+    orientation: 'portrait',
+    title: 'Placeholder 2 · Portrait',
+    caption: 'Cadru portrait · execuție practică',
   },
   {
-    id: 'brand-strategy',
-    number: '03',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_CURS_BRAND || '',
-    title: 'Brand Strategy Essentials',
-    category: 'BRAND & IDENTITY',
-    description: 'Cum să construiești o identitate de brand coerentă — de la poziționare și voce la identitate vizuală și verbal identity.',
-    duration: '5 săptămâni',
-    level: 'Intermediar',
-    includes: [
-      'Acces video pe viață',
-      'Brand Book template',
-      'Exerciții de poziționare',
-    ],
-    price: process.env.NEXT_PUBLIC_PRICE_CURS_BRAND || 'Disponibil în curând',
+    id: 'ph-03',
+    orientation: 'portrait',
+    title: 'Placeholder 3 · Portrait',
+    caption: 'Cadru portrait · funnel setup',
+  },
+  {
+    id: 'ph-04',
+    orientation: 'portrait',
+    title: 'Placeholder 4 · Portrait',
+    caption: 'Cadru portrait · strategie și conversii',
+  },
+  {
+    id: 'ph-05',
+    orientation: 'landscape',
+    title: 'Placeholder 5 · Landscape',
+    caption: 'Cadru landscape · workshop și exemple reale',
+  },
+  {
+    id: 'ph-06',
+    orientation: 'portrait',
+    title: 'Placeholder 6 · Portrait',
+    caption: 'Cadru portrait · optimizare rapidă',
+  },
+  {
+    id: 'ph-07',
+    orientation: 'portrait',
+    title: 'Placeholder 7 · Portrait',
+    caption: 'Cadru portrait · creativ și hook',
+  },
+  {
+    id: 'ph-08',
+    orientation: 'portrait',
+    title: 'Placeholder 8 · Portrait',
+    caption: 'Cadru portrait · audit reclame',
+  },
+  {
+    id: 'ph-09',
+    orientation: 'portrait',
+    title: 'Placeholder 9 · Portrait',
+    caption: 'Cadru portrait · structură campanie',
+  },
+  {
+    id: 'ph-10',
+    orientation: 'landscape',
+    title: 'Placeholder 10 · Landscape',
+    caption: 'Cadru landscape · aplicabil imediat',
   },
 ]
 
-export default function CursuriPage() {
-  const router = useRouter()
-  const [loadingId, setLoadingId] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
+function buildSliderPages(items: SliderPlaceholder[]): SliderPage[] {
+  const pages: SliderPage[] = []
 
-  const handleBuy = async (course: Course) => {
-    if (!course.priceId) {
-      setError('Cursul nu este disponibil momentan. Te rugăm revino curând.')
-      return
-    }
+  for (let index = 0; index < items.length; index += 1) {
+    const current = items[index]
 
-    setLoadingId(course.id)
-    setError(null)
+    if (current.orientation === 'portrait') {
+      const group: SliderPlaceholder[] = [current]
 
-    try {
-      const response = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          priceId: course.priceId,
-          courseName: course.title,
-        }),
+      while (
+        index + group.length < items.length &&
+        items[index + group.length].orientation === 'portrait' &&
+        group.length < 4
+      ) {
+        group.push(items[index + group.length])
+      }
+
+      pages.push({
+        items: group,
+        caption: group.map((item) => item.caption).join(' · '),
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Eroare necunoscută')
-      }
-
-      if (data.url) {
-        router.push(data.url)
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'A apărut o eroare. Te rugăm încearcă din nou.')
-    } finally {
-      setLoadingId(null)
+      index += group.length - 1
+      continue
     }
+
+    pages.push({
+      items: [current],
+      caption: current.caption,
+    })
+  }
+
+  return pages
+}
+
+const sliderPages = buildSliderPages(sliderPlaceholders)
+
+const expertTags = [
+  'Meta Ads',
+  'Google Ads',
+  'Lead Generation',
+  'E-commerce',
+  'Funnels',
+  'AI & ChatGPT',
+  'WhatsApp',
+  'Content',
+]
+
+const audiencePoints = [
+  'Vrei să înțelegi cum funcționează marketingul digital în realitate',
+  'Ai un business și vrei mai multe lead-uri sau vânzări',
+  'Lucrezi în marketing și simți că "știi teoria", dar nu execuția',
+  'Vrei să începi în digital marketing fără cursuri complicate și generale',
+  'Ai încercat reclame și "nu au mers"',
+  'Vrei să înțelegi cum gândesc campaniile oamenii care fac asta zilnic',
+]
+
+const differentiators = [
+  { icon: '✅', title: 'Ce funcționează', desc: 'Metode testate în business-uri active' },
+  { icon: '❌', title: 'Ce nu funcționează', desc: 'Greșeli reale și cum le eviți' },
+  { icon: '💸', title: 'Unde se pierd bani', desc: 'Capcanele comune în campanii' },
+  { icon: '⚡', title: 'Cum optimizezi rapid', desc: 'Fără să complici tot procesul' },
+]
+
+const formatItems = [
+  { icon: '🏙️', text: 'Workshop live în București' },
+  { icon: '👥', text: 'Grup restrâns' },
+  { icon: '💡', text: 'Exemple reale & sesiuni practice' },
+  { icon: '❓', text: 'Întrebări & răspunsuri' },
+  { icon: '🤝', text: 'Networking' },
+  { icon: '🎁', text: 'Bonus prompts & resurse utile' },
+]
+
+const brands = [
+  'HOLCIM',
+  'AUTOMOBILE BAVARIA',
+  'ENGIE - AJUSTO',
+  'PHYSIO ONE',
+  'PICK2',
+  'STARTCASA',
+  'AVANDOR LABS',
+  'DR. GABRIEL ȘTEFĂNESCU',
+]
+
+const whatYouLearnCards = [
+  {
+    number: '01',
+    title: 'Meta Ads',
+    points: [
+      'Reclame care nu par reclame',
+      'Cum găsești un hook bun',
+      'Creative care opresc scroll-ul',
+      'Greșeli care omoară campaniile',
+    ],
+  },
+  {
+    number: '02',
+    title: 'Lead Generation',
+    points: [
+      'Cum generezi lead-uri mai bune',
+      'Formulare care convertesc',
+      'WhatsApp pentru conversii',
+    ],
+  },
+  {
+    number: '03',
+    title: 'Ofertă & Psihologia vânzării',
+    points: [
+      'De ce performează unele reclame',
+      'Cum construiești o ofertă bună',
+      'Cum influențează mesajul conversia',
+    ],
+  },
+  {
+    number: '04',
+    title: 'AI & ChatGPT',
+    points: [
+      'AI practic în marketing',
+      'Prompts utile pentru reclame & content',
+      'Automatizări care economisesc timp',
+    ],
+  },
+  {
+    number: '05',
+    title: 'Content & Performance',
+    points: [
+      'Conținut care vinde',
+      'Cifrele importante din Ads Manager',
+      'KPI-urile care contează',
+    ],
+  },
+  {
+    number: '06',
+    title: 'Funnel & Conversii',
+    points: [
+      'Funnel simplu și eficient',
+      'Trafic → lead-uri și vânzări',
+      'Greșeli comune și cum le eviți',
+    ],
+  },
+]
+
+function ImageFrame({ ratio, title }: { ratio: string; title: string }) {
+  return (
+    <div
+      className="relative w-full overflow-hidden border"
+      style={{
+        borderColor: 'rgba(180, 163, 93, 0.35)',
+        aspectRatio: ratio,
+        background:
+          'linear-gradient(135deg, rgba(201, 162, 39, 0.13) 0%, rgba(27, 44, 26, 0.06) 45%, rgba(201, 162, 39, 0.08) 100%)',
+      }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, rgba(180, 163, 93, 0.18) 1px, transparent 1px), linear-gradient(to bottom, rgba(180, 163, 93, 0.18) 1px, transparent 1px)',
+          backgroundSize: '36px 36px',
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center text-center px-4">
+        <div>
+          <p
+            className="text-[10px] uppercase tracking-[0.3em] mb-2"
+            style={{ color: 'rgba(27, 44, 26, 0.55)' }}
+          >
+            Placeholder Imagine
+          </p>
+          <p className="text-sm md:text-base font-semibold" style={{ color: '#1b2c1a' }}>
+            {title}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function CursuriPage() {
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % sliderPages.length)
+    }, 4500)
+
+    return () => window.clearInterval(id)
+  }, [])
+
+  const goPrev = () => {
+    setActiveSlide((prev) => (prev - 1 + sliderPages.length) % sliderPages.length)
+  }
+
+  const goNext = () => {
+    setActiveSlide((prev) => (prev + 1) % sliderPages.length)
   }
 
   return (
     <>
-    <main style={{ backgroundColor: '#eee5c8' }}>
-      <Navigation activePage="Cursuri" variant="dark" noOffset />
+      <main style={{ backgroundColor: '#eee5c8' }}>
+        <Navigation activePage="Cursuri" variant="dark" noOffset />
 
-      {/* Hero Section */}
-      <section
-        className="w-full min-h-screen px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
-        style={{ backgroundColor: '#1b2c1a' }}
-      >
-        <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
-          {/* Label */}
-          <motion.div
-            className="flex items-center gap-2 text-xs uppercase tracking-widest mb-8"
-            style={{ color: '#b4a35d' }}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span>—</span>
-            <span>CURSURI NOMES</span>
-          </motion.div>
-
-          {/* Main Title */}
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8"
-            style={{ color: '#eee5c8' }}
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          >
-            Învață de la<br />
-            practici.
-          </motion.h1>
-
-          {/* Description */}
-          <motion.p
-            className={`${cormorantGaramondItalic.className} text-lg md:text-xl max-w-2xl mb-10 md:mb-12`}
-            style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          >
-            Cursuri construite din experiența reală a echipei NOMES — fără teorie inutilă,
-            cu aplicabilitate imediată în business-ul tău.
-          </motion.p>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 md:gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
-            {heroStats.map((stat, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 + idx * 0.12 }}
-              >
-                <div
-                  className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
-                  style={{ color: '#eee5c8' }}
-                >
-                  {stat.number}
-                </div>
-                <div
-                  className="text-[10px] sm:text-xs uppercase tracking-[0.18em] md:tracking-widest leading-tight pr-2"
-                  style={{ color: '#b4a35d' }}
-                >
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Error Banner */}
-      {error && (
-        <div
-          className="w-full px-6 md:px-12 py-4"
-          style={{ backgroundColor: '#f5e6e6' }}
+        <section
+          className="w-full min-h-screen px-6 md:px-12 pt-26 md:pt-30 pb-12 md:pb-16"
+          style={{ backgroundColor: '#1b2c1a' }}
         >
-          <div className="max-w-6xl mx-auto">
-            <p className="text-sm" style={{ color: '#8b2020' }}>{error}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Courses List */}
-      <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee5c8' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col divide-y" style={{ borderColor: 'rgba(27, 44, 26, 0.12)' }}>
-            {courses.map((course, index) => (
-              <motion.div
-                key={course.id}
-                className="grid grid-cols-1 md:grid-cols-[80px_1fr_auto] gap-6 md:gap-12 py-12 md:py-16 items-start"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
+          <div className="max-w-6xl mx-auto min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-210px)] flex flex-col justify-center">
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div
+                className="inline-flex items-center gap-2 border px-4 py-2 text-[10px] uppercase tracking-[0.2em]"
+                style={{ color: '#b4a35d', borderColor: 'rgba(180, 163, 93, 0.7)' }}
               >
-                {/* Number */}
-                <span
-                  className="text-xs uppercase tracking-[0.35em] pt-1"
-                  style={{ color: '#b4a35d' }}
+                <span className="inline-block h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: '#b4a35d' }} />
+                <span>WORKSHOP FIZIC · BUCUREȘTI · LOCURI LIMITATE</span>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8"
+              style={{ color: '#eee5c8' }}
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            >
+              Marketing
+              <br />
+              digital
+              <br />
+              <span style={{ color: '#c9a227' }}>aplicat.</span>
+            </motion.h1>
+
+            <motion.p
+              className={`${cormorantGaramondItalic.className} text-2xl md:text-3xl max-w-2xl mb-6 md:mb-8 italic tracking-wide`}
+              style={{ color: '#bfbea2', fontWeight: 300, fontStyle: 'italic' }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            >
+              Fără teorie inutilă. Fără cursuri "de pe YouTube".
+            </motion.p>
+
+            <motion.p
+              className="max-w-2xl mb-10 md:mb-12"
+              style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(237, 234, 219, 0.55)' }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+            >
+              Un workshop construit din campanii reale, bugete reale și <strong style={{ color: '#edeadb', fontWeight: 700 }}>15+ ani</strong> de experiență practică în marketing digital și online sales. Campanii pe care le poți aplica <strong style={{ color: '#edeadb', fontWeight: 700 }}>chiar de a doua zi.</strong>
+            </motion.p>
+
+            <motion.div
+              className="mb-10 md:mb-12 flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+            >
+              <motion.button
+                type="button"
+                className="h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold"
+                style={{ backgroundColor: '#c9a227', color: '#111' }}
+                whileHover={{ y: -2, scale: 1.01 }}
+                whileTap={{ y: 0, scale: 0.98 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                → REZERVĂ LOCUL ACUM
+              </motion.button>
+              <motion.button
+                type="button"
+                className="h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold border"
+                style={{ borderColor: 'rgba(237, 234, 219, 0.25)', color: '#edeadb', backgroundColor: 'transparent' }}
+                whileHover={{ y: -2, scale: 1.01, borderColor: 'rgba(237, 234, 219, 0.45)' }}
+                whileTap={{ y: 0, scale: 0.98 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                DESPRE CURS
+              </motion.button>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
+              {heroStats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.45 + idx * 0.12 }}
                 >
-                  {course.number}
-                </span>
+                  <div
+                    className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2"
+                    style={{ color: '#c9a227' }}
+                  >
+                    {stat.number}
+                  </div>
+                  <div
+                    className="text-[10px] sm:text-xs uppercase tracking-[0.18em] md:tracking-widest leading-tight pr-2"
+                    style={{ color: 'rgba(237, 234, 219, 0.5)' }}
+                  >
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                {/* Content */}
-                <div>
-                  <p
-                    className="text-[10px] uppercase tracking-[0.45em] mb-3"
-                    style={{ color: '#b4a35d' }}
+        <section className="w-full py-8 md:py-10" style={{ backgroundColor: '#122612' }}>
+          <div className="w-full">
+            <div className="relative overflow-hidden border" style={{ borderColor: 'rgba(180, 163, 93, 0.26)' }}>
+              <div className="relative h-[44vw] min-h-[220px] max-h-[520px] md:min-h-[300px]">
+                {sliderPages.map((page, index) => (
+                  <div
+                    key={`slider-page-${index}`}
+                    className="absolute inset-0 transition-opacity duration-700"
+                    style={{ opacity: activeSlide === index ? 1 : 0 }}
                   >
-                    {course.category}
-                  </p>
-                  <h2
-                    className="text-3xl md:text-4xl font-bold mb-4"
-                    style={{ color: '#1b2c1a' }}
-                  >
-                    {course.title}
-                  </h2>
-                  <p
-                    className="text-base leading-relaxed mb-6 max-w-xl"
-                    style={{ color: 'rgba(27, 44, 26, 0.65)' }}
-                  >
-                    {course.description}
-                  </p>
-
-                  {/* Meta */}
-                  <div className="flex flex-wrap gap-6 mb-6">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.35em] mb-1" style={{ color: '#b4a35d' }}>Durată</p>
-                      <p className="text-sm font-medium" style={{ color: '#1b2c1a' }}>{course.duration}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.35em] mb-1" style={{ color: '#b4a35d' }}>Nivel</p>
-                      <p className="text-sm font-medium" style={{ color: '#1b2c1a' }}>{course.level}</p>
+                    <div
+                      className={`h-full ${
+                        page.items.length === 4
+                          ? 'grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 p-3 md:p-5'
+                          : page.items.length === 3
+                            ? 'grid grid-cols-3 gap-3 md:gap-4 p-3 md:p-5'
+                          : page.items.length === 2
+                            ? 'grid grid-cols-2 gap-4 md:gap-6 p-4 md:p-6'
+                            : 'p-3 md:p-5'
+                      }`}
+                    >
+                      {page.items.map((item) => (
+                        <div
+                          key={item.id}
+                          className="relative h-full overflow-hidden border"
+                          style={{
+                            borderColor: 'rgba(180, 163, 93, 0.35)',
+                            background:
+                              'linear-gradient(135deg, rgba(201, 162, 39, 0.13) 0%, rgba(27, 44, 26, 0.06) 45%, rgba(201, 162, 39, 0.08) 100%)',
+                          }}
+                        >
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              backgroundImage:
+                                'linear-gradient(to right, rgba(180, 163, 93, 0.18) 1px, transparent 1px), linear-gradient(to bottom, rgba(180, 163, 93, 0.18) 1px, transparent 1px)',
+                              backgroundSize: '36px 36px',
+                            }}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-center px-4">
+                            <div>
+                              <p
+                                className="text-[10px] uppercase tracking-[0.3em] mb-2"
+                                style={{ color: 'rgba(27, 44, 26, 0.55)' }}
+                              >
+                                Placeholder Imagine
+                              </p>
+                              <p className="text-sm md:text-base font-semibold" style={{ color: '#1b2c1a' }}>
+                                {item.title}
+                              </p>
+                              <p className="mt-2 text-[11px] uppercase tracking-[0.2em]" style={{ color: 'rgba(27, 44, 26, 0.48)' }}>
+                                {item.orientation === 'portrait' ? 'Portrait' : 'Landscape'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                ))}
 
-                  {/* Includes */}
-                  <ul className="flex flex-col gap-1.5">
-                    {course.includes.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-center gap-2 text-sm"
-                        style={{ color: 'rgba(27, 44, 26, 0.7)' }}
-                      >
-                        <span
-                          className="w-1 h-1 rounded-full shrink-0"
-                          style={{ backgroundColor: '#b4a35d' }}
-                        />
-                        {item}
+                <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.52), rgba(0,0,0,0))' }} />
+
+                <button
+                  type="button"
+                  aria-label="Slide anterior"
+                  onClick={goPrev}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 rounded-full border text-lg"
+                  style={{
+                    backgroundColor: 'rgba(27, 44, 26, 0.62)',
+                    borderColor: 'rgba(237, 234, 219, 0.2)',
+                    color: '#edeadb',
+                  }}
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  aria-label="Slide următor"
+                  onClick={goNext}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 rounded-full border text-lg"
+                  style={{
+                    backgroundColor: 'rgba(27, 44, 26, 0.62)',
+                    borderColor: 'rgba(237, 234, 219, 0.2)',
+                    color: '#edeadb',
+                  }}
+                >
+                  ›
+                </button>
+
+                <p
+                  className={`${cormorantGaramondItalic.className} absolute left-6 bottom-5 text-base md:text-xl italic`}
+                  style={{ color: 'rgba(237, 234, 219, 0.92)' }}
+                >
+                  {sliderPages[activeSlide].caption}
+                </p>
+
+                <div className="absolute bottom-6 right-6 flex items-center gap-2">
+                  {sliderPages.map((_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      aria-label={`Mergi la slide ${index + 1}`}
+                      onClick={() => setActiveSlide(index)}
+                      className="h-2.5 rounded-full transition-all"
+                      style={{
+                        width: activeSlide === index ? '22px' : '8px',
+                        backgroundColor: activeSlide === index ? '#c9a227' : 'rgba(237, 234, 219, 0.35)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee9d9' }}>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 md:gap-14 items-start">
+            <div className="relative mb-12 lg:mb-0">
+              <ImageFrame ratio="4 / 5" title="Cadru imagine · Despre mine" />
+
+              <div
+                className="absolute right-2 -bottom-8 md:right-4 md:-bottom-10 lg:-right-5 lg:-bottom-5 w-[360px] md:w-[390px] p-6 rounded-none"
+                style={{ backgroundColor: '#173620', transform: 'scale(0.6)', transformOrigin: 'bottom right' }}
+              >
+                <p
+                  className={`${cormorantGaramondItalic.className} text-[26px] leading-[1.34] italic`}
+                  style={{ color: '#f3eedf', fontWeight: 500 }}
+                >
+                  "Digitalul nu vinde. Oferta vinde.
+                  <br />
+                  Digitalul doar o multiplică."
+                </p>
+
+                <p
+                  className="mt-4 text-[12px] uppercase tracking-[0.18em]"
+                  style={{ color: 'rgba(180, 163, 93, 0.85)' }}
+                >
+                  — Mihai Iorgulescu
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+                — DESPRE MINE
+              </p>
+              <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-7" style={{ color: '#1b2c1a' }}>
+                Salut, sunt
+                <br />
+                Mihai
+                <br />
+                Iorgulescu.
+              </h2>
+              <p className="text-lg leading-9 mb-6" style={{ color: 'rgba(27, 44, 26, 0.56)' }}>
+                Lucrez de peste 15 ani în marketing digital și online sales, construind și scalând campanii pentru business-uri reale — de la e-commerce și lead generation până la campanii pentru companii mari, clinici, retail și servicii.
+              </p>
+              <p className="text-lg leading-9 mb-7" style={{ color: 'rgba(27, 44, 26, 0.56)' }}>
+                În ultimii ani am lucrat intensiv pe Meta Ads, Google Ads, lead generation, e-commerce, funnels, WhatsApp conversion, content performance și AI aplicat în marketing și vânzări.
+              </p>
+
+              <div className="flex flex-wrap gap-3 mb-8">
+                {expertTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-4 py-2 rounded-full border text-sm"
+                    style={{ borderColor: 'rgba(27, 44, 26, 0.2)', color: 'rgba(27, 44, 26, 0.65)' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="w-full px-6 md:px-12 py-16 md:py-24"
+          style={{ background: 'linear-gradient(90deg, #173620 0%, #112913 100%)' }}
+        >
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 md:gap-14 items-start">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+                — PENTRU CINE ESTE CURSUL
+              </p>
+              <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-7" style={{ color: '#eee5c8' }}>
+                Cursul este
+                <br />
+                pentru tine dacă:
+              </h2>
+
+              <ul className="space-y-4 mb-8">
+                {audiencePoints.map((point) => (
+                  <li key={point} className="flex items-start gap-3" style={{ color: 'rgba(237, 234, 219, 0.86)' }}>
+                    <span className="mt-1 text-sm" style={{ color: '#c9a227' }}>✓</span>
+                    <span className="text-[12px] leading-5">{point}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="px-6 py-7 border" style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderColor: 'rgba(180, 163, 93, 0.2)' }}>
+                <p className="text-[16px] leading-7" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
+                  Nu contează dacă ești <strong style={{ color: '#eee5c8' }}>antreprenor, freelancer, angajat, creator</strong> sau la început de drum. Vei pleca cu lucruri pe care le poți aplica imediat.
+                </p>
+              </div>
+            </div>
+
+            <ImageFrame ratio="4 / 5" title="Cadru imagine · Pentru cine este cursul" />
+          </div>
+        </section>
+
+        <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#d8d5c7' }}>
+          <div className="max-w-7xl mx-auto">
+            <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+              — CE VEI ÎNVĂȚA
+            </p>
+            <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-12" style={{ color: '#173620' }}>
+              Ce vei putea aplica
+              <br />
+              imediat după <span style={{ color: '#de5959' }}>workshop.</span>
+            </h2>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
+              {whatYouLearnCards.map((card) => (
+                <div key={card.number} className="p-7 md:p-8 border" style={{ backgroundColor: '#f1f1f1', borderColor: 'rgba(23, 54, 32, 0.08)' }}>
+                  <p className="text-sm font-semibold tracking-[0.2em] mb-2" style={{ color: '#c9a227' }}>
+                    {card.number}
+                  </p>
+                  <h3 className="text-[15px] font-bold leading-tight mb-6" style={{ color: '#132b1a' }}>
+                    {card.title}
+                  </h3>
+                  <ul className="space-y-3">
+                    {card.points.map((point) => (
+                      <li key={point} className="flex items-start gap-3">
+                        <span className="mt-[2px] text-[10px]" style={{ color: '#de5959' }}>•</span>
+                        <span className="text-[13px] leading-6" style={{ color: 'rgba(19, 43, 26, 0.42)' }}>
+                          {point}
+                        </span>
                       </li>
                     ))}
                   </ul>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                {/* Price + CTA */}
-                <div className="flex flex-col items-start md:items-end gap-4 pt-1">
-                  <p
-                    className="text-2xl md:text-3xl font-bold"
-                    style={{ color: '#1b2c1a' }}
-                  >
-                    {course.price}
+        <section
+          className="w-full px-6 md:px-12 py-16 md:py-24"
+          style={{ background: 'linear-gradient(90deg, #173620 0%, #112913 100%)' }}
+        >
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 md:gap-14 items-center">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+                CUM ESTE DIFERIT
+              </p>
+              <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-6" style={{ color: '#eee5c8' }}>
+                Nu este un curs
+                <br />
+                <span style={{ color: '#c9a227' }}>&quot;academic&quot;.</span>
+              </h2>
+              <p className="text-[15px] leading-9 mb-4" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>
+                Nu vei sta 6 ore într-un PowerPoint cu definiții. Vom lucra pe exemple reale, reclame reale, campanii active, funnel-uri din business-uri reale.
+              </p>
+              <p className="text-[15px] leading-9 mb-8" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>
+                Totul explicat simplu, direct și aplicat.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {differentiators.map((item) => (
+                  <div key={item.title} className="border p-6" style={{ borderColor: 'rgba(180, 163, 93, 0.16)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                    <p className="text-2xl mb-3">{item.icon}</p>
+                    <p className="text-2xl md:text-[31px] font-semibold mb-2" style={{ color: '#eee5c8' }}>{item.title}</p>
+                    <p className="text-2xl md:text-[31px]" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <ImageFrame ratio="4 / 5" title="Cadru imagine · Nu este un curs academic" />
+          </div>
+        </section>
+
+        <section
+          className="w-full px-6 md:px-12 py-16 md:py-24 border-t"
+          style={{ background: 'linear-gradient(90deg, #173620 0%, #112913 100%)', borderColor: 'rgba(180, 163, 93, 0.2)' }}
+        >
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+              FORMAT CURS
+            </p>
+            <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-4" style={{ color: '#eee5c8' }}>
+              Workshop fizic.
+              <br />
+              Aplicat. Interactiv.
+            </h2>
+            <p className="text-lg leading-9 mb-10" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>
+              Workshop live în București · Grup restrâns · Rezultate imediat aplicabile
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-5">
+              {formatItems.map((item) => (
+                <div key={item.text} className="border p-6 md:p-7" style={{ borderColor: 'rgba(180, 163, 93, 0.2)' }}>
+                  <p className="text-3xl mb-3">{item.icon}</p>
+                  <p className="text-base md:text-lg leading-7" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
+                    {item.text}
                   </p>
-                  <button
-                    onClick={() => handleBuy(course)}
-                    disabled={loadingId === course.id || !course.priceId}
-                    className="relative px-7 py-3 text-sm uppercase tracking-[0.25em] font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{
-                      backgroundColor: loadingId === course.id ? 'rgba(27, 44, 26, 0.7)' : '#1b2c1a',
-                      color: '#eee5c8',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (loadingId !== course.id) {
-                        e.currentTarget.style.backgroundColor = '#2d4a2c'
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (loadingId !== course.id) {
-                        e.currentTarget.style.backgroundColor = '#1b2c1a'
-                      }
-                    }}
-                  >
-                    {loadingId === course.id ? 'Se procesează...' : 'Cumpără'}
-                  </button>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+              ))}
+            </div>
 
-      {/* FAQ / Note */}
-      <section
-        className="w-full px-6 md:px-12 py-16 md:py-20 border-t"
-        style={{ backgroundColor: '#eee5c8', borderColor: 'rgba(27, 44, 26, 0.12)' }}
-      >
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.45em] mb-4" style={{ color: '#b4a35d' }}>Plată</p>
-            <h3 className="text-xl font-bold mb-3" style={{ color: '#1b2c1a' }}>Plată securizată prin Stripe</h3>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(27, 44, 26, 0.65)' }}>
-              Toate tranzacțiile sunt procesate securizat prin Stripe. Acceptăm carduri Visa, Mastercard și American Express.
+            <p className="mt-10 text-2xl md:text-4xl" style={{ color: 'rgba(237, 234, 219, 0.7)' }}>
+              Durată: <strong style={{ color: '#eee5c8' }}>Half-day intensive workshop</strong>
             </p>
           </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.45em] mb-4" style={{ color: '#b4a35d' }}>Acces</p>
-            <h3 className="text-xl font-bold mb-3" style={{ color: '#1b2c1a' }}>Acces imediat după plată</h3>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(27, 44, 26, 0.65)' }}>
-              Imediat după confirmare primești pe email linkul de acces la materiale. Accesul este pe viață — inclusiv actualizările viitoare.
+        </section>
+
+        <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#eee9d9' }}>
+          <div className="max-w-6xl mx-auto">
+            <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+              EXPERIENȚĂ PRACTICĂ
             </p>
+            <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-6" style={{ color: '#1b2c1a' }}>
+              Experiență construită
+              <br />
+              în campanii reale.
+            </h2>
+            <p className="text-lg leading-9 max-w-3xl mb-8" style={{ color: 'rgba(27, 44, 26, 0.56)' }}>
+              15+ ani de proiecte de marketing digital, lead generation și online sales pentru companii din multiple industrii.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-8">
+              {brands.map((brand) => (
+                <span
+                  key={brand}
+                  className="px-4 py-2 text-sm font-semibold border"
+                  style={{ borderColor: 'rgba(27, 44, 26, 0.14)', color: '#1b2c1a', backgroundColor: '#f8f6ee' }}
+                >
+                  {brand}
+                </span>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <ImageFrame ratio="4 / 5" title="Cadru galerie · Proiect 1" />
+              <ImageFrame ratio="4 / 5" title="Cadru galerie · Proiect 2" />
+              <ImageFrame ratio="4 / 5" title="Cadru galerie · Proiect 3" />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
-    <FallingDotIndicator />
+        </section>
+
+        <section
+          className="w-full px-6 md:px-12 py-16 md:py-20 border-t"
+          style={{ backgroundColor: '#070c12', borderColor: 'rgba(180, 163, 93, 0.24)' }}
+        >
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 md:gap-14 items-center">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+                URMĂTORUL WORKSHOP
+              </p>
+              <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-5" style={{ color: '#eee5c8' }}>
+                Înțelege. Aplică.
+                <br />
+                <span style={{ color: '#c9a227' }}>Obține rezultate.</span>
+              </h2>
+              <p className="text-lg leading-9 mb-8" style={{ color: 'rgba(237, 234, 219, 0.65)' }}>
+                Locurile sunt limitate. Workshop fizic, București, grup restrâns pentru calitatea interacțiunii.
+              </p>
+
+              <button
+                type="button"
+                className="h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold"
+                style={{ backgroundColor: '#c9a227', color: '#111' }}
+              >
+                → REZERVĂ LOCUL ACUM
+              </button>
+            </div>
+
+            <div className="border p-8 md:p-10" style={{ borderColor: 'rgba(180, 163, 93, 0.25)', background: 'linear-gradient(90deg, #18361f 0%, #1f4628 100%)' }}>
+              <div className="inline-flex items-center px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.2em] mb-6 border" style={{ borderColor: 'rgba(201, 162, 39, 0.5)', color: '#c9a227' }}>
+                ⚡ LOCURI LIMITATE
+              </div>
+              <h3 className="text-4xl md:text-5xl font-bold leading-tight mb-4" style={{ color: '#eee5c8' }}>
+                Marketing Digital
+                <br />
+                Aplicat
+              </h3>
+              <p className="mb-6" style={{ color: 'rgba(237, 234, 219, 0.66)' }}>
+                📍 București · Workshop fizic
+              </p>
+              <button
+                type="button"
+                className="w-full h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold mb-5"
+                style={{ backgroundColor: '#c9a227', color: '#111' }}
+              >
+                REZERVĂ LOCUL ACUM →
+              </button>
+              <p className="text-sm text-center" style={{ color: 'rgba(237, 234, 219, 0.55)' }}>
+                Vreau mai multe detalii înainte
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <FallingDotIndicator />
     </>
   )
 }
