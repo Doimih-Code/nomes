@@ -196,7 +196,6 @@ docker run --rm -p 3000:3000 --env-file .env.local nomes-v0
 - `lib/` - utilitare server-side (email, Stripe, reCAPTCHA, rate limit)
 - `public/` - asset-uri statice
 - `styles/` - stiluri globale suplimentare
-- `dash-mode/` - aplicatie separata, exclusa din `tsconfig` principal
 
 ## Troubleshooting rapid
 
