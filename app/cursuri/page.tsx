@@ -275,6 +275,13 @@ function ImageFrame({ ratio, title }: { ratio: string; title: string }) {
 
 export default function CursuriPage() {
   const [activeSlide, setActiveSlide] = useState(0)
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
+  const [checkoutModalMessage, setCheckoutModalMessage] = useState('Procesez...')
+
+  const courseKey = 'marketing-digital-aplicat-workshop'
+  const isCheckoutTestMode = process.env.NEXT_PUBLIC_STRIPE_CHECKOUT_TEST_MODE === 'true'
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -290,6 +297,56 @@ export default function CursuriPage() {
 
   const goNext = () => {
     setActiveSlide((prev) => (prev + 1) % sliderPages.length)
+  }
+
+  const startCheckout = async () => {
+    if (isCheckoutLoading) {
+      return
+    }
+
+    setCheckoutError(null)
+    setIsCheckoutLoading(true)
+    setIsCheckoutModalOpen(true)
+    setCheckoutModalMessage('Procesez...')
+
+    if (isCheckoutTestMode) {
+      window.setTimeout(() => {
+        setCheckoutModalMessage('Acesta este un flux de test. Nicio plata nu a fost procesata.')
+        setIsCheckoutLoading(false)
+      }, 1600)
+      return
+    }
+
+    try {
+      const idempotencyKey =
+        typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-idempotency-key': idempotencyKey,
+        },
+        body: JSON.stringify({
+          courseKey,
+        }),
+      })
+
+      const data = await response.json().catch(() => null)
+
+      if (!response.ok || !data?.url) {
+        throw new Error(data?.error || 'Nu am putut inițializa plata.')
+      }
+
+      window.location.assign(data.url)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'A apărut o eroare neașteptată.'
+      setCheckoutError(message)
+      setCheckoutModalMessage('Nu am putut porni checkout-ul. Te rugam sa incerci din nou.')
+      setIsCheckoutLoading(false)
+    }
   }
 
   return (
@@ -361,11 +418,13 @@ export default function CursuriPage() {
                 type="button"
                 className="h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold"
                 style={{ backgroundColor: '#c9a227', color: '#111' }}
+                onClick={startCheckout}
+                disabled={isCheckoutLoading}
                 whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ y: 0, scale: 0.98 }}
                 transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               >
-                → REZERVĂ LOCUL ACUM
+                {isCheckoutLoading ? 'SE PROCESEAZĂ...' : '→ REZERVĂ LOCUL ACUM'}
               </motion.button>
               <motion.button
                 type="button"
@@ -378,6 +437,12 @@ export default function CursuriPage() {
                 DESPRE CURS
               </motion.button>
             </motion.div>
+
+            {checkoutError && (
+              <p className="mb-8 text-sm" style={{ color: '#de5959' }}>
+                {checkoutError}
+              </p>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 border-t pt-8 md:pt-10" style={{ borderColor: 'rgba(180, 163, 93, 0.3)' }}>
               {heroStats.map((stat, idx) => (
@@ -405,10 +470,10 @@ export default function CursuriPage() {
           </div>
         </section>
 
-        <section className="w-full py-8 md:py-10" style={{ backgroundColor: '#122612' }}>
+        <section className="w-full pt-19.25 pb-19.25 md:pt-21.25 md:pb-21.25" style={{ backgroundColor: '#122612' }}>
           <div className="w-full">
             <div className="relative overflow-hidden border" style={{ borderColor: 'rgba(180, 163, 93, 0.26)' }}>
-              <div className="relative h-[44vw] min-h-[220px] max-h-[520px] md:min-h-[300px]">
+              <div className="relative h-[44vw] min-h-55 max-h-130 md:min-h-75">
                 {sliderPages.map((page, index) => (
                   <div
                     key={`slider-page-${index}`}
@@ -529,7 +594,7 @@ export default function CursuriPage() {
               <ImageFrame ratio="4 / 5" title="Cadru imagine · Despre mine" />
 
               <div
-                className="absolute right-2 -bottom-8 md:right-4 md:-bottom-10 lg:-right-5 lg:-bottom-5 w-[360px] md:w-[390px] p-6 rounded-none"
+                className="absolute right-2 -bottom-8 md:right-4 md:-bottom-10 lg:-right-5 lg:-bottom-5 w-90 md:w-97.5 p-6 rounded-none"
                 style={{ backgroundColor: '#173620', transform: 'scale(0.6)', transformOrigin: 'bottom right' }}
               >
                 <p
@@ -641,7 +706,7 @@ export default function CursuriPage() {
                   <ul className="space-y-3">
                     {card.points.map((point) => (
                       <li key={point} className="flex items-start gap-3">
-                        <span className="mt-[2px] text-[10px]" style={{ color: '#de5959' }}>•</span>
+                        <span className="mt-0.5 text-[10px]" style={{ color: '#de5959' }}>•</span>
                         <span className="text-[13px] leading-6" style={{ color: 'rgba(19, 43, 26, 0.42)' }}>
                           {point}
                         </span>
@@ -780,8 +845,10 @@ export default function CursuriPage() {
                 type="button"
                 className="h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold"
                 style={{ backgroundColor: '#c9a227', color: '#111' }}
+                onClick={startCheckout}
+                disabled={isCheckoutLoading}
               >
-                → REZERVĂ LOCUL ACUM
+                {isCheckoutLoading ? 'SE PROCESEAZĂ...' : '→ REZERVĂ LOCUL ACUM'}
               </button>
             </div>
 
@@ -801,8 +868,10 @@ export default function CursuriPage() {
                 type="button"
                 className="w-full h-12 px-7 text-sm md:text-[15px] tracking-[0.08em] uppercase font-bold mb-5"
                 style={{ backgroundColor: '#c9a227', color: '#111' }}
+                onClick={startCheckout}
+                disabled={isCheckoutLoading}
               >
-                REZERVĂ LOCUL ACUM →
+                {isCheckoutLoading ? 'SE PROCESEAZĂ...' : 'REZERVĂ LOCUL ACUM →'}
               </button>
               <p className="text-sm text-center" style={{ color: 'rgba(237, 234, 219, 0.55)' }}>
                 Vreau mai multe detalii înainte
@@ -811,6 +880,32 @@ export default function CursuriPage() {
           </div>
         </section>
       </main>
+      {isCheckoutModalOpen && (
+        <div className="fixed inset-0 z-120 flex items-center justify-center px-6" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+          <div className="w-full max-w-md border p-7 md:p-8" style={{ backgroundColor: '#102414', borderColor: 'rgba(180, 163, 93, 0.35)' }}>
+            <p className="text-[11px] uppercase tracking-[0.22em] mb-3" style={{ color: 'rgba(180, 163, 93, 0.8)' }}>
+              Checkout curs
+            </p>
+            <h3 className="text-2xl md:text-3xl font-bold leading-tight mb-4" style={{ color: '#eee5c8' }}>
+              {checkoutModalMessage}
+            </h3>
+            <p className="text-sm leading-6" style={{ color: 'rgba(237, 234, 219, 0.7)' }}>
+              {isCheckoutLoading ? 'Te rugam sa astepti cateva secunde.' : 'Poti inchide aceasta fereastra.'}
+            </p>
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                className="h-11 px-6 text-sm uppercase tracking-[0.12em] font-bold"
+                style={{ backgroundColor: '#c9a227', color: '#111', opacity: isCheckoutLoading ? 0.6 : 1 }}
+                disabled={isCheckoutLoading}
+                onClick={() => setIsCheckoutModalOpen(false)}
+              >
+                Inchide
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <FallingDotIndicator />
     </>
   )

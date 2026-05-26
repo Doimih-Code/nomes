@@ -16,7 +16,7 @@ export default function CheckoutAnulatPage() {
     <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#1b2c1a' }}>
       <Navigation variant="transparent" />
 
-      <div className="flex-1 flex items-center justify-center px-6 md:px-12 pt-[104px] md:pt-[120px] pb-16">
+      <div className="flex-1 flex items-center justify-center px-6 md:px-12 pt-26 md:pt-30 pb-16">
         <div className="max-w-xl w-full text-center">
           {loaded && (
             <motion.div

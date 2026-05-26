@@ -6,9 +6,54 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendContactEmail, ContactFormData } from '@/lib/email-service'
 import { verifyRecaptcha } from '@/lib/recaptcha-config'
+import { checkRateLimit } from '@/lib/server-rate-limit'
+import { validateServerEnv } from '@/lib/env-validation'
+
+const CONTACT_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
+const CONTACT_RATE_LIMIT_MAX_REQUESTS = 5
+
+function getClientIp(request: NextRequest): string {
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(',')[0]?.trim()
+    if (firstIp) {
+      return firstIp
+    }
+  }
+
+  const realIp = request.headers.get('x-real-ip')
+  return realIp?.trim() || 'unknown'
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const requireRecaptcha =
+      process.env.NODE_ENV === 'production' || Boolean(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
+
+    validateServerEnv({
+      requireEmail: true,
+      requireRecaptcha,
+    })
+
+    const clientIp = getClientIp(request)
+    const rateLimitResult = checkRateLimit({
+      key: `contact:${clientIp}`,
+      windowMs: CONTACT_RATE_LIMIT_WINDOW_MS,
+      maxRequests: CONTACT_RATE_LIMIT_MAX_REQUESTS,
+    })
+
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: 'Prea multe trimiteri. Încearcă din nou mai târziu.' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': Math.max(1, Math.ceil((rateLimitResult.resetAt - Date.now()) / 1000)).toString(),
+          },
+        }
+      )
+    }
+
     const body = await request.json()
 
     // Validare date
@@ -22,6 +67,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify reCAPTCHA token
+    if (requireRecaptcha && !recaptchaToken) {
+      return NextResponse.json(
+        { error: 'Token reCAPTCHA lipsă' },
+        { status: 400 }
+      )
+    }
+
     if (recaptchaToken) {
       const recaptchaResult = await verifyRecaptcha(recaptchaToken)
       if (!recaptchaResult.success) {

@@ -10,16 +10,48 @@ function CheckoutSuccesContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [loaded, setLoaded] = useState(false)
+  const [isVerifying, setIsVerifying] = useState(true)
+  const [isVerified, setIsVerified] = useState(false)
+  const [courseName, setCourseName] = useState<string | null>(null)
+  const [accessUrl, setAccessUrl] = useState<string | null>(null)
 
   useEffect(() => {
     setLoaded(true)
   }, [])
 
+  useEffect(() => {
+    const verifySession = async () => {
+      if (!sessionId) {
+        setIsVerified(false)
+        setIsVerifying(false)
+        return
+      }
+
+      try {
+        const response = await fetch(`/api/stripe/checkout/verify-session?session_id=${encodeURIComponent(sessionId)}`)
+        const data = await response.json().catch(() => null)
+
+        setIsVerified(Boolean(response.ok && data?.verified))
+        setCourseName(typeof data?.courseName === 'string' ? data.courseName : null)
+        setAccessUrl(typeof data?.accessUrl === 'string' ? data.accessUrl : null)
+      } catch {
+        setIsVerified(false)
+        setAccessUrl(null)
+      } finally {
+        setIsVerifying(false)
+      }
+    }
+
+    verifySession()
+  }, [sessionId])
+
+  const maskedSessionId = sessionId ? `${sessionId.slice(0, 10)}...${sessionId.slice(-6)}` : null
+
   return (
     <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#1b2c1a' }}>
       <Navigation variant="transparent" />
 
-      <div className="flex-1 flex items-center justify-center px-6 md:px-12 pt-[104px] md:pt-[120px] pb-16">
+      <div className="flex-1 flex items-center justify-center px-6 md:px-12 pt-26 md:pt-30 pb-16">
         <div className="max-w-xl w-full text-center">
           {loaded && (
             <motion.div
@@ -51,35 +83,58 @@ function CheckoutSuccesContent() {
               <div>
                 <p
                   className="text-xs uppercase tracking-[0.45em] mb-4"
-                  style={{ color: 'rgba(180, 163, 93, 0.7)' }}
+                  style={{ color: isVerified ? 'rgba(180, 163, 93, 0.7)' : 'rgba(222, 89, 89, 0.75)' }}
                 >
-                  Plată confirmată
+                  {isVerifying ? 'Verificăm plata...' : isVerified ? 'Plată confirmată' : 'Plată neverificată'}
                 </p>
                 <h1
                   className="text-4xl md:text-5xl font-bold leading-[1.1] mb-4"
                   style={{ color: '#eee5c8' }}
                 >
-                  Mulțumim pentru
-                  <br />
-                  achiziție!
+                  {isVerified ? (
+                    <>
+                      Mulțumim pentru
+                      <br />
+                      achiziție!
+                    </>
+                  ) : (
+                    <>
+                      Nu am putut
+                      <br />
+                      confirma plata.
+                    </>
+                  )}
                 </h1>
                 <p
                   className="text-base leading-relaxed"
                   style={{ color: 'rgba(238, 229, 200, 0.6)' }}
                 >
-                  Plata a fost procesată cu succes. Vei primi pe email un link de acces la materiale în câteva minute.
+                  {isVerified
+                    ? `Plata a fost procesată cu succes${courseName ? ` pentru ${courseName}` : ''}. Vei primi pe email un link de acces la materiale în câteva minute.`
+                    : 'Dacă ai fost taxat, te rugăm să ne contactezi și să ne trimiți referința plății pentru verificare manuală.'}
                 </p>
-                {sessionId && (
+                {maskedSessionId && (
                   <p
                     className="mt-3 text-xs"
                     style={{ color: 'rgba(238, 229, 200, 0.3)' }}
                   >
-                    Referință: {sessionId}
+                    Referință: {maskedSessionId}
                   </p>
                 )}
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                {isVerified && accessUrl && (
+                  <a
+                    href={accessUrl}
+                    className="px-7 py-3 text-sm uppercase tracking-[0.25em] font-medium transition-colors"
+                    style={{ backgroundColor: '#b4a35d', color: '#1b2c1a' }}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Accesează materialele
+                  </a>
+                )}
                 <Link
                   href="/cursuri"
                   className="px-7 py-3 text-sm uppercase tracking-[0.25em] font-medium transition-colors border"
