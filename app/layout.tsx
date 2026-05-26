@@ -10,12 +10,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 if (process.env.NODE_ENV === 'production') {
-  validateServerEnv({
-    requireStripe: true,
-    requireEmail: true,
-    requireRecaptcha: true,
-    requireCourseAccess: true,
-  })
+  validateServerEnv()
 }
 
 export const metadata: Metadata = {
