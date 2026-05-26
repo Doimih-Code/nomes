@@ -3,30 +3,23 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import GoToTopButton from '@/components/go-to-top-button'
 import ConditionalFooter from '@/components/conditional-footer'
+import { validateServerEnv } from '@/lib/env-validation'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
+if (process.env.NODE_ENV === 'production') {
+  validateServerEnv()
+}
+
 export const metadata: Metadata = {
   title: 'NOMÉS - Performance • Strategy • Content',
   description: 'Echipa ta de marketing. Google, Meta, TikTok și LinkedIn Ads, social media strategy, content, video profesionist și evenimente PR.',
-  generator: 'v0.app',
+  generator: 'NOMES',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
     apple: '/apple-icon.png',
   },
 }

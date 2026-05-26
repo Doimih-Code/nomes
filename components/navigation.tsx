@@ -103,7 +103,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
     <>
       <header
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-40 w-full py-4 px-6 md:px-12 flex items-center justify-between transition-transform duration-300 ${shouldHideNav ? '-translate-y-full' : 'translate-y-0'}`}
+        className={`fixed top-0 left-0 right-0 z-40 w-full py-4 transition-transform duration-300 ${shouldHideNav ? '-translate-y-full' : 'translate-y-0'}`}
         style={{
           backgroundColor: glassBg,
           backdropFilter: 'blur(16px) saturate(1.4)',
@@ -111,6 +111,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
           borderBottom: `1px solid ${glassBorder}`,
         }}
       >
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span
@@ -148,7 +149,6 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
           onClick={() => setMenuOpen(!menuOpen)}
           type="button"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           className={`${dmMono.className} flex items-center gap-2 text-xs uppercase tracking-widest`}
           style={{ color: accentColor, fontWeight: 500 }}
@@ -169,6 +169,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
             />
           </span>
         </button>
+        </div>
       </header>
 
       {menuOpen && (
@@ -226,7 +227,7 @@ export default function Navigation({ activePage, variant = 'light', noOffset = f
         </div>
       )}
 
-      {needsOffset && <div aria-hidden="true" className="h-[68px] md:h-[72px]" />}
+      {needsOffset && <div aria-hidden="true" className="h-17 md:h-18" />}
     </>
   )
 }

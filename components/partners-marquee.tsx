@@ -21,7 +21,7 @@ export default function PartnersMarquee() {
   const dragStartXRef = useRef(0)
   const dragStartPosRef = useRef(0)
   const halfWidthRef = useRef(0)
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number | null>(null)
 
   const wrap = useCallback((pos: number) => {
     const half = halfWidthRef.current

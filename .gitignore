@@ -8,9 +8,17 @@ __v0_jsx-dev-runtime.ts
 next.user-config.*
 
 # Environment variables
+.env
+.env.*
+!.env.production
 .env*.local
+!.env.example
+!.env.production.example
 
 # Common ignores
 node_modules
 .next/
 .DS_Store
+.next-build
+.next
+dash-mode/

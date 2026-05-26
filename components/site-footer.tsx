@@ -205,8 +205,6 @@ export default function SiteFooter({ variant = 'dark' }: { variant?: 'dark' | 'l
             </p>
             <p className="text-xl leading-relaxed mb-7" style={{ color: bodyColor }}>
               Tactici de ads si studii de caz saptamanal.
-              <br />
-              Fara spam.
             </p>
             <form className="flex border rounded-[3px] overflow-hidden" style={{ borderColor: formBorder }}>
               <input
