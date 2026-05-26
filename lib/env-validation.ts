@@ -20,7 +20,7 @@ function checkBooleanEnv(errors: string[], name: string, value: string | undefin
     return
   }
 
-  const normalized = value.trim().toLowerCase()
+  const normalized = (value ?? '').trim().toLowerCase()
   if (!TRUE_FALSE_VALUES.has(normalized)) {
     errors.push(`${name} must be "true" or "false"`)
   }
