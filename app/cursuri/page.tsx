@@ -369,7 +369,19 @@ export default function CursuriPage() {
                 className="inline-flex items-center gap-2 border px-4 py-2 text-[10px] uppercase tracking-[0.2em]"
                 style={{ color: '#b4a35d', borderColor: 'rgba(180, 163, 93, 0.7)' }}
               >
-                <span className="inline-block h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: '#b4a35d' }} />
+                <motion.span
+                  className="inline-block h-2 w-2 rounded-full"
+                  style={{ backgroundColor: '#b4a35d' }}
+                  animate={{
+                    opacity: [0.55, 1, 0.55],
+                    boxShadow: [
+                      '0 0 0 0 rgba(180, 163, 93, 0.35)',
+                      '0 0 0 9px rgba(180, 163, 93, 0)',
+                      '0 0 0 0 rgba(180, 163, 93, 0)',
+                    ],
+                  }}
+                  transition={{ duration: 0.7, repeat: Infinity, ease: 'easeOut' }}
+                />
                 <span>WORKSHOP FIZIC · BUCUREȘTI · LOCURI LIMITATE</span>
               </div>
             </motion.div>
@@ -667,13 +679,13 @@ export default function CursuriPage() {
                 {audiencePoints.map((point) => (
                   <li key={point} className="flex items-start gap-3" style={{ color: 'rgba(237, 234, 219, 0.86)' }}>
                     <span className="mt-1 text-sm" style={{ color: '#c9a227' }}>✓</span>
-                    <span className="text-[12px] leading-5">{point}</span>
+                    <span className="text-[15px] leading-6">{point}</span>
                   </li>
                 ))}
               </ul>
 
               <div className="px-6 py-7 border" style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderColor: 'rgba(180, 163, 93, 0.2)' }}>
-                <p className="text-[16px] leading-7" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
+                <p className="text-[14px] leading-7" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
                   Nu contează dacă ești <strong style={{ color: '#eee5c8' }}>antreprenor, freelancer, angajat, creator</strong> sau la început de drum. Vei pleca cu lucruri pe care le poți aplica imediat.
                 </p>
               </div>
@@ -683,31 +695,31 @@ export default function CursuriPage() {
           </div>
         </section>
 
-        <section className="w-full px-6 md:px-12 py-16 md:py-24" style={{ backgroundColor: '#d8d5c7' }}>
+        <section className="w-full px-6 md:px-12 py-16 md:py-24 bg-[#d8d5c7]">
           <div className="max-w-7xl mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.3em] mb-5" style={{ color: '#8b946c' }}>
+            <p className="text-[11px] uppercase tracking-[0.3em] mb-5 text-[#8b946c]">
               — CE VEI ÎNVĂȚA
             </p>
-            <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-12" style={{ color: '#173620' }}>
+            <h2 className="text-5xl md:text-7xl font-bold leading-[0.95] mb-12 text-[#173620]">
               Ce vei putea aplica
               <br />
-              imediat după <span style={{ color: '#de5959' }}>workshop.</span>
+              imediat după <span className="text-[#de5959]">workshop.</span>
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
               {whatYouLearnCards.map((card) => (
-                <div key={card.number} className="p-7 md:p-8 border" style={{ backgroundColor: '#f1f1f1', borderColor: 'rgba(23, 54, 32, 0.08)' }}>
-                  <p className="text-sm font-semibold tracking-[0.2em] mb-2" style={{ color: '#c9a227' }}>
+                <div key={card.number} className="p-7 md:p-8 border bg-[#f1f1f1] border-[rgba(23,54,32,0.08)]">
+                  <p className="text-sm font-semibold tracking-[0.2em] mb-2 text-[#c9a227]">
                     {card.number}
                   </p>
-                  <h3 className="text-[15px] font-bold leading-tight mb-6" style={{ color: '#132b1a' }}>
+                  <h3 className="text-[15px] font-bold leading-tight mb-6 text-[#132b1a]">
                     {card.title}
                   </h3>
                   <ul className="space-y-3">
                     {card.points.map((point) => (
                       <li key={point} className="flex items-start gap-3">
-                        <span className="mt-0.5 text-[10px]" style={{ color: '#de5959' }}>•</span>
-                        <span className="text-[13px] leading-6" style={{ color: 'rgba(19, 43, 26, 0.42)' }}>
+                        <span className="mt-0.5 text-[10px] text-[#de5959]">•</span>
+                        <span className="text-[13px] leading-6 text-[rgba(19,43,26,0.42)]">
                           {point}
                         </span>
                       </li>
@@ -744,8 +756,8 @@ export default function CursuriPage() {
                 {differentiators.map((item) => (
                   <div key={item.title} className="border p-6" style={{ borderColor: 'rgba(180, 163, 93, 0.16)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
                     <p className="text-2xl mb-3">{item.icon}</p>
-                    <p className="text-2xl md:text-[31px] font-semibold mb-2" style={{ color: '#eee5c8' }}>{item.title}</p>
-                    <p className="text-2xl md:text-[31px]" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>{item.desc}</p>
+                    <p className="text-[11px] font-bold tracking-[0.2em] mb-[5px]" style={{ color: '#eee5c8' }}>{item.title}</p>
+                    <p className="text-[12px] leading-[1.5]" style={{ color: 'rgba(237, 234, 219, 0.62)' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -776,15 +788,16 @@ export default function CursuriPage() {
               {formatItems.map((item) => (
                 <div key={item.text} className="border p-6 md:p-7" style={{ borderColor: 'rgba(180, 163, 93, 0.2)' }}>
                   <p className="text-3xl mb-3">{item.icon}</p>
-                  <p className="text-base md:text-lg leading-7" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
+                  <p className="text-[12px] leading-[1.45]" style={{ color: 'rgba(237, 234, 219, 0.82)' }}>
                     {item.text}
                   </p>
                 </div>
               ))}
             </div>
 
-            <p className="mt-10 text-2xl md:text-4xl" style={{ color: 'rgba(237, 234, 219, 0.7)' }}>
-              Durată: <strong style={{ color: '#eee5c8' }}>Half-day intensive workshop</strong>
+            <p className="mt-10 text-[18px]" style={{ color: 'rgba(237, 234, 219, 0.7)' }}>
+              <span className="text-[14px]">Durată:</span>{' '}
+              <strong style={{ color: '#eee5c8' }}>Half-day intensive workshop</strong>
             </p>
           </div>
         </section>
@@ -799,15 +812,15 @@ export default function CursuriPage() {
               <br />
               în campanii reale.
             </h2>
-            <p className="text-lg leading-9 max-w-3xl mb-8" style={{ color: 'rgba(27, 44, 26, 0.56)' }}>
+            <p className="text-[15px] leading-9 max-w-3xl mb-8" style={{ color: 'rgba(27, 44, 26, 0.56)' }}>
               15+ ani de proiecte de marketing digital, lead generation și online sales pentru companii din multiple industrii.
             </p>
 
-            <div className="flex flex-wrap gap-3 mb-8">
+            <div className="mb-8 grid grid-cols-2 auto-rows-fr gap-3 md:[grid-template-columns:repeat(auto-fit,minmax(160px,1fr))] xl:grid-cols-8">
               {brands.map((brand) => (
                 <span
                   key={brand}
-                  className="px-4 py-2 text-sm font-semibold border"
+                  className="flex min-h-[64px] h-full items-center justify-center border px-3 py-2 text-center text-[12px] font-semibold leading-[1.25] sm:text-[13px] md:text-[12px] xl:px-2 xl:text-[clamp(9px,0.7vw,12px)]"
                   style={{ borderColor: 'rgba(27, 44, 26, 0.14)', color: '#1b2c1a', backgroundColor: '#f8f6ee' }}
                 >
                   {brand}
