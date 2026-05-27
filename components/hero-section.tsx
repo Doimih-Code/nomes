@@ -109,6 +109,19 @@ export default function HeroSection() {
                 NOMÉS
               </motion.h1>
 
+              <motion.p
+                className="text-xl md:text-2xl tracking-[0.01em]"
+                style={{
+                  color: '#eee5c8',
+                  fontWeight: 500,
+                }}
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.14 }}
+              >
+                Seen not scrolled
+              </motion.p>
+
               {/* Subtitle */}
               <motion.p
                 className={`${cormorantGaramondItalic.className} text-lg md:text-xl tracking-wide`}
@@ -175,7 +188,9 @@ export default function HeroSection() {
         {/* Social icons anchored to bottom on smartphone/tablet */}
         <div className="absolute bottom-6 md:bottom-7 lg:bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-6 items-center justify-center w-full lg:w-auto px-6">
           <motion.a
-            href="#"
+            href="https://www.facebook.com/share/1CupsdYrWj/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"
             style={{
               color: '#bfbea2',
@@ -185,12 +200,15 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622H16.56V24h6.115C23.407 24 24 23.407 24 22.676V1.325C24 .593 23.407 0 22.675 0z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" strokeWidth="1.8" />
+              <path d="M13.8 9H15V6.8H13.6C11.9 6.8 10.8 7.9 10.8 9.6V11H9V13.2H10.8V17.2H13V13.2H14.8L15.1 11H13V9.8C13 9.3 13.3 9 13.8 9Z" fill="currentColor" />
             </svg>
           </motion.a>
           <motion.a
-            href="#"
+            href="https://www.instagram.com/nomes.digitalagency?igsh=cWI0emtvcXl4eDg0&utm_source=qr"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"
             style={{
               color: '#bfbea2',
@@ -200,12 +218,16 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.63 }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.322a1.44 1.44 0 11-2.881 0 1.44 1.44 0 012.881 0z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" strokeWidth="1.8" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
             </svg>
           </motion.a>
           <motion.a
-            href="#"
+            href="https://www.tiktok.com/@noms0748?_r=1&_t=ZN-96Y2rYyk3qY"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"
             style={{
               color: '#bfbea2',
@@ -215,8 +237,9 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.71 }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.1 1.82 2.89 2.89 0 0 1 2.31-4.64 2.86 2.86 0 0 1 .88.13V9.4a6.26 6.26 0 0 0-1-.08A6.26 6.26 0 1 0 12.6 20.9a6.26 6.26 0 0 0 6.52-6.52V10.2a8.14 8.14 0 0 0 4.3 1.23v-3.36a4.83 4.83 0 0 1-.74-.06z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 4V13.2C14 15.2 12.4 16.8 10.4 16.8C8.4 16.8 6.8 15.2 6.8 13.2C6.8 11.2 8.4 9.6 10.4 9.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M14 4C14.8 5.9 16.5 7.2 18.6 7.3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
           </motion.a>
           <motion.a
@@ -230,8 +253,11 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.79 }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.731-2.004 1.438-.103.249-.129.597-.129.946v5.421h-3.554s.05-8.789 0-9.714h3.554v1.375c.427-.659 1.191-1.599 2.897-1.599 2.117 0 3.704 1.385 3.704 4.362v5.576zM5.337 8.855c-1.144 0-1.915-.762-1.915-1.715 0-.953.771-1.715 1.921-1.715 1.15 0 1.915.762 1.915 1.715 0 .953-.765 1.715-1.921 1.715zm1.946 11.597H3.392V9.538h3.891v10.914zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" strokeWidth="1.8" />
+              <path d="M8 10.5V16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <circle cx="8" cy="8" r="1" fill="currentColor" />
+              <path d="M12 16V12.8C12 11.7 12.9 10.8 14 10.8C15.1 10.8 16 11.7 16 12.8V16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.a>
         </div>

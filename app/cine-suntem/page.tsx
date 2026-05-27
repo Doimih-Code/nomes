@@ -180,7 +180,7 @@ export default function CineSuntemPage() {
                   Credem că fiecare brand are o poveste unică de spus. Misiunea noastră este să găsim acea poveste, să o rafinăm și să o transmitem lumii cu claritate și impact.
                 </p>
                 <p>
-                  Nu suntem o agenție obișnuită — suntem partenerii tăi de creștere, investiți în succesul tău pe termen lung.
+                  Nu suntem o agenție obișnuită, suntem partenerii tăi de creștere, investiți în succesul tău pe termen lung.
                 </p>
               </div>
             </div>

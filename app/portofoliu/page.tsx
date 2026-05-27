@@ -87,7 +87,7 @@ export default function PortofoliuPage() {
                 Proiecte selectate
               </p>
               <h2 className="text-5xl md:text-7xl font-bold leading-[0.9]" style={{ color: '#1b2c1a' }}>
-                Clienți<br /> Campanii.
+                Clienți și<br /> Campanii.
               </h2>
             </motion.div>
             <motion.p
