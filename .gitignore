@@ -22,3 +22,10 @@ node_modules
 .next-build
 .next
 dash-mode/
+
+# Health-check runtime log
+deploy/healthcheck.log
+
+# Local backups and TLS secrets - never commit
+.deploy-backup/
+letsencrypt/

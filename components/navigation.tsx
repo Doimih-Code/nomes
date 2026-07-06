@@ -10,7 +10,6 @@ const dmMono = DM_Mono({ subsets: ['latin'], weight: ['500'] })
 const navItems = [
   { label: 'Cine suntem', href: '/cine-suntem', active: false },
   { label: 'Servicii', href: '/servicii', active: false },
-  { label: 'Cursuri', href: '/cursuri', active: false },
   { label: 'Portofoliu', href: '/portofoliu', active: false },
   { label: 'Articole', href: '/articole', active: false },
   { label: 'Contact', href: '/contact', active: false },

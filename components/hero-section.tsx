@@ -16,7 +16,6 @@ const cormorantGaramondItalic = Cormorant_Garamond({
 const menuItems = [
   { label: 'Cine suntem', href: '/cine-suntem' },
   { label: 'Servicii', href: '/servicii' },
-  { label: 'Cursuri', href: '/cursuri' },
   { label: 'Portofoliu', href: '/portofoliu' },
   { label: 'Articole', href: '/articole' },
   { label: 'Contact', href: '/contact' },
@@ -108,19 +107,6 @@ export default function HeroSection() {
                 />
                 NOMÉS
               </motion.h1>
-
-              <motion.p
-                className="text-xl md:text-2xl tracking-[0.01em]"
-                style={{
-                  color: '#eee5c8',
-                  fontWeight: 500,
-                }}
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.14 }}
-              >
-                Seen not scrolled
-              </motion.p>
 
               {/* Subtitle */}
               <motion.p
@@ -243,7 +229,9 @@ export default function HeroSection() {
             </svg>
           </motion.a>
           <motion.a
-            href="#"
+            href="https://www.linkedin.com/company/nom%C3%A9s/about/?viewAsMember=true"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"
             style={{
               color: '#bfbea2',
