@@ -107,7 +107,8 @@ export default function PortofoliuPage() {
         </div>
       </motion.section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials Section — hidden until we have real client testimonials/partner logos */}
+      {false && (
       <motion.section
         className="w-full px-6 md:px-12 py-16 md:py-24"
         style={{ backgroundColor: '#eee5c8' }}
@@ -200,6 +201,7 @@ export default function PortofoliuPage() {
           </div>
         </div>
       </motion.section>
+      )}
 
       {/* CTA Section */}
       <motion.section

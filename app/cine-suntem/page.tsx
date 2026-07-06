@@ -38,9 +38,9 @@ const values = [
 ]
 
 const team = [
-  { initials: 'MI', name: 'Mihai Iorgulescu', role: 'Ads specialist' },
+  { initials: 'MI', name: ' ', role: 'Ads specialist' },
   { initials: 'RE', name: 'Radu Enache', role: 'Project manager' },
-  { initials: 'AI', name: 'Andrei Ionescu', role: 'Creative & Partnership Lead' },
+  { initials: 'AI', name: 'Drey', role: 'Creative & Partnership Lead' },
   { initials: 'MO', name: 'Romina Neagu', role: 'Social Media Specialist & Creative' },
 ]
 

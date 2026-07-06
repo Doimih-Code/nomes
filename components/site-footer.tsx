@@ -10,7 +10,6 @@ const syne = Syne({ subsets: ['latin'], weight: ['800'] })
 const pageLinks = [
   { label: 'Cine suntem', href: '/cine-suntem' },
   { label: 'Servicii', href: '/servicii' },
-  { label: 'Cursuri', href: '/cursuri' },
   { label: 'Portofoliu', href: '/portofoliu' },
   { label: 'Articole', href: '/articole' },
   { label: 'Contact', href: '/contact' },
@@ -40,7 +39,7 @@ const socialLinks = [
   },
   {
     label: 'LinkedIn',
-    href: '#',
+    href: 'https://www.linkedin.com/company/nom%C3%A9s/about/?viewAsMember=true',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" strokeWidth="1.8" />

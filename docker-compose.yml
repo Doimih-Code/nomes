@@ -35,4 +35,4 @@ services:
       - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
     volumes:
       - ./traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro
-      - ./letsencrypt/acme.json:/letsencrypt/acme.json
+      - ./letsencrypt:/letsencrypt

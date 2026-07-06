@@ -132,7 +132,7 @@ export default function ContactPage() {
                     className="text-lg md:text-xl"
                     style={{ color: '#1b2c1a' }}
                   >
-                    +40 7XX XXX XXX
+                    +40 757 087 748
                   </p>
                 </div>
 
@@ -147,7 +147,7 @@ export default function ContactPage() {
                     className="text-lg md:text-xl"
                     style={{ color: '#1b2c1a' }}
                   >
-                    hello@nomes.ro
+                    contact@nomes.ro
                   </p>
                 </div>
 
