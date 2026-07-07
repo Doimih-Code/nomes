@@ -85,7 +85,7 @@ export default function HeroSection() {
         {/* Left side content */}
         <div className="relative w-full lg:w-1/2 lg:h-full flex flex-col justify-center items-center p-6 md:p-10 lg:p-12 lg:pr-16 xl:pr-20 z-10">
           {/* Main wordmark NUMELE */}
-          <div className="space-y-6">
+          <div className="space-y-0">
               <motion.h1
                 className={`${syne.className} leading-tight tracking-tight flex items-center gap-[0.18em]`}
                 style={{
@@ -110,7 +110,7 @@ export default function HeroSection() {
 
               {/* Subtitle */}
               <motion.p
-                className={`${cormorantGaramondItalic.className} text-lg md:text-xl tracking-wide`}
+                className={`${cormorantGaramondItalic.className} text-lg md:text-xl tracking-wide -mt-2 md:-mt-3`}
                 style={{
                   color: '#b4a35d',
                   fontStyle: 'italic',
