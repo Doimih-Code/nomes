@@ -162,7 +162,7 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
           <path d="M45 45 H140 A10 10 0 0 1 150 55 V90 A10 10 0 0 1 140 100 H90 L65 118 V100 H55 A10 10 0 0 1 45 90 Z" stroke={FILL} strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
-          <path d="M100 115 H165 A10 10 0 0 1 175 125 V135 L193 145 L175 155 A10 10 0 0 1 165 165 H100 A10 10 0 0 1 90 155 V125 A10 10 0 0 1 100 115 Z" stroke={RED} strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
+          <path d="M100 115 H165 A10 10 0 0 1 175 125 V155 A10 10 0 0 1 165 165 H155 V183 L135 165 H100 A10 10 0 0 1 90 155 V125 A10 10 0 0 1 100 115 Z" stroke={RED} strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
         </svg>
       )
 
