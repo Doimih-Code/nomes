@@ -248,11 +248,13 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
           <rect x="50" y="90" width="120" height="85" rx="8" stroke={FILL} strokeWidth="2.5" opacity="0.9" />
-          <path d="M50 90 L60 55 L180 65 L170 90 Z" fill={FILL} opacity="0.9" />
-          <line x1="76" y1="57" x2="66" y2="90" stroke="#1b2c1a" strokeWidth="9" />
-          <line x1="102" y1="59" x2="92" y2="90" stroke="#1b2c1a" strokeWidth="9" />
-          <line x1="128" y1="61" x2="118" y2="90" stroke="#1b2c1a" strokeWidth="9" />
-          <line x1="154" y1="63" x2="144" y2="90" stroke="#1b2c1a" strokeWidth="9" />
+          <g transform="rotate(-16 55 90)">
+            <rect x="55" y="68" width="140" height="22" rx="3" fill={FILL} stroke={FILL} strokeWidth="1.5" opacity="0.9" />
+            <rect x="80" y="68" width="10" height="22" fill="#1b2c1a" />
+            <rect x="105" y="68" width="10" height="22" fill="#1b2c1a" />
+            <rect x="130" y="68" width="10" height="22" fill="#1b2c1a" />
+            <rect x="155" y="68" width="10" height="22" fill="#1b2c1a" />
+          </g>
           <path d="M92 115 L92 155 L128 135 Z" fill={RED} opacity="0.95" />
         </svg>
       )
