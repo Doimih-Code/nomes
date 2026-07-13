@@ -28,7 +28,7 @@ export default function ArticleShareIcons({ url, title }: ArticleShareIconsProps
     },
     {
       label: 'TikTok',
-      href: 'https://www.tiktok.com/@noms0748?_r=1&_t=ZN-96Y2rYyk3qY',
+      href: 'https://www.tiktok.com/@nomes.project?_r=1&_t=ZN-980CY0KDW58',
       path: 'M14 4V13.2C14 15.2 12.4 16.8 10.4 16.8C8.4 16.8 6.8 15.2 6.8 13.2C6.8 11.2 8.4 9.6 10.4 9.6M14 4C14.8 5.9 16.5 7.2 18.6 7.3',
       viewBox: '4 1 17 18',
     },

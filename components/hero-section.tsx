@@ -211,7 +211,7 @@ export default function HeroSection() {
             </svg>
           </motion.a>
           <motion.a
-            href="https://www.tiktok.com/@noms0748?_r=1&_t=ZN-96Y2rYyk3qY"
+            href="https://www.tiktok.com/@nomes.project?_r=1&_t=ZN-980CY0KDW58"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"
