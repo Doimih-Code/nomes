@@ -247,15 +247,15 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
     case 'clapperboard':
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
-          <rect x="50" y="90" width="120" height="85" rx="8" stroke={FILL} strokeWidth="2.5" opacity="0.9" />
-          <g transform="rotate(-16 55 90)">
-            <rect x="55" y="68" width="140" height="22" rx="3" fill={FILL} stroke={FILL} strokeWidth="1.5" opacity="0.9" />
-            <rect x="80" y="68" width="10" height="22" fill="#1b2c1a" />
-            <rect x="105" y="68" width="10" height="22" fill="#1b2c1a" />
-            <rect x="130" y="68" width="10" height="22" fill="#1b2c1a" />
-            <rect x="155" y="68" width="10" height="22" fill="#1b2c1a" />
+          <rect x="40" y="85" width="150" height="110" rx="8" stroke={FILL} strokeWidth="2.5" opacity="0.9" />
+          <g transform="rotate(-16 45 85)">
+            <rect x="45" y="71" width="100" height="14" rx="3" fill={FILL} stroke={FILL} strokeWidth="1.5" opacity="0.9" />
+            <rect x="63" y="71" width="7" height="14" fill="#1b2c1a" />
+            <rect x="81" y="71" width="7" height="14" fill="#1b2c1a" />
+            <rect x="99" y="71" width="7" height="14" fill="#1b2c1a" />
+            <rect x="116" y="71" width="7" height="14" fill="#1b2c1a" />
           </g>
-          <path d="M92 115 L92 155 L128 135 Z" fill={RED} opacity="0.95" />
+          <path d="M103 116 L103 164 L137 140 Z" fill={RED} opacity="0.95" />
         </svg>
       )
 
