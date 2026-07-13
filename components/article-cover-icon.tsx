@@ -169,8 +169,8 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
     case 'hashtag':
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
-          <line x1="40" y1="-20" x2="0" y2="240" stroke={FILL} strokeWidth="4" strokeLinecap="round" opacity="0.9" />
-          <line x1="200" y1="-20" x2="160" y2="240" stroke={FILL} strokeWidth="4" strokeLinecap="round" opacity="0.9" />
+          <line x1="85" y1="-20" x2="45" y2="240" stroke={FILL} strokeWidth="4" strokeLinecap="round" opacity="0.9" />
+          <line x1="175" y1="-20" x2="135" y2="240" stroke={FILL} strokeWidth="4" strokeLinecap="round" opacity="0.9" />
           <line x1="-30" y1="60" x2="270" y2="60" stroke={RED} strokeWidth="6" strokeLinecap="round" opacity="0.95" />
           <line x1="-50" y1="160" x2="250" y2="160" stroke={FILL} strokeWidth="4" strokeLinecap="round" opacity="0.9" />
         </svg>
