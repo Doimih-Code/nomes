@@ -77,17 +77,6 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
             >
-              {/* Giant faded article number, behind the icon */}
-              <div
-                aria-hidden="true"
-                className="absolute bottom-0 right-0 select-none font-bold leading-none"
-                style={{
-                  color: 'rgba(238, 229, 200, 0.07)',
-                  fontSize: 'clamp(calc(5.5rem + 25px), 15vw, calc(10rem + 25px))',
-                }}
-              >
-                {article.articleNumber}
-              </div>
               {/* Decorative icon, in front */}
               <div className="absolute top-0 right-0">
                 <ArticleCoverIconGraphic icon={article.coverIcon} className="w-40 h-40 md:w-44 md:h-44 lg:w-52 lg:h-52" />
@@ -97,9 +86,20 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
 
           {/* Footer meta row */}
           <div
-            className="mt-10 md:mt-14 pt-6 border-t flex items-center justify-between"
+            className="relative mt-10 md:mt-14 pt-6 border-t flex items-center justify-between"
             style={{ borderColor: 'rgba(238, 229, 200, 0.15)' }}
           >
+            {/* Giant faded article number, 35px above the separator line */}
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute bottom-full right-0 mb-[35px] select-none font-bold leading-none pointer-events-none"
+              style={{
+                color: 'rgba(238, 229, 200, 0.07)',
+                fontSize: 'clamp(calc(5.5rem + 25px), 15vw, calc(10rem + 25px))',
+              }}
+            >
+              {article.articleNumber}
+            </div>
             <span className="text-xs" style={{ color: 'rgba(238, 229, 200, 0.5)' }}>
               nomes.ro
             </span>
