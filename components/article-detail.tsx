@@ -78,7 +78,7 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
             >
               {/* Decorative icon, in front */}
-              <div className="absolute top-0 right-0">
+              <div className="absolute top-0 right-0 -translate-x-[150px]">
                 <ArticleCoverIconGraphic icon={article.coverIcon} className="w-40 h-40 md:w-44 md:h-44 lg:w-52 lg:h-52" />
               </div>
             </motion.div>
