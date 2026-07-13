@@ -42,6 +42,14 @@ export default function ArticolePage() {
     setFeaturedIndex(next)
   }, [])
 
+  // Pick up ?categorie= from links elsewhere on the site (e.g. the article sidebar).
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get('categorie')
+    if (cat && categories.includes(cat)) {
+      setActiveCategory(cat)
+    }
+  }, [])
+
   // Reset pagination whenever the category filter changes.
   useEffect(() => {
     setVisibleCount(GRID_BATCH_SIZE)

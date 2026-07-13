@@ -112,9 +112,10 @@ export default function ArticleSidebar({ currentHref }: ArticleSidebarProps) {
         </div>
         <div className="grid grid-cols-2 gap-2.5">
           {categoryCounts.map((cat) => (
-            <div
+            <Link
               key={cat.name}
-              className="flex items-center gap-2.5 p-3 rounded-[3px] border"
+              href={`/articole?categorie=${encodeURIComponent(cat.name)}`}
+              className="flex items-center gap-2.5 p-3 rounded-[3px] border transition-opacity hover:opacity-70"
               style={{ backgroundColor: 'rgba(27, 44, 26, 0.03)', borderColor: 'rgba(27, 44, 26, 0.12)' }}
             >
               <div className="w-9 h-9 rounded-[3px] shrink-0" style={{ backgroundColor: '#1b2c1a' }} />
@@ -129,7 +130,7 @@ export default function ArticleSidebar({ currentHref }: ArticleSidebarProps) {
                   {cat.count} articole
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
