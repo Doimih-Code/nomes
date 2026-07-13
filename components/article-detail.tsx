@@ -90,16 +90,19 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
             style={{ borderColor: 'rgba(238, 229, 200, 0.15)' }}
           >
             {/* Giant faded article number, 35px above the separator line */}
-            <div
+            <motion.div
               aria-hidden="true"
               className="hidden md:block absolute bottom-full right-0 mb-[10px] select-none font-bold leading-none pointer-events-none"
               style={{
                 color: 'rgba(238, 229, 200, 0.07)',
                 fontSize: 'clamp(calc(5.5rem + 25px), 15vw, calc(10rem + 25px))',
               }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
             >
               {article.articleNumber}
-            </div>
+            </motion.div>
             <span className="text-xs" style={{ color: 'rgba(238, 229, 200, 0.5)' }}>
               nomes.ro
             </span>
