@@ -1,45 +1,41 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const projects = [
-  {
-    id: 1,
-    name: 'Brand Name 01',
-    service: 'Performance Ads · Meta & Google',
-  },
-  {
-    id: 2,
-    name: 'Brand Name 02',
-    service: 'Social Media Strategy · Content',
-  },
-  {
-    id: 3,
-    name: 'Brand Name 03',
-    service: 'LinkedIn Ads · TikTok',
-  },
-  {
-    id: 4,
-    name: 'Brand Name 04',
-    service: 'Performance Ads · Meta & Google',
-  },
+const videos = [
+  { id: 1, videoId: 'kEoHHLbjh-M' },
+  { id: 2, videoId: 'olmkTNT7B0s' },
+  { id: 3, videoId: 'hPwaMa2GIdQ' },
+  { id: 4, videoId: 'h2Zj2dzHU54' },
+  { id: 5, videoId: '1qHE3uZZy3o' },
+  { id: 6, videoId: 'CWGeYcqnTro' },
 ]
 
 export default function PortfolioSlider() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+  const [needsScroll, setNeedsScroll] = useState(false)
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-    setCanScrollLeft(scrollLeft > 0)
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+    setCanScrollLeft(scrollLeft > 4)
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 4)
+    setNeedsScroll(scrollWidth > clientWidth + 4)
   }
+
+  // All clips currently fit the gallery zone without scrolling — arrows only
+  // reappear (via needsScroll) once more clips are added than the row can hold.
+  useEffect(() => {
+    checkScroll()
+    window.addEventListener('resize', checkScroll)
+    return () => window.removeEventListener('resize', checkScroll)
+  }, [])
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return
-    const scrollAmount = scrollContainerRef.current.clientWidth
+    const scrollAmount = scrollContainerRef.current.clientWidth * 0.8
     scrollContainerRef.current.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',
@@ -48,44 +44,13 @@ export default function PortfolioSlider() {
   }
 
   return (
-    <div className="relative">
-      {/* Scroll Container */}
-      <div
-        ref={scrollContainerRef}
-        className="overflow-hidden scroll-smooth flex gap-4"
-        onScroll={checkScroll}
-        onLoad={checkScroll}
-        style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
-      >
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="flex-shrink-0 w-full md:w-1/2 rounded-[3px] overflow-hidden scroll-snap-align-start"
-            style={{ scrollSnapAlign: 'start' }}
-          >
-            <div style={{ backgroundColor: '#1b2c1a' }}>
-              <div
-                className="aspect-[16/10] w-full"
-                style={{ backgroundColor: '#1b2c1a', opacity: 0.7 }}
-              />
-              <div className="px-6 py-5">
-                <p className="text-base font-bold mb-1" style={{ color: '#eee5c8' }}>
-                  {project.name}
-                </p>
-                <p className="text-xs uppercase tracking-widest" style={{ color: '#b4a35d' }}>
-                  {project.service}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Left Arrow */}
-      {canScrollLeft && (
+    <div className="flex items-center gap-3 md:gap-4">
+      {/* Left Arrow — only rendered when the row actually overflows */}
+      {needsScroll && (
         <button
           onClick={() => scroll('left')}
-          className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+          disabled={!canScrollLeft}
+          className="shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-70 disabled:opacity-30 disabled:pointer-events-none"
           style={{
             border: `1px solid #1b2c1a`,
             color: '#1b2c1a',
@@ -111,11 +76,49 @@ export default function PortfolioSlider() {
         </button>
       )}
 
-      {/* Right Arrow */}
-      {canScrollRight && (
+      {/* Scroll Container */}
+      <div
+        ref={scrollContainerRef}
+        className="min-w-0 flex-1 overflow-x-auto scroll-smooth flex gap-4 pb-2"
+        onScroll={checkScroll}
+        style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory', scrollbarWidth: 'none' }}
+      >
+        {videos.map((video) => (
+          <a
+            key={video.id}
+            href={`https://youtube.com/shorts/${video.videoId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Vezi clipul pe YouTube"
+            className="group flex-shrink-0 w-[42%] sm:w-[30%] md:w-[20%] lg:w-[15%] rounded-[3px] overflow-hidden relative"
+            style={{ scrollSnapAlign: 'start', backgroundColor: '#1b2c1a' }}
+          >
+            <div className="aspect-9/16 w-full relative overflow-hidden">
+              <img
+                src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`}
+                alt="Campanie video NOMÉS"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-center justify-center transition-colors group-hover:bg-black/10">
+                <div
+                  className="w-11 h-11 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: 'rgba(27, 44, 26, 0.55)', border: '1.5px solid rgba(238, 229, 200, 0.7)', backdropFilter: 'blur(4px)' }}
+                >
+                  <div className="w-0 h-0 border-t-[7px] border-b-[7px] border-l-[11px] border-t-transparent border-b-transparent ml-0.5" style={{ borderLeftColor: '#eee5c8' }} />
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* Right Arrow — only rendered when the row actually overflows */}
+      {needsScroll && (
         <button
           onClick={() => scroll('right')}
-          className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 z-10 h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+          disabled={!canScrollRight}
+          className="shrink-0 h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center transition-opacity hover:opacity-70 disabled:opacity-30 disabled:pointer-events-none"
           style={{
             border: `1px solid #1b2c1a`,
             color: '#1b2c1a',

@@ -38,28 +38,39 @@ export default function PortofoliuPage() {
               </h1>
             </motion.div>
 
-            <motion.div
-              className="border border-dashed rounded-[3px] h-[420px] md:h-[460px] px-6 text-center flex items-center justify-center"
-              style={{ borderColor: 'rgba(180, 163, 93, 0.24)' }}
+            <motion.a
+              href="https://youtube.com/shorts/OirFNRli7NY"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vezi video reel-ul pe YouTube"
+              className="group relative block rounded-[3px] overflow-hidden h-[504px] md:h-[552px] mx-auto w-full max-w-[312px]"
+              style={{ backgroundColor: '#0f1a0e' }}
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="w-full flex flex-col items-center justify-center">
-                <div className="mb-5 flex justify-center">
-                  <div className="w-0 h-0 border-t-[12px] border-b-[12px] border-l-[20px] border-t-transparent border-b-transparent" style={{ borderLeftColor: 'rgba(238, 229, 200, 0.55)' }} />
-                </div>
-                <p
-                  className="text-sm uppercase tracking-[0.35em] mb-2"
-                  style={{ color: 'rgba(180, 163, 93, 0.55)' }}
+              <img
+                src="https://img.youtube.com/vi/OirFNRli7NY/maxresdefault.jpg"
+                alt="Video reel NOMÉS"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                className="absolute inset-0 flex items-center justify-center transition-colors group-hover:bg-black/10"
+              >
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: 'rgba(27, 44, 26, 0.55)', border: '1.5px solid rgba(238, 229, 200, 0.7)', backdropFilter: 'blur(4px)' }}
                 >
-                  Video reel / showreel
-                </p>
-                <p className="text-sm" style={{ color: 'rgba(238, 229, 200, 0.35)' }}>
-                  Inlocuiti acest tag cu video-ul vostru sau cu un frame din portofoliu.
-                </p>
+                  <div className="w-0 h-0 border-t-[10px] border-b-[10px] border-l-[16px] border-t-transparent border-b-transparent ml-1" style={{ borderLeftColor: '#eee5c8' }} />
+                </div>
               </div>
-            </motion.div>
+              <p
+                className="absolute bottom-4 left-0 right-0 text-center text-xs uppercase tracking-[0.35em]"
+                style={{ color: 'rgba(238, 229, 200, 0.85)' }}
+              >
+                Video reel / showreel
+              </p>
+            </motion.a>
           </div>
         </div>
       </section>
@@ -73,7 +84,7 @@ export default function PortofoliuPage() {
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
 
           {/* Header row */}
           <div className="flex items-end justify-between mb-10 md:mb-14">
