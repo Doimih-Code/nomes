@@ -92,7 +92,7 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
             {/* Giant faded article number, 35px above the separator line */}
             <div
               aria-hidden="true"
-              className="hidden md:block absolute bottom-full right-0 mb-[35px] select-none font-bold leading-none pointer-events-none"
+              className="hidden md:block absolute bottom-full right-0 mb-[10px] select-none font-bold leading-none pointer-events-none"
               style={{
                 color: 'rgba(238, 229, 200, 0.07)',
                 fontSize: 'clamp(calc(5.5rem + 25px), 15vw, calc(10rem + 25px))',
