@@ -36,20 +36,20 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
     case 'cycle':
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
-          <path d="M110 28 A82 82 0 0 0 110 192" stroke={RED} strokeWidth="2.5" opacity="0.9" />
-          <path d="M110 28 A82 82 0 0 1 110 192" stroke={STROKE} strokeWidth="2.5" opacity="0.9" />
-          <path d="M95 15 L110 28 L91 36" stroke={RED} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.95" />
-          <path d="M125 205 L110 192 L129 184" stroke={STROKE} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+          <path d="M32 110 A78 78 0 0 1 188 110" stroke={STROKE} strokeWidth="6" opacity="0.9" />
+          <path d="M32 110 A78 78 0 0 0 188 110" stroke={RED} strokeWidth="6" opacity="0.9" />
+          <path d="M34 98 L10 110 L34 122 Z" fill={RED} opacity="0.95" />
+          <path d="M186 98 L210 110 L186 122 Z" fill={STROKE} opacity="0.9" />
         </svg>
       )
 
     case 'curve':
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
-          <path d="M45 155 Q110 55 175 130" stroke={STROKE} strokeWidth="2" opacity="0.85" />
-          <circle cx="45" cy="155" r="7" stroke={STROKE} strokeWidth="2" opacity="0.85" />
-          <circle cx="110" cy="83" r="7" stroke={STROKE} strokeWidth="2" opacity="0.85" />
-          <circle cx="175" cy="130" r="9" fill={RED} opacity="0.95" />
+          <path d="M45 155 Q110 55 175 130" stroke={STROKE} strokeWidth="5" strokeLinecap="round" opacity="0.95" />
+          <circle cx="45" cy="155" r="9" stroke={STROKE} strokeWidth="5" opacity="0.95" />
+          <circle cx="110" cy="83" r="9" stroke={STROKE} strokeWidth="5" opacity="0.95" />
+          <circle cx="175" cy="130" r="12" fill={RED} opacity="0.95" />
         </svg>
       )
 
@@ -247,11 +247,12 @@ export default function ArticleCoverIconGraphic({ icon, className }: ArticleCove
     case 'clapperboard':
       return (
         <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
-          <rect x="50" y="90" width="120" height="85" rx="8" stroke={FILL} strokeWidth="2" opacity="0.9" />
-          <path d="M50 90 L60 55 L180 65 L170 90 Z" stroke={FILL} strokeWidth="2" strokeLinejoin="round" opacity="0.9" />
-          <line x1="80" y1="58" x2="70" y2="90" stroke={FILL} strokeWidth="2" opacity="0.9" />
-          <line x1="110" y1="60" x2="100" y2="90" stroke={FILL} strokeWidth="2" opacity="0.9" />
-          <line x1="140" y1="63" x2="130" y2="90" stroke={FILL} strokeWidth="2" opacity="0.9" />
+          <rect x="50" y="90" width="120" height="85" rx="8" stroke={FILL} strokeWidth="2.5" opacity="0.9" />
+          <path d="M50 90 L60 55 L180 65 L170 90 Z" fill={FILL} opacity="0.9" />
+          <line x1="76" y1="57" x2="66" y2="90" stroke="#1b2c1a" strokeWidth="9" />
+          <line x1="102" y1="59" x2="92" y2="90" stroke="#1b2c1a" strokeWidth="9" />
+          <line x1="128" y1="61" x2="118" y2="90" stroke="#1b2c1a" strokeWidth="9" />
+          <line x1="154" y1="63" x2="144" y2="90" stroke="#1b2c1a" strokeWidth="9" />
           <path d="M92 115 L92 155 L128 135 Z" fill={RED} opacity="0.95" />
         </svg>
       )
