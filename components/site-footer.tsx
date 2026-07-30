@@ -152,7 +152,7 @@ export default function SiteFooter({ variant = 'dark' }: { variant?: 'dark' | 'l
             <p className="text-xl leading-relaxed max-w-md" style={{ color: bodyColor }}>
               Echipa ta pentru performance ads, social media, brand strategy si video production.
               <br />
-              15+ ani experienta, 0 clienti pierduti.
+              6+ ani experienta, 0 clienti pierduti.
             </p>
           </motion.div>
 

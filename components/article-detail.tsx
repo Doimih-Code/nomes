@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'motion/react'
 import Navigation from '@/components/navigation'
 import ArticleCoverIconGraphic from '@/components/article-cover-icon'
@@ -8,12 +9,17 @@ import ArticleContent from '@/components/article-content'
 import ArticleShareIcons from '@/components/article-share-icons'
 import ArticleSidebar from '@/components/article-sidebar'
 import type { Article } from '@/lib/articles-data'
+import { articleListings } from '@/lib/article-listings'
 
 interface ArticleDetailProps {
   article: Article
 }
 
 export default function ArticleDetail({ article }: ArticleDetailProps) {
+  const coverImage = articleListings.find(
+    (listing) => listing.href === `/articole/${article.slug}`
+  )?.coverImage
+
   return (
     <main style={{ backgroundColor: '#eee5c8' }}>
       <Navigation activePage="Articole" variant="dark" noOffset />
@@ -147,14 +153,28 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
               </span>
             </div>
 
-            {/* Imagine featured — placeholder */}
+            {/* Imagine featured */}
             <div
-              className="w-full aspect-video rounded-[3px] mb-10 flex items-center justify-center"
+              className="relative w-full aspect-video rounded-[3px] mb-10 overflow-hidden"
               style={{ backgroundColor: '#1b2c1a' }}
             >
-              <p className="text-xs uppercase tracking-[0.3em]" style={{ color: 'rgba(238, 229, 200, 0.25)' }}>
-                Imagine articol featured
-              </p>
+              {coverImage ? (
+                <Image
+                  src={coverImage}
+                  alt={article.title}
+                  fill
+                  sizes="(min-width: 768px) 768px, 100vw"
+                  className="object-contain"
+                  priority
+                />
+              ) : (
+                <p
+                  className="absolute inset-0 flex items-center justify-center text-xs uppercase tracking-[0.3em]"
+                  style={{ color: 'rgba(238, 229, 200, 0.25)' }}
+                >
+                  Imagine articol featured
+                </p>
+              )}
             </div>
 
             {/* Conținut + social share */}
@@ -163,7 +183,7 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
                 <ArticleShareIcons url={`https://www.nomes.ro/articole/${article.slug}`} title={article.title} />
               </div>
               <div className="min-w-0 flex-1">
-                <ArticleContent blocks={article.content} />
+                <ArticleContent blocks={article.content} coverImage={coverImage} imageAlt={article.title} />
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ export interface ArticleListing {
   date: string
   readTime: string
   href?: string
+  coverImage: string
 }
 
 export const articleCategories: string[] = [
@@ -24,6 +25,7 @@ export const articleListings: ArticleListing[] = [
     date: '07 IUN 2026',
     readTime: '9 MIN',
     href: '/articole/cum-construiesti-un-calendar-editorial-pentru-social-media-in-2026',
+    coverImage: '/media/covers/cover-04.png',
   },
   {
     id: 2,
@@ -32,6 +34,7 @@ export const articleListings: ArticleListing[] = [
     date: '13 IUL 2026',
     readTime: '9 MIN',
     href: '/articole/ce-este-brand-positioning-si-cum-iti-diferentiezi-afacerea-de-competitie',
+    coverImage: '/media/covers/cover-06.png',
   },
   {
     id: 3,
@@ -40,6 +43,7 @@ export const articleListings: ArticleListing[] = [
     date: '14 MAI 2026',
     readTime: '10 MIN',
     href: '/articole/reels-vs-tiktok-vs-youtube-shorts-ce-format-video-alegi-in-2026',
+    coverImage: '/media/covers/cover-08.png',
   },
   {
     id: 4,
@@ -48,6 +52,7 @@ export const articleListings: ArticleListing[] = [
     date: '20 MAI 2026',
     readTime: '9 MIN',
     href: '/articole/cum-instalezi-meta-pixel-si-conversions-api',
+    coverImage: '/media/covers/cover-10.png',
   },
   {
     id: 5,
@@ -56,6 +61,7 @@ export const articleListings: ArticleListing[] = [
     date: '23 MAI 2026',
     readTime: '8 MIN',
     href: '/articole/cum-alegi-o-agentie-de-marketing-digital-in-romania-9-intrebari',
+    coverImage: '/media/covers/cover-12.png',
   },
   {
     id: 6,
@@ -64,6 +70,7 @@ export const articleListings: ArticleListing[] = [
     date: '26 IUN 2026',
     readTime: '9 MIN',
     href: '/articole/cat-costa-publicitatea-pe-facebook-si-instagram-in-romania-in-2026',
+    coverImage: '/media/covers/cover-01.png',
   },
   {
     id: 7,
@@ -72,6 +79,7 @@ export const articleListings: ArticleListing[] = [
     date: '10 IUL 2026',
     readTime: '8 MIN',
     href: '/articole/tone-of-voice-cum-definesti-tonul-vocii-brandului-tau',
+    coverImage: '/media/covers/cover-07.png',
   },
   {
     id: 8,
@@ -80,6 +88,7 @@ export const articleListings: ArticleListing[] = [
     date: '06 IUL 2026',
     readTime: '8 MIN',
     href: '/articole/identitate-vizuala-logo-culori-si-tipografie-coerente',
+    coverImage: '/media/covers/cover-19.png',
   },
   {
     id: 9,
@@ -88,6 +97,7 @@ export const articleListings: ArticleListing[] = [
     date: '02 IUL 2026',
     readTime: '8 MIN',
     href: '/articole/rebranding-cand-are-sens-si-cand-e-doar-bani-aruncati',
+    coverImage: '/media/covers/cover-20.png',
   },
   {
     id: 10,
@@ -96,6 +106,7 @@ export const articleListings: ArticleListing[] = [
     date: '29 IUN 2026',
     readTime: '8 MIN',
     href: '/articole/brand-storytelling-cum-spui-povestea-brandului-tau-ca-sa-vanda',
+    coverImage: '/media/covers/cover-21.png',
   },
   {
     id: 11,
@@ -104,6 +115,7 @@ export const articleListings: ArticleListing[] = [
     date: '23 IUN 2026',
     readTime: '8 MIN',
     href: '/articole/ce-este-roas-si-cum-il-calculezi-corect-pentru-campaniile-tale',
+    coverImage: '/media/covers/cover-02.png',
   },
   {
     id: 12,
@@ -112,6 +124,7 @@ export const articleListings: ArticleListing[] = [
     date: '19 IUN 2026',
     readTime: '10 MIN',
     href: '/articole/performance-max-in-google-ads-ghidul-complet-pentru-magazine-online',
+    coverImage: '/media/covers/cover-03.png',
   },
   {
     id: 13,
@@ -120,6 +133,7 @@ export const articleListings: ArticleListing[] = [
     date: '16 IUN 2026',
     readTime: '9 MIN',
     href: '/articole/funnel-complet-pe-meta-ads-tofu-mofu-si-bofu-explicate-simplu',
+    coverImage: '/media/covers/cover-13.png',
   },
   {
     id: 14,
@@ -128,6 +142,7 @@ export const articleListings: ArticleListing[] = [
     date: '13 IUN 2026',
     readTime: '8 MIN',
     href: '/articole/retargeting-pe-meta-cum-recuperezi-vizitatorii-care-nu-au-cumparat',
+    coverImage: '/media/covers/cover-14.png',
   },
   {
     id: 15,
@@ -136,6 +151,7 @@ export const articleListings: ArticleListing[] = [
     date: '10 IUN 2026',
     readTime: '9 MIN',
     href: '/articole/quality-score-in-google-ads-ce-este-si-cum-il-cresti',
+    coverImage: '/media/covers/cover-15.png',
   },
   {
     id: 16,
@@ -144,6 +160,7 @@ export const articleListings: ArticleListing[] = [
     date: '04 IUN 2026',
     readTime: '8 MIN',
     href: '/articole/cate-postari-pe-saptamana-ai-nevoie-pe-instagram-tiktok-si-facebook',
+    coverImage: '/media/covers/cover-05.png',
   },
   {
     id: 17,
@@ -152,6 +169,7 @@ export const articleListings: ArticleListing[] = [
     date: '01 IUN 2026',
     readTime: '9 MIN',
     href: '/articole/cum-cresti-organic-pe-tiktok-in-2026-ce-premiaza-algoritmul',
+    coverImage: '/media/covers/cover-16.png',
   },
   {
     id: 18,
@@ -160,6 +178,7 @@ export const articleListings: ArticleListing[] = [
     date: '29 MAI 2026',
     readTime: '8 MIN',
     href: '/articole/community-management-cum-raspunzi-la-comentarii-dm-uri-si-review-uri-negative',
+    coverImage: '/media/covers/cover-17.png',
   },
   {
     id: 19,
@@ -168,6 +187,7 @@ export const articleListings: ArticleListing[] = [
     date: '26 MAI 2026',
     readTime: '7 MIN',
     href: '/articole/mai-conteaza-hashtag-urile-in-2026-ce-functioneaza-acum',
+    coverImage: '/media/covers/cover-18.png',
   },
   {
     id: 20,
@@ -176,6 +196,7 @@ export const articleListings: ArticleListing[] = [
     date: '17 MAI 2026',
     readTime: '9 MIN',
     href: '/articole/google-analytics-4-pentru-incepatori-metricile-care-conteaza',
+    coverImage: '/media/covers/cover-11.png',
   },
   {
     id: 21,
@@ -184,6 +205,7 @@ export const articleListings: ArticleListing[] = [
     date: '11 MAI 2026',
     readTime: '8 MIN',
     href: '/articole/ugc-ce-este-user-generated-content-si-cum-creste-vanzarile',
+    coverImage: '/media/covers/cover-09.png',
   },
   {
     id: 22,
@@ -192,5 +214,6 @@ export const articleListings: ArticleListing[] = [
     date: '08 MAI 2026',
     readTime: '8 MIN',
     href: '/articole/cum-scrii-scriptul-unui-reel-care-converteste',
+    coverImage: '/media/covers/cover-22.png',
   },
 ]

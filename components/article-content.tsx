@@ -1,5 +1,6 @@
 import { Fragment, type ReactNode } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { ArticleContentBlock } from '@/lib/articles-data'
 
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
@@ -43,25 +44,38 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
   return nodes
 }
 
-function InlineImagePlaceholder() {
+function InlineImage({ src, alt }: { src?: string; alt: string }) {
+  if (!src) {
+    return (
+      <div
+        aria-hidden="true"
+        className="w-full aspect-video rounded-[3px] my-8 flex items-center justify-center"
+        style={{ backgroundColor: '#1b2c1a' }}
+      >
+        <p className="text-[10px] uppercase tracking-[0.3em]" style={{ color: 'rgba(238, 229, 200, 0.25)' }}>
+          Imagine articol
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div
-      aria-hidden="true"
-      className="w-full aspect-video rounded-[3px] my-8 flex items-center justify-center"
+      className="relative w-full aspect-video rounded-[3px] my-8 overflow-hidden"
       style={{ backgroundColor: '#1b2c1a' }}
     >
-      <p className="text-[10px] uppercase tracking-[0.3em]" style={{ color: 'rgba(238, 229, 200, 0.25)' }}>
-        Imagine articol
-      </p>
+      <Image src={src} alt={alt} fill sizes="(min-width: 768px) 768px, 100vw" className="object-contain" />
     </div>
   )
 }
 
 interface ArticleContentProps {
   blocks: ArticleContentBlock[]
+  coverImage?: string
+  imageAlt: string
 }
 
-export default function ArticleContent({ blocks }: ArticleContentProps) {
+export default function ArticleContent({ blocks, coverImage, imageAlt }: ArticleContentProps) {
   const headingIndices = blocks.reduce<number[]>((acc, block, i) => {
     if (block.type === 'heading') acc.push(i)
     return acc
@@ -74,7 +88,9 @@ export default function ArticleContent({ blocks }: ArticleContentProps) {
     <div className="max-w-none">
       {blocks.map((block, idx) => {
         const key = `block-${idx}`
-        const imageBefore = imageBeforeIndices.has(idx) ? <InlineImagePlaceholder key={`${key}-img`} /> : null
+        const imageBefore = imageBeforeIndices.has(idx) ? (
+          <InlineImage key={`${key}-img`} src={coverImage} alt={imageAlt} />
+        ) : null
 
         switch (block.type) {
           case 'lead':

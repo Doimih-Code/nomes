@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import Navigation from '@/components/navigation'
 import PortfolioSlider from '@/components/portfolio-slider'
 import PartnersLogoLoop from '@/components/partners-logo-loop'
@@ -8,6 +9,23 @@ import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { motion } from 'motion/react'
 
 export default function PortofoliuPage() {
+  const showreelFrameRef = useRef<HTMLIFrameElement>(null)
+  const [isShowreelMuted, setIsShowreelMuted] = useState(true)
+
+  const toggleShowreelSound = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const frame = showreelFrameRef.current
+    if (!frame?.contentWindow) return
+
+    const nextMuted = !isShowreelMuted
+    frame.contentWindow.postMessage(
+      JSON.stringify({ event: 'command', func: nextMuted ? 'mute' : 'unMute', args: [] }),
+      '*'
+    )
+    setIsShowreelMuted(nextMuted)
+  }
+
   return (
     <>
     <main className="min-h-screen" style={{ backgroundColor: '#1b2c1a' }}>
@@ -38,39 +56,50 @@ export default function PortofoliuPage() {
               </h1>
             </motion.div>
 
-            <motion.a
-              href="https://youtube.com/shorts/OirFNRli7NY"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Vezi video reel-ul pe YouTube"
+            <motion.div
               className="group relative block rounded-[3px] overflow-hidden h-[504px] md:h-[552px] mx-auto w-full max-w-[312px]"
               style={{ backgroundColor: '#0f1a0e' }}
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img
-                src="https://img.youtube.com/vi/OirFNRli7NY/maxresdefault.jpg"
-                alt="Video reel NOMÉS"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              <iframe
+                ref={showreelFrameRef}
+                src="https://www.youtube.com/embed/OirFNRli7NY?autoplay=1&mute=1&loop=1&playlist=OirFNRli7NY&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&enablejsapi=1"
+                title="Video reel NOMÉS"
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                style={{ border: 0 }}
+                allow="autoplay; encrypted-media"
               />
-              <div
-                className="absolute inset-0 flex items-center justify-center transition-colors group-hover:bg-black/10"
+              <a
+                href="https://youtube.com/shorts/OirFNRli7NY"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Vezi video reel-ul pe YouTube"
+                className="absolute inset-0 transition-colors group-hover:bg-black/10"
+              />
+              <button
+                type="button"
+                onClick={toggleShowreelSound}
+                aria-label={isShowreelMuted ? 'Pornește sunetul' : 'Oprește sunetul'}
+                className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                style={{ backgroundColor: 'rgba(27, 44, 26, 0.55)', border: '1.5px solid rgba(238, 229, 200, 0.7)', backdropFilter: 'blur(4px)' }}
               >
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: 'rgba(27, 44, 26, 0.55)', border: '1.5px solid rgba(238, 229, 200, 0.7)', backdropFilter: 'blur(4px)' }}
-                >
-                  <div className="w-0 h-0 border-t-[10px] border-b-[10px] border-l-[16px] border-t-transparent border-b-transparent ml-1" style={{ borderLeftColor: '#eee5c8' }} />
-                </div>
-              </div>
-              <p
-                className="absolute bottom-4 left-0 right-0 text-center text-xs uppercase tracking-[0.35em]"
-                style={{ color: 'rgba(238, 229, 200, 0.85)' }}
-              >
-                Video reel / showreel
-              </p>
-            </motion.a>
+                {isShowreelMuted ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eee5c8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eee5c8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M18.36 5.64a9 9 0 0 1 0 12.73" />
+                  </svg>
+                )}
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>

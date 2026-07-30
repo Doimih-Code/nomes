@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Navigation from '@/components/navigation'
 import { motion } from 'motion/react'
 import { articleCategories, articleListings } from '@/lib/article-listings'
@@ -189,21 +190,23 @@ export default function ArticolePage() {
               href={featuredListing.href!}
               className="group grid grid-cols-1 md:grid-cols-2 gap-0 rounded-[3px] overflow-hidden"
             >
-              {/* Image placeholder */}
+              {/* Cover image */}
               <motion.div
                 key={`${featuredListing.id}-image`}
-                className="aspect-4/3 md:aspect-auto md:min-h-105 flex items-end justify-center relative transition-opacity group-hover:opacity-90"
+                className="aspect-4/3 md:aspect-auto md:min-h-105 relative overflow-hidden transition-opacity group-hover:opacity-90"
                 style={{ backgroundColor: '#1b2c1a' }}
                 initial={{ opacity: 0, x: -32 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p
-                  className="absolute text-xs uppercase tracking-[0.4em] pb-10"
-                  style={{ color: 'rgba(238, 229, 200, 0.3)' }}
-                >
-                  Imagine Articol Featured
-                </p>
+                <Image
+                  src={featuredListing.coverImage}
+                  alt={featuredListing.title}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-contain"
+                  priority
+                />
               </motion.div>
 
               {/* Content */}
@@ -288,15 +291,23 @@ export default function ArticolePage() {
             {visibleArticles.map((article, idx) => {
               const cardContent = (
                 <>
-                  {/* Image placeholder */}
+                  {/* Cover image */}
                   <motion.div
-                    className="aspect-16/10 w-full rounded-[3px] mb-4 transition-opacity group-hover:opacity-90"
+                    className="aspect-16/10 w-full rounded-[3px] mb-4 relative overflow-hidden transition-opacity group-hover:opacity-90"
                     style={{ backgroundColor: '#1b2c1a' }}
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: (idx % GRID_BATCH_SIZE) * 0.1 }}
-                  />
+                  >
+                    <Image
+                      src={article.coverImage}
+                      alt={article.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-contain"
+                    />
+                  </motion.div>
                   <p className="text-xs uppercase tracking-widest mb-2" style={{ color: '#b4a35d' }}>
                     {article.category}
                   </p>
