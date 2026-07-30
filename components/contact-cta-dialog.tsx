@@ -23,14 +23,16 @@ export default function ContactCtaDialog({ variant = 'dark' }: { variant?: 'dark
       </DialogTrigger>
 
       <DialogContent
-        className="w-[calc(100vw-1rem)] max-w-md max-h-[88vh] overflow-y-auto border-0 p-4 sm:max-w-xl md:max-w-2xl md:p-6 lg:max-w-3xl lg:p-7"
+        className="flex w-[calc(100vw-1rem)] max-w-md max-h-[88vh] flex-col overflow-hidden border-0 p-0 sm:max-w-xl md:max-w-2xl lg:max-w-3xl"
         style={{ backgroundColor: '#eee5c8' }}
       >
         <DialogTitle className="sr-only">Formular de contact</DialogTitle>
         <DialogDescription className="sr-only">
           Completeaza formularul pentru a discuta despre proiectul tau.
         </DialogDescription>
-        <ContactForm variant="dialog" />
+        <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-6 lg:p-7">
+          <ContactForm variant="dialog" />
+        </div>
       </DialogContent>
     </Dialog>
   )

@@ -10,7 +10,6 @@ next.user-config.*
 # Environment variables
 .env
 .env.*
-!.env.production
 .env*.local
 !.env.example
 !.env.production.example
@@ -21,7 +20,14 @@ node_modules
 .DS_Store
 .next-build
 .next
+.next-runtime/
 dash-mode/
+
+# Build caches (regenerated automatically, shouldn't be versioned)
+tsconfig.tsbuildinfo
+
+# npm lockfile not used - project uses pnpm exclusively (see pnpm-lock.yaml)
+package-lock.json
 
 # Health-check runtime log
 deploy/healthcheck.log
