@@ -54,12 +54,12 @@ export default function HeroSection() {
 
   return (
     <div
-      className="w-full min-h-screen flex items-start md:items-center justify-center p-4 md:p-8"
+      className="w-full min-h-dvh flex items-stretch md:items-center justify-center p-4 md:p-8"
       style={{ backgroundColor: '#eee5c8' }}
     >
         {/* Main hero panel with dark green background */}
         <div
-        className="relative w-full rounded-lg overflow-hidden shadow-2xl min-h-[720px] md:min-h-[790px] lg:min-h-0 flex flex-col lg:flex-row lg:aspect-[16/10] max-h-none lg:max-h-[90vh]"
+        className="relative w-full rounded-lg overflow-hidden shadow-2xl md:min-h-[790px] lg:min-h-0 flex flex-col lg:flex-row lg:aspect-[16/10] max-h-[calc(100dvh-2rem)] md:max-h-none lg:max-h-[90vh]"
         style={{
           backgroundColor: '#1b2c1a',
         }}
@@ -211,7 +211,7 @@ export default function HeroSection() {
             </svg>
           </motion.a>
           <motion.a
-            href="https://www.tiktok.com/@noms0748?_r=1&_t=ZN-96Y2rYyk3qY"
+            href="https://www.tiktok.com/@nomes.project?_r=1&_t=ZN-980CY0KDW58"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center transition-all hover:scale-110"

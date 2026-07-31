@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -34,7 +35,6 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
   const isDialog = variant === 'dialog'
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -78,7 +78,6 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setSubmitMessage(null)
 
     try {
       // Get reCAPTCHA token
@@ -102,15 +101,15 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
       const data = await response.json()
 
       if (response.ok) {
-        setSubmitMessage({ type: 'success', text: data.message })
+        toast.success(data.message)
         // Reset form
         setFormData({ fullName: '', email: '', phone: '', comment: '' })
         setSelectedServices([])
       } else {
-        setSubmitMessage({ type: 'error', text: data.error || 'Eroare la trimitere' })
+        toast.error(data.error || 'Eroare la trimitere')
       }
     } catch (error) {
-      setSubmitMessage({ type: 'error', text: 'Eroare la conectare. Încearcă din nou.' })
+      toast.error('Eroare la conectare. Încearcă din nou.')
     } finally {
       setIsSubmitting(false)
     }
@@ -155,7 +154,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               value={formData.fullName}
               onChange={handleInputChange}
               placeholder="Introdu numele complet"
-              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-base md:text-sm"
             />
           </div>
 
@@ -175,7 +174,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               value={formData.email}
               onChange={handleInputChange}
               placeholder="exemplu@email.com"
-              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-base md:text-sm"
             />
           </div>
 
@@ -195,7 +194,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               value={formData.phone}
               onChange={handleInputChange}
               placeholder="07xx xxx xxx"
-              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
+              className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-base md:text-sm"
             />
           </div>
 
@@ -214,7 +213,7 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               value={formData.comment}
               onChange={handleInputChange}
               placeholder="Scrie cateva detalii despre proiectul tau"
-              className="min-h-28 md:min-h-36 bg-white/60 border-[#d4ccae] text-sm"
+              className="min-h-28 md:min-h-36 bg-white/60 border-[#d4ccae] text-base md:text-sm"
             />
           </div>
 
@@ -263,17 +262,6 @@ export default function ContactForm({ id = 'contact', variant = 'section' }: Con
               {isSubmitting ? 'Se trimite...' : 'Trimite mesajul'}
             </Button>
           </div>
-
-          {submitMessage && (
-            <div className="md:col-span-2 p-4 rounded-[3px]" style={{
-              backgroundColor: submitMessage.type === 'success' ? '#f0fdf4' : '#fef2f2',
-              border: `1px solid ${submitMessage.type === 'success' ? '#86efac' : '#fecaca'}`,
-            }}>
-              <p style={{ color: submitMessage.type === 'success' ? '#166534' : '#991b1b' }}>
-                {submitMessage.text}
-              </p>
-            </div>
-          )}
         </form>
       </div>
     </section>

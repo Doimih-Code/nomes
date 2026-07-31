@@ -3,6 +3,7 @@
 import Navigation from '@/components/navigation'
 import ContactCtaDialog from '@/components/contact-cta-dialog'
 import FallingDotIndicator from '@/components/falling-dot-indicator'
+import ValueIconGraphic from '@/components/value-icon'
 import { Cormorant_Garamond } from 'next/font/google'
 import { motion } from 'motion/react'
 
@@ -13,36 +14,57 @@ const cormorantGaramondItalic = Cormorant_Garamond({
 })
 
 const stats = [
-  { number: '15+', label: 'Ani Experiență' },
-  { number: '12+', label: 'Clienți Recurenți' },
-  { number: '100+', label: 'Proiecte Livrate' },
+  { number: '6+', label: 'Ani Experiență' },
+  { number: '50+', label: 'Proiecte Livrate' },
 ]
 
 const values = [
   {
     id: '01',
     title: 'Autenticitate',
-      },
+    icon: 'target' as const,
+  },
   {
     id: '02',
     title: 'Excelență',
-      },
+    icon: 'medal' as const,
+  },
   {
     id: '03',
     title: 'Inovație',
-      },
+    icon: 'lightbulb' as const,
+  },
   {
     id: '04',
     title: 'Parteneriat',
+    icon: 'rings' as const,
   },
 ]
 
 const team = [
-  { initials: 'MI', name: ' ', role: 'Ads specialist' },
-  { initials: 'RE', name: 'Radu Enache', role: 'Project manager' },
+  { initials: 'RE', name: 'Radu Enache', role: 'Ads specialist' },
   { initials: 'AI', name: 'Drey', role: 'Creative & Partnership Lead' },
   { initials: 'MO', name: 'Romina Neagu', role: 'Social Media Specialist & Creative' },
 ]
+
+function TeamMemberCard({ member }: { member: (typeof team)[number] }) {
+  return (
+    <div className="w-[140px] md:w-[168px] text-center">
+      <div
+        className="w-[140px] h-[170px] md:w-[168px] md:h-[192px] flex items-center justify-center text-3xl md:text-5xl font-bold mb-4 rounded-[3px]"
+        style={{ backgroundColor: '#1b2c1a', color: '#3a4a3a' }}
+      >
+        {member.initials}
+      </div>
+      <div className="font-bold text-sm" style={{ color: '#1b2c1a' }}>
+        {member.name}
+      </div>
+      <div className="text-xs uppercase tracking-wider" style={{ color: '#5a5a4a' }}>
+        {member.role}
+      </div>
+    </div>
+  )
+}
 
 const timeline = [
   {
@@ -110,7 +132,7 @@ export default function CineSuntemPage() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           >
             Google, Meta, TikTok și LinkedIn Ads, social media strategy, content,
-            video profesionist și evenimente PR — tot ce ai nevoie, sub un singur
+            video profesionist și evenimente PR, tot ce ai nevoie, sub un singur
             acoperiș.
           </motion.p>
 
@@ -208,14 +230,22 @@ export default function CineSuntemPage() {
                     className="p-6 md:p-7 border rounded-[3px]"
                     style={{ borderColor: 'rgba(26, 44, 26, 0.15)', backgroundColor: 'rgba(255,255,255,0.3)' }}
                   >
-                    <div
-                      className="text-xs mb-3"
-                      style={{ color: '#5a5a4a' }}
-                    >
-                      {value.id}
+                    <div className="flex items-start justify-between">
+                      <div
+                        className="text-xs"
+                        style={{ color: '#5a5a4a' }}
+                      >
+                        {value.id}
+                      </div>
+                      <div
+                        className="w-[48px] h-[48px] md:w-[54px] md:h-[54px] rounded-xl flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: '#1b2c1a' }}
+                      >
+                        <ValueIconGraphic icon={value.icon} className="w-[34px] h-[34px] md:w-[38px] md:h-[38px]" />
+                      </div>
                     </div>
                     <h3
-                      className="text-lg font-bold"
+                      className="text-base font-bold mt-3"
                       style={{ color: '#1b2c1a' }}
                     >
                       {value.title}
@@ -293,29 +323,14 @@ export default function CineSuntemPage() {
             </div>
 
             {/* Right Team Cards */}
-            <div className="grid grid-cols-2 gap-x-6 md:gap-x-8 gap-y-10 justify-items-center md:justify-items-end md:max-w-[420px] md:ml-auto">
-              {team.map((member, idx) => (
-                <div key={idx} className="w-[140px] md:w-[168px] text-center">
-                  <div
-                    className="w-[140px] h-[170px] md:w-[168px] md:h-[192px] flex items-center justify-center text-3xl md:text-5xl font-bold mb-4 rounded-[3px]"
-                    style={{ backgroundColor: '#1b2c1a', color: '#3a4a3a' }}
-                  >
-                    {member.initials}
-                  </div>
-                  <div
-                    className="font-bold text-sm"
-                    style={{ color: '#1b2c1a' }}
-                  >
-                    {member.name}
-                  </div>
-                  <div
-                    className="text-xs uppercase tracking-wider"
-                    style={{ color: '#5a5a4a' }}
-                  >
-                    {member.role}
-                  </div>
-                </div>
-              ))}
+            <div className="md:max-w-[420px] md:ml-auto">
+              <div className="flex justify-center mb-10">
+                <TeamMemberCard member={team[0]} />
+              </div>
+              <div className="grid grid-cols-2 gap-x-6 md:gap-x-8 justify-items-center md:justify-items-end">
+                <TeamMemberCard member={team[1]} />
+                <TeamMemberCard member={team[2]} />
+              </div>
             </div>
           </div>
         </div>
@@ -323,75 +338,74 @@ export default function CineSuntemPage() {
 
       {/* Drumul nostru Section */}
       <motion.section
-        className="w-full px-6 md:px-12 py-16 md:py-24"
-        style={{ backgroundColor: '#eee5c8' }}
+        className="relative overflow-hidden w-full px-6 md:px-12 py-8 md:py-16"
+        style={{ backgroundColor: '#1b2c1a' }}
         initial={{ opacity: 0, y: 48 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            {/* Left Dark Panel */}
-            <div
-              className="relative p-8 md:p-12 min-h-112.5 flex flex-col justify-between rounded-[3px]"
-              style={{ backgroundColor: '#1b2c1a' }}
+        {/* Decorative arcs */}
+        <svg
+          className="absolute bottom-0 right-0 w-72 h-72 md:w-96 md:h-96 pointer-events-none"
+          viewBox="0 0 300 300"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M160 300 A140 140 0 0 1 300 160" stroke="#eee5c8" strokeWidth="1.5" opacity="0.2" />
+          <path d="M110 300 A190 190 0 0 1 300 110" stroke="#eee5c8" strokeWidth="1.5" opacity="0.15" />
+          <path d="M60 300 A240 240 0 0 1 300 60" stroke="#eee5c8" strokeWidth="1.5" opacity="0.1" />
+        </svg>
+
+        <div className="relative max-w-6xl mx-auto">
+          {/* Timeline graph */}
+          <div
+            className="relative w-full max-w-3xl mb-16 md:mb-20"
+            style={{ aspectRatio: '1000 / 400' }}
+          >
+            <svg
+              viewBox="0 0 1000 400"
+              className="w-full h-full"
+              fill="none"
+              aria-hidden="true"
             >
-              <div
-                className="text-8xl font-bold opacity-20"
-                style={{ color: '#eee5c8' }}
-              >
-                03
-              </div>
-              <p
-                className="text-lg italic"
-                style={{ color: '#bfbea2' }}
-              >
-                {'"Fiecare an a adăugat un nou capitol la povestea noastră."'}
-              </p>
+              <polyline
+                points="90,300 410,260 640,230 940,190"
+                stroke="#8a8a72"
+                strokeWidth="2"
+                opacity="0.6"
+              />
+              <circle cx="90" cy="300" r="13" stroke="#eee5c8" strokeWidth="4" fill="#1b2c1a" />
+              <circle cx="410" cy="260" r="13" stroke="#eee5c8" strokeWidth="4" fill="#1b2c1a" />
+              <circle cx="640" cy="230" r="13" stroke="#eee5c8" strokeWidth="4" fill="#1b2c1a" />
+              <circle cx="940" cy="190" r="16" fill="#c94c4c" />
+            </svg>
+            <div
+              className="absolute text-sm"
+              style={{ left: '5%', top: '84%', color: '#8a8a72' }}
+            >
+              {timeline[0].year}
             </div>
-
-            {/* Right Timeline */}
-            <div>
-              <div
-                className="text-xs uppercase tracking-widest mb-4"
-                style={{ color: '#5a5a4a' }}
-              >
-                POVESTEA NOASTRĂ
-              </div>
-              <h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12"
-                style={{ color: '#1b2c1a' }}
-              >
-                Drumul<br />
-                nostru.
-              </h2>
-
-              {/* Timeline */}
-              <div className="space-y-4 md:space-y-5">
-                {timeline.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 md:gap-3">
-                    <div
-                      className="text-lg font-bold w-12 md:w-14"
-                      style={{ color: '#1b2c1a' }}
-                    >
-                      {item.year}
-                    </div>
-                    <div
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: '#1b2c1a' }}
-                    />
-                    <h3
-                      className="font-bold"
-                      style={{ color: '#1b2c1a' }}
-                    >
-                      {item.title}
-                    </h3>
-                  </div>
-                ))}
-              </div>
+            <div
+              className="absolute text-xs font-bold uppercase tracking-widest"
+              style={{ left: '87%', top: '4%', color: '#c94c4c' }}
+            >
+              {timeline[timeline.length - 1].year}
             </div>
           </div>
+
+          <div
+            className="h-px w-full mb-8 md:mb-10"
+            style={{ backgroundColor: 'rgba(238,229,200,0.15)' }}
+          />
+
+          <p
+            className={`${cormorantGaramondItalic.className} text-2xl md:text-3xl lg:text-4xl italic leading-snug max-w-xl`}
+            style={{ color: '#eee5c8' }}
+          >
+            „Fiecare an a adăugat un nou capitol<br />
+            la povestea noastră.”
+          </p>
         </div>
       </motion.section>
 

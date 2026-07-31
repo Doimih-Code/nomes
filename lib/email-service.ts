@@ -60,6 +60,9 @@ async function getTransporter() {
 
     const transporter = nodemailer.createTransport(emailConfig.smtp)
     transporterPromise = transporter.verify().then(() => transporter)
+    transporterPromise.catch(() => {
+      transporterPromise = null
+    })
   }
 
   return transporterPromise
@@ -80,21 +83,20 @@ export async function sendContactEmail(data: ContactFormData) {
   const safeServices = services.map((service) => escapeHtml(normalizeText(service))).filter(Boolean)
   const servicesText = safeServices.length > 0 ? safeServices.join(', ') : 'Niciun serviciu selectat'
 
-  try {
-    const transporter = await getTransporter()
+  const transporter = await getTransporter()
 
-    const htmlContent = `
-      <h2>Formulare de Contact - NOMES</h2>
-      <p><strong>Nume:</strong> ${safeName}</p>
-      <p><strong>Email:</strong> ${safeEmail}</p>
-      <p><strong>Telefon:</strong> ${safePhone}</p>
-      <p><strong>Servicii de interes:</strong> ${servicesText}</p>
-      <hr />
-      <h3>Mesaj:</h3>
-      <p>${safeComment}</p>
-    `
+  const htmlContent = `
+    <h2>Formulare de Contact - NOMES</h2>
+    <p><strong>Nume:</strong> ${safeName}</p>
+    <p><strong>Email:</strong> ${safeEmail}</p>
+    <p><strong>Telefon:</strong> ${safePhone}</p>
+    <p><strong>Servicii de interes:</strong> ${servicesText}</p>
+    <hr />
+    <h3>Mesaj:</h3>
+    <p>${safeComment}</p>
+  `
 
-    const textContent = `
+  const textContent = `
 Formulare de Contact - NOMES
 
 Nume: ${normalizeText(fullName)}
@@ -104,9 +106,10 @@ Servicii de interes: ${servicesText}
 
 --- MESAJ ---
 ${normalizeText(comment)}
-    `
+  `
 
-    // Trimitere email către recipient
+  try {
+    // Trimitere email către recipient (critic - determină succesul cererii)
     await transporter.sendMail({
       from: `${emailConfig.fromName} <${emailConfig.from}>`,
       to: emailConfig.recipientEmail,
@@ -115,20 +118,25 @@ ${normalizeText(comment)}
       text: textContent,
       html: htmlContent,
     })
+  } catch (error) {
+    console.error('Email send error (notification):', error)
+    throw new Error('Eroare la trimiterea emailului. Încearcă din nou mai târziu.')
+  }
 
-    // Trimitere email de confirmare către client
-    const confirmationHtml = `
-      <p>Salut ${safeName},</p>
-      <p>Mulțumim pentru mesajul tău! Am primit formularul și vom reveni la tine în cel mai scurt timp.</p>
-      <p>Am notat următoarele detalii:</p>
-      <ul>
-        <li><strong>Email:</strong> ${safeEmail}</li>
-        <li><strong>Telefon:</strong> ${safePhone}</li>
-        <li><strong>Servicii:</strong> ${servicesText}</li>
-      </ul>
-      <p>Echipa NOMES</p>
-    `
+  // Trimitere email de confirmare către client (best-effort - nu trebuie să blocheze răspunsul)
+  const confirmationHtml = `
+    <p>Salut ${safeName},</p>
+    <p>Mulțumim pentru mesajul tău! Am primit formularul și vom reveni la tine în cel mai scurt timp.</p>
+    <p>Am notat următoarele detalii:</p>
+    <ul>
+      <li><strong>Email:</strong> ${safeEmail}</li>
+      <li><strong>Telefon:</strong> ${safePhone}</li>
+      <li><strong>Servicii:</strong> ${servicesText}</li>
+    </ul>
+    <p>Echipa NOMES</p>
+  `
 
+  try {
     await transporter.sendMail({
       from: `${emailConfig.fromName} <${emailConfig.from}>`,
       to: normalizeText(email),
@@ -137,14 +145,13 @@ ${normalizeText(comment)}
       html: confirmationHtml,
       text: `Salut ${normalizeText(fullName)},\n\nMultumim pentru mesajul tau! Am primit formularul si vom reveni la tine in cel mai scurt timp.\n\nEchipa NOMES`,
     })
-
-    return {
-      success: true,
-      message: 'Email trimis cu succes',
-    }
   } catch (error) {
-    console.error('Email send error:', error)
-    throw new Error('Eroare la trimiterea emailului. Încearcă din nou mai târziu.')
+    console.error('Email send error (confirmation):', error)
+  }
+
+  return {
+    success: true,
+    message: 'Email trimis cu succes',
   }
 }
 

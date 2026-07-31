@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import Navigation from '@/components/navigation'
 import PortfolioSlider from '@/components/portfolio-slider'
 import PartnersLogoLoop from '@/components/partners-logo-loop'
@@ -8,6 +9,23 @@ import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { motion } from 'motion/react'
 
 export default function PortofoliuPage() {
+  const showreelFrameRef = useRef<HTMLIFrameElement>(null)
+  const [isShowreelMuted, setIsShowreelMuted] = useState(true)
+
+  const toggleShowreelSound = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const frame = showreelFrameRef.current
+    if (!frame?.contentWindow) return
+
+    const nextMuted = !isShowreelMuted
+    frame.contentWindow.postMessage(
+      JSON.stringify({ event: 'command', func: nextMuted ? 'mute' : 'unMute', args: [] }),
+      '*'
+    )
+    setIsShowreelMuted(nextMuted)
+  }
+
   return (
     <>
     <main className="min-h-screen" style={{ backgroundColor: '#1b2c1a' }}>
@@ -39,26 +57,48 @@ export default function PortofoliuPage() {
             </motion.div>
 
             <motion.div
-              className="border border-dashed rounded-[3px] h-[420px] md:h-[460px] px-6 text-center flex items-center justify-center"
-              style={{ borderColor: 'rgba(180, 163, 93, 0.24)' }}
+              className="group relative block rounded-[3px] overflow-hidden h-[504px] md:h-[552px] mx-auto w-full max-w-[312px]"
+              style={{ backgroundColor: '#0f1a0e' }}
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="w-full flex flex-col items-center justify-center">
-                <div className="mb-5 flex justify-center">
-                  <div className="w-0 h-0 border-t-[12px] border-b-[12px] border-l-[20px] border-t-transparent border-b-transparent" style={{ borderLeftColor: 'rgba(238, 229, 200, 0.55)' }} />
-                </div>
-                <p
-                  className="text-sm uppercase tracking-[0.35em] mb-2"
-                  style={{ color: 'rgba(180, 163, 93, 0.55)' }}
-                >
-                  Video reel / showreel
-                </p>
-                <p className="text-sm" style={{ color: 'rgba(238, 229, 200, 0.35)' }}>
-                  Inlocuiti acest tag cu video-ul vostru sau cu un frame din portofoliu.
-                </p>
-              </div>
+              <iframe
+                ref={showreelFrameRef}
+                src="https://www.youtube.com/embed/OirFNRli7NY?autoplay=1&mute=1&loop=1&playlist=OirFNRli7NY&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&enablejsapi=1"
+                title="Video reel NOMÉS"
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                style={{ border: 0 }}
+                allow="autoplay; encrypted-media"
+              />
+              <a
+                href="https://youtube.com/shorts/OirFNRli7NY"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Vezi video reel-ul pe YouTube"
+                className="absolute inset-0 transition-colors group-hover:bg-black/10"
+              />
+              <button
+                type="button"
+                onClick={toggleShowreelSound}
+                aria-label={isShowreelMuted ? 'Pornește sunetul' : 'Oprește sunetul'}
+                className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                style={{ backgroundColor: 'rgba(27, 44, 26, 0.55)', border: '1.5px solid rgba(238, 229, 200, 0.7)', backdropFilter: 'blur(4px)' }}
+              >
+                {isShowreelMuted ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eee5c8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eee5c8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M18.36 5.64a9 9 0 0 1 0 12.73" />
+                  </svg>
+                )}
+              </button>
             </motion.div>
           </div>
         </div>
@@ -73,7 +113,7 @@ export default function PortofoliuPage() {
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
 
           {/* Header row */}
           <div className="flex items-end justify-between mb-10 md:mb-14">

@@ -130,3 +130,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.article-lead::first-letter {
+  float: left;
+  font-size: 3.6rem;
+  font-weight: 800;
+  line-height: 0.75;
+  margin: 6px 10px 0 0;
+  color: #1b2c1a;
+}

@@ -29,7 +29,7 @@ const socialLinks = [
   },
   {
     label: 'TikTok',
-    href: 'https://www.tiktok.com/@noms0748?_r=1&_t=ZN-96Y2rYyk3qY',
+    href: 'https://www.tiktok.com/@nomes.project?_r=1&_t=ZN-980CY0KDW58',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M14 4V13.2C14 15.2 12.4 16.8 10.4 16.8C8.4 16.8 6.8 15.2 6.8 13.2C6.8 11.2 8.4 9.6 10.4 9.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -152,7 +152,7 @@ export default function SiteFooter({ variant = 'dark' }: { variant?: 'dark' | 'l
             <p className="text-xl leading-relaxed max-w-md" style={{ color: bodyColor }}>
               Echipa ta pentru performance ads, social media, brand strategy si video production.
               <br />
-              15+ ani experienta, 0 clienti pierduti.
+              6+ ani experienta, 0 clienti pierduti.
             </p>
           </motion.div>
 

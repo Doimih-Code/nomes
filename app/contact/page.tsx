@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import Navigation from '@/components/navigation'
 import FallingDotIndicator from '@/components/falling-dot-indicator'
 import { Button } from '@/components/ui/button'
@@ -28,6 +29,35 @@ const services = [
 
 export default function ContactPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    website: '',
+    message: '',
+  })
+
+  // Load reCAPTCHA script on mount
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+    if (!siteKey) {
+      console.warn('reCAPTCHA site key not configured')
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`
+    script.async = true
+    document.head.appendChild(script)
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script)
+      }
+    }
+  }, [])
 
   const toggleService = (serviceId: string) => {
     setSelectedServices(prev =>
@@ -35,6 +65,58 @@ export default function ContactPage() {
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
     )
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+      if (!siteKey) {
+        throw new Error('reCAPTCHA not configured')
+      }
+
+      const recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'submit' })
+
+      const commentParts = []
+      if (formData.company.trim()) commentParts.push(`Denumire firmă: ${formData.company.trim()}`)
+      if (formData.website.trim()) commentParts.push(`Website: ${formData.website.trim()}`)
+      commentParts.push(formData.message.trim())
+      const comment = commentParts.join('\n')
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          comment,
+          services: selectedServices,
+          recaptchaToken,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        toast.success(data.message)
+        setFormData({ name: '', email: '', phone: '', company: '', website: '', message: '' })
+        setSelectedServices([])
+      } else {
+        toast.error(data.error || 'Eroare la trimitere')
+      }
+    } catch (error) {
+      toast.error('Eroare la conectare. Încearcă din nou.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -120,6 +202,15 @@ export default function ContactPage() {
                 — DATE DE CONTACT
               </div>
 
+              <div>
+                <p
+                  className="text-base leading-relaxed"
+                  style={{ color: '#3a3a3a', marginBottom: '20px' }}
+                >
+                  Ne poți scrie direct sau poți completa formularul alăturat.
+                </p>
+              </div>
+
               <div className="space-y-6">
                 <div>
                   <p
@@ -150,15 +241,6 @@ export default function ContactPage() {
                     contact@nomes.ro
                   </p>
                 </div>
-
-                <div className="pt-6">
-                  <p
-                    className="text-base leading-relaxed"
-                    style={{ color: '#3a3a3a' }}
-                  >
-                    Ne poți scrie direct sau poți completa formularul alăturat.
-                  </p>
-                </div>
               </div>
             </motion.div>
 
@@ -169,7 +251,7 @@ export default function ContactPage() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
-              <form className="space-y-5" action="#" method="post">
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 {/* Nume */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -189,33 +271,60 @@ export default function ContactPage() {
                     name="name"
                     type="text"
                     required
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="Numele tău"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
                 </motion.div>
 
-                {/* Email */}
+                {/* Email + Telefon */}
                 <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-5"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <label
-                    htmlFor="email"
-                    className="block text-xs uppercase tracking-widest mb-2"
-                    style={{ color: '#5a5a4a' }}
-                  >
-                    Adresă email *
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="email@example.com"
-                    className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
-                  />
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-xs uppercase tracking-widest mb-2"
+                      style={{ color: '#5a5a4a' }}
+                    >
+                      Adresă email *
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="email@example.com"
+                      className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="block text-xs uppercase tracking-widest mb-2"
+                      style={{ color: '#5a5a4a' }}
+                    >
+                      Telefon *
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="07xx xxx xxx"
+                      className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
+                    />
+                  </div>
                 </motion.div>
 
                 {/* Denumire firmă */}
@@ -236,6 +345,8 @@ export default function ContactPage() {
                     id="company"
                     name="company"
                     type="text"
+                    value={formData.company}
+                    onChange={handleInputChange}
                     placeholder="Denumirea companiei"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
@@ -259,6 +370,8 @@ export default function ContactPage() {
                     id="website"
                     name="website"
                     type="url"
+                    value={formData.website}
+                    onChange={handleInputChange}
                     placeholder="https://example.com"
                     className="h-11 md:h-12 bg-white/60 border-[#d4ccae] text-sm"
                   />
@@ -339,11 +452,14 @@ export default function ContactPage() {
                     className="block text-xs uppercase tracking-widest mb-2"
                     style={{ color: '#5a5a4a' }}
                   >
-                    Comentarii
+                    Comentarii *
                   </label>
                   <Textarea
                     id="message"
                     name="message"
+                    required
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder="Spune-ne mai mult despre ceea ce ai în minte…"
                     className="min-h-32 md:min-h-40 bg-white/60 border-[#d4ccae] text-sm"
                   />
@@ -359,10 +475,11 @@ export default function ContactPage() {
                 >
                   <Button
                     type="submit"
-                    className="h-12 w-full text-xs uppercase tracking-[0.2em] md:tracking-widest font-bold rounded-[3px] transition-all hover:opacity-80"
+                    disabled={isSubmitting}
+                    className="h-12 w-full text-xs uppercase tracking-[0.2em] md:tracking-widest font-bold rounded-[3px] transition-all hover:opacity-80 disabled:opacity-60"
                     style={{ backgroundColor: '#1b2c1a', color: '#eee5c8' }}
                   >
-                    TRIMITE MESAJUL
+                    {isSubmitting ? 'SE TRIMITE...' : 'TRIMITE MESAJUL'}
                   </Button>
                 </motion.div>
               </form>

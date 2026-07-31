@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cum să structurezi un cont Google Ads de la zero — NOMES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #e9e3d0;
+      --bg-dark:    #1b2d1b;
+      --bg-card:    #dfd9c6;
+      --text:       #141408;
+      --text-mid:   #4a4530;
+      --text-muted: #8a8060;
+      --accent:     #c0392b;
+      --line:       #ccc6b0;
+      --font:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(233,227,208,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 48px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+      color: var(--text-mid); transition: color .15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a.active { border-bottom: 1.5px solid var(--text); padding-bottom: 1px; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .breadcrumb span { color: var(--accent); }
+    .breadcrumb-sep { color: var(--line); }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ═══════════════════════
+       COLOANA STÂNGA (2/3)
+    ═══════════════════════ */
+    .main-col {}
+
+    /* Titlu deasupra pozei */
+    .article-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    /* Meta autor */
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .meta-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .meta-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; color: rgba(233,227,208,0.7);
+      flex-shrink: 0;
+    }
+    .meta-name {
+      font-size: 12px; font-weight: 700;
+      color: var(--text); letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .meta-date { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .meta-stats {
+      font-size: 11px; color: var(--text-muted);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .meta-stats span + span::before { content: ' • '; }
+
+    /* Hero image */
+    .hero-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg-dark);
+      border-radius: 4px;
+      margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(233,227,208,0.2);
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+
+    /* ── CONTENT AREA cu social la stânga ── */
+    .content-with-social {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    /* Social share — coloana fixă stânga */
+    .social-sidebar {
+      width: 40px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding-top: 6px;
+      position: sticky;
+      top: 76px;
+    }
+    .soc-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color .15s;
+    }
+    .soc-btn:hover { color: var(--text); }
+    .soc-btn svg { display: block; }
+
+    /* Article body */
+    .article-body {
+      flex: 1;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-mid);
+      min-width: 0;
+    }
+
+    /* Drop cap pe primul paragraf */
+    .article-body .lead::first-letter {
+      float: left;
+      font-size: 68px;
+      font-weight: 900;
+      line-height: 0.75;
+      margin: 6px 10px 0 0;
+      color: var(--text);
+      font-family: var(--font);
+    }
+
+    .article-body p { margin-bottom: 20px; }
+    .article-body p.lead { margin-bottom: 22px; }
+
+    .article-body h2 {
+      font-size: 20px; font-weight: 800;
+      color: var(--text); letter-spacing: -0.01em;
+      margin: 36px 0 12px;
+    }
+
+    .article-body strong { color: var(--text); font-weight: 700; }
+
+    .article-body ul {
+      padding-left: 20px; margin-bottom: 20px;
+    }
+    .article-body li { margin-bottom: 6px; }
+
+    /* Pull quote */
+    .pull-quote {
+      margin: 32px 0;
+      padding: 16px 0 16px 24px;
+      border-left: 3px solid var(--text-mid);
+    }
+    .pull-quote p {
+      font-size: 19px !important;
+      font-weight: 600;
+      color: var(--text) !important;
+      line-height: 1.5 !important;
+      margin-bottom: 10px !important;
+    }
+    .pull-quote cite {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-style: normal;
+    }
+    .pull-quote cite::before { content: '— '; }
+
+    /* Inline image placeholder */
+    .inline-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg-dark);
+      border-radius: 4px;
+      margin: 28px 0;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(233,227,208,0.2);
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+
+    /* ═══════════════════════
+       COLOANA DREAPTA (1/3)
+    ═══════════════════════ */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+    }
+
+    /* News section */
+    .sidebar-section {
+      margin-bottom: 36px;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--text);
+    }
+    .sidebar-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .sidebar-viewall {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color .15s;
+    }
+    .sidebar-viewall:hover { color: var(--text); }
+
+    /* News list */
+    .news-list { display: flex; flex-direction: column; gap: 0; }
+
+    .news-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .news-item:hover { opacity: 0.75; }
+
+    .news-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-muted);
+      min-width: 22px;
+      margin-top: 2px;
+      letter-spacing: -0.01em;
+    }
+
+    .news-content {}
+    .news-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 5px;
+    }
+    .news-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .news-meta span + span::before { content: ' • '; }
+
+    /* Categories grid */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .cat-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .cat-card:hover { border-color: var(--text-mid); }
+
+    .cat-thumb {
+      width: 42px; height: 42px; border-radius: 3px;
+      background: var(--bg-dark);
+      flex-shrink: 0;
+    }
+
+    .cat-name {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cat-count {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 36px 48px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 15px; font-weight: 900; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .footer-tagline { font-size: 12px; color: var(--text-muted); max-width: 240px; line-height: 1.65; }
+    .footer-links { display: flex; flex-direction: column; gap: 9px; }
+    .footer-links a { font-size: 12px; color: var(--text-mid); transition: color .15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { width: 100%; border-top: 1px solid var(--line); padding-top: 18px; font-size: 11px; color: var(--text-muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .page-wrap { grid-template-columns: 1fr; gap: 40px; padding: 0 18px 60px; }
+      .sidebar { position: static; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .social-sidebar { display: none; }
+      footer { padding: 32px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <span class="nav-dot"></span>NOMES
+    </a>
+    <ul class="nav-links">
+      <li><a href="/cine-suntem">Cine suntem</a></li>
+      <li><a href="/servicii">Servicii</a></li>
+      <li><a href="/cursuri">Cursuri</a></li>
+      <li><a href="/portofoliu">Portofoliu</a></li>
+      <li><a href="/articole" class="active">Articole</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    Home <span class="breadcrumb-sep">›</span> <span>Performance Ads</span>
+  </div>
+
+  <!-- PAGE GRID -->
+  <div class="page-wrap">
+
+    <!-- ══ COLOANA STÂNGA (2/3) ══ -->
+    <main class="main-col">
+
+      <!-- Titlu deasupra imaginii -->
+      <h1 class="article-title">
+        Cum să structurezi un cont Google Ads de la zero și să ajungi la ROAS pozitiv în 30 de zile
+      </h1>
+
+      <!-- Meta autor + statistici -->
+      <div class="article-meta">
+        <div class="meta-author">
+          <div class="meta-avatar">AN</div>
+          <div>
+            <div class="meta-name">Alexandru Nomeș</div>
+            <div class="meta-date">12 MAR 2026</div>
+          </div>
+        </div>
+        <div class="meta-stats">
+          <span>12 MAR 2026</span>
+          <span>1.240 vizualizări</span>
+          <span>0 comentarii</span>
+        </div>
+      </div>
+
+      <!-- Hero imagine -->
+      <div class="hero-img">Imagine articol featured</div>
+
+      <!-- Conținut + social share pe stânga -->
+      <div class="content-with-social">
+
+        <!-- Social share fix stânga -->
+        <div class="social-sidebar">
+          <!-- Facebook -->
+          <a class="soc-btn" href="#" title="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <!-- Twitter/X -->
+          <a class="soc-btn" href="#" title="Twitter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <!-- Pinterest -->
+          <a class="soc-btn" href="#" title="Pinterest">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+            </svg>
+          </a>
+          <!-- Telegram -->
+          <a class="soc-btn" href="#" title="Telegram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.008 9.465c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.871.756z"/>
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a class="soc-btn" href="#" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <!-- More -->
+          <a class="soc-btn" href="#" title="Mai multe">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Conținut articol -->
+        <div class="article-body">
+
+          <p class="lead">
+            Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well. The universe is hilarious! Like, Venus is 900 degrees. I could tell you it melts lead.
+          </p>
+
+          <p>
+            Dacă ai deschis vreodată Google Ads și te-ai simțit copleșit de opțiuni — nu ești singur. <strong>Majoritatea conturilor pe care le preluăm de la clienți arată ca un experiment neterminat.</strong> Campanii suprapuse, audiențe nedefinite, cuvinte cheie prea largi și un buget care se duce fără rezultate clare.
+          </p>
+
+          <!-- Pull quote -->
+          <div class="pull-quote">
+            <p>Nu vreau să părăsesc această planetă până nu realizez tot ce am fost pus să fac.</p>
+            <cite>Alexandru Nomeș</cite>
+          </div>
+
+          <p>
+            În acest articol îți arăt exact cum structurăm noi un cont Google Ads de la zero — pas cu pas, cu decizii concrete și motivele din spatele lor. Modelul pe care îl folosim a generat ROAS pozitiv pentru 9 din 10 conturi noi în primele 30 de zile.
+          </p>
+
+          <h2>De ce eșuează cele mai multe conturi noi</h2>
+
+          <p>
+            Problema nu e Google Ads în sine — platforma funcționează. Problema e că cei mai mulți antreprenori sar direct la campanii fără să înțeleagă structura care stă la baza unui cont sănătos.
+          </p>
+
+          <ul>
+            <li>Un singur grup de anunțuri cu 50+ cuvinte cheie</li>
+            <li>Lipsă totală de negative keywords</li>
+            <li>Campanii Search și Shopping amestecate fără separare</li>
+            <li>Nicio conversie setată corect în primele săptămâni</li>
+          </ul>
+
+          <!-- Imagine placeholder inline #1 -->
+          <div class="inline-img">Imagine articol — Structură cont Google Ads</div>
+
+          <h2>Pasul 1 — Tracking înainte de orice</h2>
+
+          <p>
+            Primul lucru înainte să cheltuim un leu: <strong>setăm tracking-ul corect</strong>. Fără date de conversie fiabile, Google Ads optimizează în gol. Ești practic nevăzut.
+          </p>
+
+          <p>
+            Google Tag Manager instalat și verificat, conversia principală cu valoare atribuită, micro-conversii pentru add_to_cart și begin_checkout, remarketing audience activ din prima zi — acestea sunt bazele. Fără ele, orice buget cheltuit e experiment pur.
+          </p>
+
+          <!-- Imagine placeholder inline #2 -->
+          <div class="inline-img">Imagine articol — Setup tracking GTM</div>
+
+          <h2>Pasul 2 — Structura contului</h2>
+
+          <p>
+            Am testat ambele abordări extensiv. <strong>Structura tematică bate SKAG</strong> pentru conturile noi în 2025-2026. Motivul: Google are nevoie de suficiente date per grup ca să optimizeze smart bidding-ul eficient. La 30 de zile, cu o structură corectă și tracking funcțional, cel puțin 60-70% din buget ar trebui să fie rentabil.
+          </p>
+
+          <!-- Imagine placeholder inline #3 -->
+          <div class="inline-img">Imagine articol — Schema structură campanii</div>
+
+        </div>
+        <!-- /article-body -->
+
+      </div>
+      <!-- /content-with-social -->
+
+    </main>
+    <!-- /main-col -->
+
+    <!-- ══ COLOANA DREAPTA (1/3) ══ -->
+    <aside class="sidebar">
+
+      <!-- NEWS -->
+      <div class="sidebar-section">
+        <div class="sidebar-header">
+          <span class="sidebar-title">Articole recente</span>
+          <a href="/articole" class="sidebar-viewall">Vezi toate →</a>
+        </div>
+
+        <div class="news-list">
+          <div class="news-item">
+            <div class="news-num">01</div>
+            <div class="news-content">
+              <div class="news-title">Cum să structurezi un cont Google Ads de la zero și să ajungi la ROAS pozitiv</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>12 MAR 2026</span></div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-num">02</div>
+            <div class="news-content">
+              <div class="news-title">Cum construiești o prezență organică reală pe Instagram în 2026</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>05 MAR 2026</span></div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-num">03</div>
+            <div class="news-content">
+              <div class="news-title">De ce brandurile românești pierd la poziționare și cum corectezi asta</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>28 FEB 2026</span></div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-num">04</div>
+            <div class="news-content">
+              <div class="news-title">Hook-urile care funcționează pe TikTok în 2026 — studiu pe 50 de reclame</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>20 FEB 2026</span></div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-num">05</div>
+            <div class="news-content">
+              <div class="news-title">Google Tag Manager pentru non-tehnici: tot ce ai nevoie să știi</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>14 FEB 2026</span></div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-num">06</div>
+            <div class="news-content">
+              <div class="news-title">Cum am crescut ROAS-ul unui brand de fashion de la 1.2x la 4.8x în 3 luni</div>
+              <div class="news-meta"><span>Alexandru Nomeș</span><span>07 FEB 2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="sidebar-section">
+        <div class="sidebar-header">
+          <span class="sidebar-title">Categorii</span>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Performance</div>
+              <div class="cat-count">8 articole</div>
+            </div>
+          </div>
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Social Media</div>
+              <div class="cat-count">6 articole</div>
+            </div>
+          </div>
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Strategy</div>
+              <div class="cat-count">5 articole</div>
+            </div>
+          </div>
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Video</div>
+              <div class="cat-count">4 articole</div>
+            </div>
+          </div>
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Tutoriale</div>
+              <div class="cat-count">7 articole</div>
+            </div>
+          </div>
+          <div class="cat-card">
+            <div class="cat-thumb"></div>
+            <div>
+              <div class="cat-name">Studii de caz</div>
+              <div class="cat-count">4 articole</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+    <!-- /sidebar -->
+
+  </div>
+  <!-- /page-wrap -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-logo"><span class="nav-dot"></span>NOMES</div>
+      <div class="footer-tagline">Echipa ta pentru performance ads, social media, brand strategy și video production. 15+ ani experiență, 0 clienți pierduți.</div>
+    </div>
+    <div class="footer-links">
+      <a href="/cine-suntem">Cine suntem</a>
+      <a href="/servicii">Servicii</a>
+      <a href="/cursuri">Cursuri</a>
+      <a href="/portofoliu">Portofoliu</a>
+      <a href="/articole">Articole</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 NOMES. Toate drepturile rezervate.</div>
+  </footer>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import GoToTopButton from '@/components/go-to-top-button'
 import ConditionalFooter from '@/components/conditional-footer'
+import { Toaster } from '@/components/ui/sonner'
 import { validateServerEnv } from '@/lib/env-validation'
 import './globals.css'
 
@@ -35,6 +36,15 @@ export default function RootLayout({
         {children}
         <ConditionalFooter />
         <GoToTopButton />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            classNames: {
+              success: '!bg-[#f0fdf4] !text-[#166534] !border-[#86efac]',
+              error: '!bg-[#fef2f2] !text-[#991b1b] !border-[#fecaca]',
+            },
+          }}
+        />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
